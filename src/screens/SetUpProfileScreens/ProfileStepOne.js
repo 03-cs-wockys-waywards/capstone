@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { EmptyCircle } from '../../components/ProgressCircles';
+import { EmptyCircle, FilledCircle } from '../../components/ProgressCircles';
 
 export default function ProfileStepOne() {
   return (
@@ -28,6 +28,7 @@ export default function ProfileStepOne() {
         (only allow one selection or multiple?) */}
       </View>
       <View>
+        <FilledCircle />
         <EmptyCircle />
         <EmptyCircle />
         <EmptyCircle />
