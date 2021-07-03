@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { EmptyCircle } from '../../components/ProgressCircles';
 
 export default function ProfileStepOne() {
   return (
@@ -26,7 +27,11 @@ export default function ProfileStepOne() {
         {/* TODO: Are the pronouns radio buttons or checkboxes?
         (only allow one selection or multiple?) */}
       </View>
-      <View></View>
+      <View>
+        <EmptyCircle />
+        <EmptyCircle />
+        <EmptyCircle />
+      </View>
     </SafeAreaView>
   );
 }
