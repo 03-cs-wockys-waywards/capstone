@@ -14,6 +14,9 @@ if (!global.atob) {
 }
 
 const Stack = createStackNavigator();
+const screenOptions = {
+  cardStyle: { backgroundColor: 'white' },
+};
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -46,7 +49,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
         {user ? (
           // <Stack.Screen name="Home">
           //   {(props) => <HomeScreen {...props} extraData={user} />}
