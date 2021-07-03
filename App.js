@@ -4,6 +4,7 @@ import { firebase } from './src/firebaseSpecs/config';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen, HomeScreen, RegistrationScreen } from './src/screens';
+import ProfileStepOne from './src/screens/SetUpProfileScreens/ProfileStepOne';
 import { decode, encode } from 'base-64';
 if (!global.btoa) {
   global.btoa = encode;
@@ -47,9 +48,10 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {user ? (
-          <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
-          </Stack.Screen>
+          // <Stack.Screen name="Home">
+          //   {(props) => <HomeScreen {...props} extraData={user} />}
+          // </Stack.Screen>
+          <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
