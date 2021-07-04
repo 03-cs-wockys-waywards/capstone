@@ -19,6 +19,7 @@ export default function ProfileStepOne() {
 
   const handlePress = () => {
     console.log({ firstName, lastName, pronouns });
+    // validating whether all inputs are completed
     if (!firstName || !lastName || pronouns.length === 0) {
       alert('Please fill out all required fields');
     }
