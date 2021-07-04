@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   View,
   Text,
   TextInput,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../components/ProgressCircles';
@@ -16,8 +16,12 @@ export default function ProfileStepOne() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [pronouns, setPronouns] = useState([]);
+
   const handlePress = () => {
     console.log({ firstName, lastName, pronouns });
+    if (!firstName || !lastName || pronouns.length === 0) {
+      alert('Please fill out all required fields');
+    }
   };
 
   return (
@@ -75,9 +79,9 @@ export default function ProfileStepOne() {
           <EmptyCircle />
           <EmptyCircle />
           <EmptyCircle />
-          <Pressable onPress={handlePress}>
-            <Icon type="font-awesome" name="chevron-right" color="#BDBDBD" />
-          </Pressable>
+          <TouchableOpacity onPress={handlePress}>
+            <Icon type="font-awesome" name="chevron-right" color="#000" />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
