@@ -3,9 +3,10 @@ import { StyleSheet } from 'react-native';
 // Styles for Set Up Profile: Step One
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     marginHorizontal: '10%',
-    marginTop: '15%',
+    marginTop: '10%',
+    height: '100%',
   },
   headerContainer: {
     justifyContent: 'center',
@@ -21,6 +22,7 @@ export default StyleSheet.create({
   labelText: {
     fontSize: 16,
     lineHeight: 19,
+    marginTop: 15,
     marginBottom: 15,
   },
   nameInput: {
@@ -40,6 +42,6 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '10%',
+    bottom: '15%',
   },
 });
