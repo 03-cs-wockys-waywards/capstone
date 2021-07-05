@@ -5,6 +5,20 @@ export default StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
+  headerContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 25,
+    paddingBottom: 10
+  },
+  headerTitle: {
+    fontSize: 30,
+    fontWeight: '600',
+  },
+  headerText: {
+    fontSize: 20,
+    lineHeight: 36
+  },
   item: {
     padding: 20,
     marginVertical: 8,
@@ -14,7 +28,7 @@ export default StyleSheet.create({
     borderRadius: 50,
     flex: 1
   },
-  title: {
-    fontSize: 17,
+  itemName: {
+    fontSize: 16,
   },
 });
