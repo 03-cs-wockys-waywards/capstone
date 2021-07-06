@@ -5,12 +5,21 @@ export default StyleSheet.create({
   container: {
     flexGrow: 1,
     flexDirection: 'column',
-    alignItems: 'center',
+    marginHorizontal: '10%',
+    marginTop: '50%',
+    alignContent: 'center',
   },
   title: {
     fontSize: 40,
     fontWeight: '600',
-    lineHeight: 36,
-    marginBottom: 5,
+    textAlign: 'center',
+    marginBottom: 250,
+  },
+  linksContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 20,
   },
 })

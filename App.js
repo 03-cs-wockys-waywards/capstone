@@ -10,6 +10,7 @@ import {
   HomeScreen,
   RegistrationScreen,
   InterestsScreen,
+  LandingScreen
 } from './src/screens';
 import ProfileStepOne from './src/screens/SetUpProfileScreens/ProfileStepOne';
 import { decode, encode } from 'base-64';
@@ -88,11 +89,12 @@ export default function App() {
           //   {(props) => <HomeScreen {...props} extraData={user} />}
           // </Stack.Screen>
           <>
-            <Stack.Screen name="Interests" component={InterestsScreen} />
+            {/* <Stack.Screen name="Interests" component={InterestsScreen} /> */}
             {/* <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} /> */}
           </>
         ) : (
           <>
+            <Stack.Screen name="Landing" component={LandingScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
           </>
