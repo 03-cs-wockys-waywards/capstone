@@ -6,7 +6,6 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native'
-import { Icon } from 'react-native-elements'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -15,9 +14,9 @@ import styles from './styles'
 export default function AddProfilePic({ navigation }) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
   const [hasCameraPermission, setHasCameraPermission] = useState(null)
-  const [camera, setCamera] = useState(null)
+  //const [camera, setCamera] = useState(null)
   const [image, setImage] = useState(null)
-  const [type, setType] = useState(Camera.Constants.Type.back)
+  //const [type, setType] = useState(Camera.Constants.Type.back)
 
   useEffect(() => {
     ;(async () => {
@@ -30,7 +29,7 @@ export default function AddProfilePic({ navigation }) {
     })()
   }, [])
 
-  const openCamera = async () => {
+  const useCamera = async () => {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
@@ -41,13 +40,6 @@ export default function AddProfilePic({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri)
-    }
-  }
-
-  const takePicture = async () => {
-    if (camera) {
-      const data = await camera.takePictureAsync(null)
-      setImage(data.uri)
     }
   }
 
@@ -75,22 +67,22 @@ export default function AddProfilePic({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Step 3:</Text>
-        <Text style={styles.labelText}>Pick a profile picture.</Text>
+        <Text style={styles.labelText}>Add a profile picture.</Text>
       </View>
 
       <Image
         source={{ uri: image }}
-        style={{ width: 300, height: 300, backgroundColor: '#d3d3d3' }}
+        style={styles.image}
         PlaceholderContent={<ActivityIndicator />}
       />
 
-      <TouchableOpacity style={styles.bigButton} onPress={() => openCamera()}>
+      <TouchableOpacity style={styles.button} onPress={() => useCamera()}>
         <Text style={styles.buttonText}>Take Photo</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.bigButton} onPress={() => pickImage()}>
+      <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
         <Text style={styles.buttonText}>Choose from Gallery</Text>
       </TouchableOpacity>
     </View>

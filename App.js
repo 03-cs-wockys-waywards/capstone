@@ -6,8 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { LoginScreen, HomeScreen, RegistrationScreen } from './src/screens'
 import { decode, encode } from 'base-64'
 import AddProfilePic from './src/screens/AddProfilePic/AddProfilePic'
-import UseCamera from './src/screens/AddProfilePic/UseCamera'
-import Gallery from './src/screens/AddProfilePic/Gallery'
 if (!global.btoa) {
   global.btoa = encode
 }
@@ -52,7 +50,6 @@ export default function App() {
         {user ? (
           <>
             <Stack.Screen name="ProfilePic" component={AddProfilePic} />
-            <Stack.Screen name="Camera" component={UseCamera} />
           </>
         ) : (
           <>
