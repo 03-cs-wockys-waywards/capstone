@@ -10,6 +10,8 @@ import { Icon } from 'react-native-elements'
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
+import { useDispatch } from "react-redux";
+import { editUserInfo } from "../../../store/userReducer";
 
 import styles from './styles'
 
@@ -19,6 +21,13 @@ export default function AddProfilePic({ navigation }) {
   //const [camera, setCamera] = useState(null)
   const [image, setImage] = useState(null)
   //const [type, setType] = useState(Camera.Constants.Type.back)
+
+  const dispatch = useDispatch();
+
+  const navigateToNext = () => {
+    dispatch(editUserInfo({profilePicture: image}));
+    navigation.navigate('SignUpConfirmation')
+  }
 
   useEffect(() => {
     ;(async () => {
@@ -97,7 +106,7 @@ export default function AddProfilePic({ navigation }) {
         <FilledCircle />
         <EmptyCircle />
         <TouchableOpacity
-          onPress={() => navigation.navigate('SignUpConfirmation')}
+          onPress={navigateToNext}
         >
           <Icon type="font-awesome" name="chevron-right" color="#000" />
         </TouchableOpacity>
