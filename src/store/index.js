@@ -1,8 +1,8 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import userReducer from "./userReducer";
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import userReducer from './userReducer'
 
 const reducer = combineReducers({
-  userReducer
-});
+  user: userReducer,
+})
 
-export default createStore(reducer);
+export default createStore(reducer)

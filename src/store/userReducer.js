@@ -1,18 +1,19 @@
-const EDIT_USER_INFO = "editUserInfo"
+const EDIT_USER_INFO = 'editUserInfo'
 
 export const editUserInfo = (userInfo) => {
-  console.log('userInfo in action creator =', userInfo) 
-  return {type: EDIT_USER_INFO, userInfo }
-};
+  console.log('userInfo in action creator =', userInfo)
+  return { type: EDIT_USER_INFO, userInfo }
+}
 
 const initialState = {
-  userId: "",
-  email: "",
-  firstName: "",
-  lastName: "",
+  userId: '',
+  email: '',
+  firstName: '',
+  lastName: '',
   pronouns: [],
   interests: [],
-  profilePicture: ""
+  profilePicture: '',
+  likes: [],
 }
 
 export default function (state = initialState, action) {
@@ -20,9 +21,9 @@ export default function (state = initialState, action) {
     case EDIT_USER_INFO:
       console.log('userInfo in reducer =', action.userInfo)
       const newState = { ...state, ...action.userInfo }
-      console.log("newState in reducer =", newState)
+      console.log('newState in reducer =', newState)
       return newState
     default:
-      return state;
+      return state
   }
 }

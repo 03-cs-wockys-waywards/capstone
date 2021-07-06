@@ -27,7 +27,7 @@ export default function AddProfilePic({ navigation }) {
   const navigateToNext = () => {
     console.log('image in addprofilepic navigate func: ', image)
     dispatch(editUserInfo({ profilePicture: image }))
-    navigation.navigate('SignUpConfirmation')
+    navigation.navigate('Confirmation')
   }
 
   useEffect(() => {
