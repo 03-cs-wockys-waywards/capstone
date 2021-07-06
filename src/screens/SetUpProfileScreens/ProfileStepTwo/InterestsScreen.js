@@ -10,6 +10,8 @@ import { Button, Icon } from 'react-native-elements'
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
 import interests from './interestsArray'
 import styles from './styles'
+import { useDispatch } from "react-redux";
+import { editUserInfo } from "../../../store/userReducer";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -18,7 +20,9 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 )
 
 export default function InterestsScreen({navigation}) {
-  const [selectedInterests, setSelectedInterests] = useState([])
+  const [selectedInterests, setSelectedInterests] = useState([]);
+
+  const dispatch = useDispatch();
 
   const handlePress = (item) => {
     if (selectedInterests.includes(item)) {
@@ -28,6 +32,11 @@ export default function InterestsScreen({navigation}) {
     } else if (selectedInterests.length < 5) {
       setSelectedInterests([...selectedInterests, item])
     }
+  }
+
+  const navigateToNext = () => {
+    dispatch(editUserInfo({interests: selectedInterests}));
+    navigation.navigate("ProfileStepThree")
   }
 
   const renderItem = ({ item }) => {
@@ -69,7 +78,7 @@ export default function InterestsScreen({navigation}) {
         <FilledCircle />
         <EmptyCircle />
         <EmptyCircle />
-        <TouchableOpacity onPress={() => navigation.navigate("ProfileStepThree")}>
+        <TouchableOpacity onPress={navigateToNext}>
           <Icon type="font-awesome" name="chevron-right" color="#000" />
         </TouchableOpacity>
       </View>
