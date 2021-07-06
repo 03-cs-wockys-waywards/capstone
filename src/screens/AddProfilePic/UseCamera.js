@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Button, Image, TouchableOpacity } from 'react-native'
+import {
+  Text,
+  View,
+  Button,
+  Image,
+  TouchableOpacity,
+  ImagePickerIOS,
+} from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
 import { Camera } from 'expo-camera'
 import styles from './styles'
 
@@ -16,11 +24,29 @@ export default function UseCamera({ navigation }) {
     })()
   }, [])
 
+  const openCamera = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    })
+
+    console.log(result)
+
+    if (!result.cancelled) {
+      setImage(result.uri)
+    }
+  }
+
   const takePicture = async () => {
     if (camera) {
       const data = await camera.takePictureAsync(null)
       setImage(data.uri)
     }
+  }
+
+  const savePicture = () => {
+    // function saves taken picture to redux store to be sent to firebase?
   }
 
   if (hasCameraPermission === null) {
@@ -32,42 +58,39 @@ export default function UseCamera({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Camera</Text>
-      <View style={styles.cameraContainer}>
-        <Camera
-          ref={(ref) => setCamera(ref)}
-          style={styles.fixedRatio}
-          type={type}
-          ratio={'1:1'}
-        />
-      </View>
+    <View style={{ flex: 1 }}>
+      <Camera
+        ref={(ref) => setCamera(ref)}
+        style={styles.fixedRatio}
+        type={type}
+        ratio={'1:1'}
+      >
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              )
+            }}
+          >
+            <Text style={styles.text}> Flip </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={() => takePicture()}>
+            <Text style={styles.text}>Take Picture</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
 
       <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          setType(
-            type === Camera.Constants.Type.back
-              ? Camera.Constants.Type.front
-              : Camera.Constants.Type.back
-          )
-        }}
+        style={styles.bigButton}
+        onPress={() => navigation.navigate('ProfilePic', { image })}
       >
-        <Text style={styles.buttonText}>Flip Camera</Text>
+        <Text style={styles.buttonText}>Select Picture</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => takePicture()}>
-        <Text style={styles.buttonText}>Take Picture</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Save', { image })}
-      >
-        <Text style={styles.buttonText}>Save Picture</Text>
-      </TouchableOpacity>
-
-      {image && <Image source={{ uri: image }} style={{ flex: 1 }} />}
     </View>
   )
 }
