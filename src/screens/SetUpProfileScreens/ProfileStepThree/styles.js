@@ -44,4 +44,12 @@ export default StyleSheet.create({
     height: 300,
     backgroundColor: '#d3d3d3',
   },
+  progressContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    left: 0,
+    right: 0,
+    bottom: '15%',
+  },
 })

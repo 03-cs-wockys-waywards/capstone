@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { EmptyCircle, FilledCircle } from '../../components/ProgressCircles';
-import Checkbox from '../../components/Checkbox';
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
+import Checkbox from '../../../components/Checkbox';
 import styles from './styles';
 
-export default function ProfileStepOne() {
+export default function ProfileStepOne({navigation}) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [pronouns, setPronouns] = useState([]);
@@ -23,6 +23,7 @@ export default function ProfileStepOne() {
     if (!firstName || !lastName || pronouns.length === 0) {
       alert('Please fill out all required fields');
     }
+    else navigation.navigate("ProfileStepTwo")
   };
 
   return (
