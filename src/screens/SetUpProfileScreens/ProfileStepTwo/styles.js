@@ -2,7 +2,7 @@ import { StyleSheet, StatusBar } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
   headerContainer: {
@@ -30,5 +30,13 @@ export default StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
+  },
+  progressContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    left: 0,
+    right: 0,
+    bottom: '15%',
   },
 });

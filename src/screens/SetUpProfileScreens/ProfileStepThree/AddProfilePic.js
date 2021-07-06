@@ -6,6 +6,8 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native'
+import { Icon } from 'react-native-elements'
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -85,6 +87,21 @@ export default function AddProfilePic({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
         <Text style={styles.buttonText}>Choose from Gallery</Text>
       </TouchableOpacity>
+
+      <View style={styles.progressContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('ProfileStepTwo')}>
+          <Icon type="font-awesome" name="chevron-left" color="#000" />
+        </TouchableOpacity>
+        <FilledCircle />
+        <FilledCircle />
+        <FilledCircle />
+        <EmptyCircle />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SignUpConfirmation')}
+        >
+          <Icon type="font-awesome" name="chevron-right" color="#000" />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }

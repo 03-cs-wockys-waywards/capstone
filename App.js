@@ -9,10 +9,10 @@ import {
   LoginScreen,
   HomeScreen,
   RegistrationScreen,
-  InterestsScreen,
+  ProfileStepOne,
+  ProfileStepTwo,
+  ProfileStepThree
 } from './src/screens';
-import ProfileStepOne from './src/screens/SetUpProfileScreens/ProfileStepOne';
-import AddProfilePic from './src/screens/AddProfilePic/AddProfilePic'
 import { decode, encode } from 'base-64';
 
 if (!global.btoa) {
@@ -85,18 +85,23 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
         {user ? (
-          // <Stack.Screen name="Home">
-          //   {(props) => <HomeScreen {...props} extraData={user} />}
-          // </Stack.Screen>
           <>
-            <Stack.Screen name="Interests" component={InterestsScreen} />
-            {/* <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} /> */}
-            <Stack.Screen name="ProfilePic" component={AddProfilePic} />
+          {/* <Stack.Screen name="Home">
+            {(props) => <HomeScreen {...props} extraData={user} />}
+          </Stack.Screen> */}
+          <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
+            <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
+            <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
+            <Stack.Screen name="ProfileStepThree" component={ProfileStepThree} />
           </>
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
+            <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
+            <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
+            <Stack.Screen name="ProfileStepThree" component={ProfileStepThree} />
           </>
         )}
       </Stack.Navigator>
