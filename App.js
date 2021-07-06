@@ -12,13 +12,14 @@ import {
   InterestsScreen,
 } from './src/screens';
 import ProfileStepOne from './src/screens/SetUpProfileScreens/ProfileStepOne';
+import AddProfilePic from './src/screens/AddProfilePic/AddProfilePic'
 import { decode, encode } from 'base-64';
 
 if (!global.btoa) {
-  global.btoa = encode;
+  global.btoa = encode
 }
 if (!global.atob) {
-  global.atob = decode;
+  global.atob = decode
 }
 
 const Stack = createStackNavigator();
@@ -52,32 +53,32 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const usersRef = firebase.firestore().collection('users');
+    const usersRef = firebase.firestore().collection('users')
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         usersRef
           .doc(user.uid)
           .get()
           .then((document) => {
-            const userData = document.data();
-            setLoading(false);
-            setUser(userData);
+            const userData = document.data()
+            setLoading(false)
+            setUser(userData)
           })
           .catch((error) => {
-            setLoading(false);
-          });
+            setLoading(false)
+          })
       } else {
-        setLoading(false);
+        setLoading(false)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   if (loading) {
-    return <></>;
+    return <></>
   }
 
   return (
@@ -90,6 +91,7 @@ export default function App() {
           <>
             <Stack.Screen name="Interests" component={InterestsScreen} />
             {/* <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} /> */}
+            <Stack.Screen name="ProfilePic" component={AddProfilePic} />
           </>
         ) : (
           <>
@@ -100,5 +102,5 @@ export default function App() {
       </Stack.Navigator>
       <MyStatusBar backgroundColor="white" barStyle="dark-content" />
     </NavigationContainer>
-  );
+  )
 }
