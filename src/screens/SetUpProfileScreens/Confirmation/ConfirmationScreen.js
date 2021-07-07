@@ -1,12 +1,36 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Button, SafeAreaView, Text } from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import { Icon } from 'react-native-elements';
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
 import { firebase } from '../../../firebaseSpecs/config';
+import styles from './styles';
 
 export default function ConfirmationScreen({ navigation }) {
   const user = useSelector((state) => state.user);
 
-  const RegisterUser = () => {
+  const displaySemanticPronouns = (pronoun) => {
+    if (pronoun === 'she') {
+      return 'She / Her';
+    } else if (pronoun === 'he') {
+      return 'He / Him';
+    } else if (pronoun === 'they') {
+      return 'They / Them';
+    } else if (pronoun === 'undisclosed') {
+      return "I'd rather not say";
+    }
+  };
+
+  const registerUser = () => {
     // Create user in users collection with uid
     const uid = user.userId;
     const usersRef = firebase.firestore().collection('users');
@@ -23,9 +47,32 @@ export default function ConfirmationScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text>Hello</Text>
-      <Button title="Register" onPress={RegisterUser} />
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Profile Confirmation</Text>
+          <Text style={styles.labelText}>
+            This is how your profile appears to others!
+          </Text>
+        </View>
+        <View>
+          <Image source={user.image} style={styles.image} />
+        </View>
+        <View>
+          <Text>{`${user.firstName} ${user.lastName[0]}.`}</Text>
+          <Text>
+            {user.pronouns
+              .map((pronoun) => displaySemanticPronouns(pronoun))
+              .join(', ')}
+          </Text>
+        </View>
+        <View></View>
+        <View style={styles.confirmButtonContainer}>
+          <TouchableOpacity style={styles.button} onPress={registerUser}>
+            <Text style={styles.buttonText}>Confirm</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
