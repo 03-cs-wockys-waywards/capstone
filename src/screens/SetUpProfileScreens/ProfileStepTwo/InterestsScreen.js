@@ -37,8 +37,6 @@ export default function InterestsScreen({navigation}) {
   }
 
   const navigateToNext = () => {
-    // dispatch(editUserInfo({interests: selectedInterests}));
-    // selectedInterests.length && navigation.navigate("ProfileStepThree");
     if (selectedInterests.length) {
       dispatch(editUserInfo({interests: selectedInterests}));
       navigation.navigate("ProfileStepThree");
