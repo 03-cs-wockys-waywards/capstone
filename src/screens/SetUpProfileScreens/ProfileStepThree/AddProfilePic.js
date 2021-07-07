@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
+  SafeAreaView,
   View,
   Text,
   TouchableOpacity,
@@ -10,7 +11,7 @@ import { Icon } from 'react-native-elements'
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { editUserInfo } from '../../../store/userReducer'
 
 import styles from './styles'
@@ -18,17 +19,10 @@ import styles from './styles'
 export default function AddProfilePic({ navigation }) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
   const [hasCameraPermission, setHasCameraPermission] = useState(null)
-  //const [camera, setCamera] = useState(null)
   const [image, setImage] = useState(null)
-  //const [type, setType] = useState(Camera.Constants.Type.back)
 
   const dispatch = useDispatch()
-
-  const navigateToNext = () => {
-    console.log('image in addprofilepic navigate func: ', image)
-    dispatch(editUserInfo({ profilePicture: image }))
-    navigation.navigate('Confirmation')
-  }
+  const profilePicture = useSelector((state) => state.user.profilePicture)
 
   useEffect(() => {
     ;(async () => {
@@ -48,9 +42,8 @@ export default function AddProfilePic({ navigation }) {
       quality: 1,
     })
 
-    console.log(result)
-
     if (!result.cancelled) {
+      dispatch(editUserInfo({ profilePicture: result.uri }))
       setImage(result.uri)
     }
   }
@@ -62,11 +55,15 @@ export default function AddProfilePic({ navigation }) {
       aspect: [1, 1],
       quality: 1,
     })
-    console.log(result)
 
     if (!result.cancelled) {
+      dispatch(editUserInfo({ profilePicture: result.uri }))
       setImage(result.uri)
     }
+  }
+
+  const navigateToNext = () => {
+    navigation.navigate('Confirmation')
   }
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
@@ -78,14 +75,14 @@ export default function AddProfilePic({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Step 3:</Text>
         <Text style={styles.labelText}>Add a profile picture.</Text>
       </View>
 
       <Image
-        source={{ uri: image }}
+        source={image ? { uri: image } : { uri: profilePicture }}
         style={styles.image}
         PlaceholderContent={<ActivityIndicator />}
       />
@@ -110,6 +107,6 @@ export default function AddProfilePic({ navigation }) {
           <Icon type="font-awesome" name="chevron-right" color="#000" />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
