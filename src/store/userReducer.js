@@ -19,10 +19,7 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case EDIT_USER_INFO:
-      console.log('userInfo in reducer =', action.userInfo)
-      const newState = { ...state, ...action.userInfo }
-      console.log('newState in reducer =', newState)
-      return newState
+      return { ...state, ...action.userInfo }
     default:
       return state
   }
