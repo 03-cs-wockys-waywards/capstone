@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -6,32 +6,37 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-} from "react-native";
-import { Icon } from "react-native-elements";
-import { EmptyCircle, FilledCircle } from "../../../components/ProgressCircles";
-import Checkbox from "../../../components/Checkbox";
-import styles from "./styles";
-import { useDispatch } from "react-redux";
-import { editUserInfo } from "../../../store/userReducer";
+} from 'react-native';
+import { Icon } from 'react-native-elements';
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
+import Checkbox from '../../../components/Checkbox';
+import styles from './styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { editUserInfo } from '../../../store/userReducer';
 
 export default function ProfileStepOne({ navigation }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [pronouns, setPronouns] = useState([]);
+  const reduxFirstName = useSelector((state) => state.user.firstName);
+  const reduxLastName = useSelector((state) => state.user.lastName);
+  const reduxPronouns = useSelector((state) => state.user.pronouns);
+  const [firstName, setFirstName] = useState(reduxFirstName || '');
+  const [lastName, setLastName] = useState(reduxLastName || '');
+  const [pronouns, setPronouns] = useState(reduxPronouns || []);
 
   const dispatch = useDispatch();
 
   const handlePress = () => {
     // validating whether all inputs are completed
     if (!firstName || !lastName || pronouns.length === 0) {
-      alert("Please fill out all required fields");
+      alert('Please fill out all required fields');
     } else {
-      dispatch(editUserInfo({
-        firstName, 
-        lastName, 
-        pronouns
-      }));
-      navigation.navigate("ProfileStepTwo");
+      dispatch(
+        editUserInfo({
+          firstName,
+          lastName,
+          pronouns,
+        })
+      );
+      navigation.navigate('ProfileStepTwo');
     }
   };
 
@@ -62,26 +67,26 @@ export default function ProfileStepOne({ navigation }) {
           <Checkbox
             state={pronouns}
             setState={setPronouns}
-            name={"She / Her"}
-            value={"she"}
+            name={'She / Her'}
+            value={'she'}
           />
           <Checkbox
             state={pronouns}
             setState={setPronouns}
-            name={"He / Him"}
-            value={"he"}
+            name={'He / Him'}
+            value={'he'}
           />
           <Checkbox
             state={pronouns}
             setState={setPronouns}
-            name={"They / Them"}
-            value={"they"}
+            name={'They / Them'}
+            value={'they'}
           />
           <Checkbox
             state={pronouns}
             setState={setPronouns}
             name={"I'd rather not say"}
-            value={"undisclosed"}
+            value={'undisclosed'}
           />
         </View>
         <View style={styles.progressContainer}>
