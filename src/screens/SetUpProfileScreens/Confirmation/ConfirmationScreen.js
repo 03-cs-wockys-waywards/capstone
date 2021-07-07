@@ -13,22 +13,11 @@ import {
 import { Pill } from '../../../components/Pill';
 import { firebase } from '../../../firebaseSpecs/config';
 import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
+import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns';
 import styles from './styles';
 
 export default function ConfirmationScreen({ navigation }) {
   const user = useSelector((state) => state.user);
-
-  const displaySemanticPronouns = (pronoun) => {
-    if (pronoun === 'she') {
-      return 'She / Her';
-    } else if (pronoun === 'he') {
-      return 'He / Him';
-    } else if (pronoun === 'they') {
-      return 'They / Them';
-    } else if (pronoun === 'undisclosed') {
-      return "I'd rather not say";
-    }
-  };
 
   const registerUser = () => {
     // Create user in users collection with uid
@@ -46,6 +35,25 @@ export default function ConfirmationScreen({ navigation }) {
       });
   };
 
+  const renderName = (firstName, lastName) => {
+    return `${firstName} ${lastName[0]}.`;
+  };
+
+  const renderPronouns = (pronouns) => {
+    return pronouns
+      .map((pronoun) => displaySemanticPronouns(pronoun))
+      .join(', ');
+  };
+
+  const renderInterests = (interests) => {
+    return interests.map((interest, index) => {
+      const backgroundColor = getRandomLightColor();
+      return (
+        <Pill key={index} text={interest} backgroundColor={backgroundColor} />
+      );
+    });
+  };
+
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
@@ -59,25 +67,10 @@ export default function ConfirmationScreen({ navigation }) {
           <Image source={user.image} style={styles.image} />
         </View>
         <View>
-          <Text>{`${user.firstName} ${user.lastName[0]}.`}</Text>
-          <Text>
-            {user.pronouns
-              .map((pronoun) => displaySemanticPronouns(pronoun))
-              .join(', ')}
-          </Text>
+          <Text>{renderName(user.firstName, user.lastName)}</Text>
+          <Text>{renderPronouns(user.pronouns)}</Text>
         </View>
-        <View>
-          {user.interests.map((interest, index) => {
-            const backgroundColor = getRandomLightColor();
-            return (
-              <Pill
-                key={index}
-                text={interest}
-                backgroundColor={backgroundColor}
-              />
-            );
-          })}
-        </View>
+        <View>{renderInterests(user.interests)}</View>
         <View style={styles.confirmButtonContainer}>
           <TouchableOpacity style={styles.button} onPress={registerUser}>
             <Text style={styles.buttonText}>Confirm</Text>
