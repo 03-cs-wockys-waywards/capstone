@@ -4,8 +4,8 @@ const seedUserData = [
   // main character - 30 year old software engineer living in NYC who enjoys cooking and also outgoing!
   {
     userId: '',
-    email: 'jennie.kim.0514@gmail.com',
-    firstName: 'Jennie',
+    email: 'jenny.kim.0514@gmail.com',
+    firstName: 'Jenny',
     lastName: 'Kim',
     pronouns: ['she'],
     interests: [
