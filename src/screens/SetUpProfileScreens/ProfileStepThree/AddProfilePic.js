@@ -22,7 +22,8 @@ export default function AddProfilePic({ navigation }) {
   const [image, setImage] = useState(null)
 
   const dispatch = useDispatch()
-  const profilePicture = useSelector((state) => state.user.profilePicture)
+  const user = useSelector((state) => state.user)
+  const profilePicture = user.profilePicture
 
   useEffect(() => {
     ;(async () => {
@@ -63,6 +64,28 @@ export default function AddProfilePic({ navigation }) {
   }
 
   const navigateToNext = () => {
+    /*
+    const imageName = 'profile' + user.userId
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : image;
+    setImage(uploadUri)
+
+    firebase
+      .storage()
+      .ref(imageName)
+      .putFile(uploadUri)
+      .then((snapshot) => {
+        console.log(`${imageName} has been successfully uploaded.`)
+      })
+      .catch((err) => console.log('uploading image error => ', err))
+
+    let imageRef = firebase.storage().ref('/' + imageName)
+    imageRef
+      .getDownloadURL()
+      .then((url) => {
+        dispatch(editUserInfo({ profilePicture: url }))
+        setImage(url)
+      })
+    */
     navigation.navigate('Confirmation')
   }
 
