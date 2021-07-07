@@ -17,13 +17,14 @@ import { editUserInfo } from '../../../store/userReducer'
 import styles from './styles'
 
 export default function AddProfilePic({ navigation }) {
-  const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
-  const [hasCameraPermission, setHasCameraPermission] = useState(null)
-  const [image, setImage] = useState(null)
-
-  const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
   const profilePicture = user.profilePicture
+
+  const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
+  const [hasCameraPermission, setHasCameraPermission] = useState(null)
+  const [image, setImage] = useState(profilePicture || null)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     ;(async () => {
@@ -105,7 +106,7 @@ export default function AddProfilePic({ navigation }) {
       </View>
 
       <Image
-        source={image ? { uri: image } : { uri: profilePicture }}
+        source={{ uri: image }}
         style={styles.image}
         PlaceholderContent={<ActivityIndicator />}
       />
