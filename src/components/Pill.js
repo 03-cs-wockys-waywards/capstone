@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 12,
     paddingHorizontal: 20,
-    marginVertical: 8,
-    marginHorizontal: 8,
+    marginVertical: 4,
+    marginHorizontal: 4,
     borderRadius: 50,
   },
   pillText: {

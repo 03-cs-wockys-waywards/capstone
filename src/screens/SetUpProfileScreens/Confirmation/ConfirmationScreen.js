@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Button,
   Image,
+  ImageBackground,
   SafeAreaView,
   ScrollView,
   View,
@@ -60,17 +61,29 @@ export default function ConfirmationScreen({ navigation }) {
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Profile Confirmation</Text>
           <Text style={styles.labelText}>
-            This is how your profile appears to others!
+            This is how your profile appears to others.
           </Text>
         </View>
-        <View>
-          <Image source={user.image} style={styles.image} />
+        <View style={styles.profilePreviewContainer}>
+          <ImageBackground source={user.image} style={styles.image}>
+            <View style={styles.profileInfoContainer}>
+              <View>
+                <Text style={styles.nameText}>
+                  {renderName(user.firstName, user.lastName)}
+                </Text>
+                <Text style={styles.pronounText}>
+                  {renderPronouns(user.pronouns)}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.subheadingText}>Interests</Text>
+                <View style={styles.interestsContainer}>
+                  {renderInterests(user.interests)}
+                </View>
+              </View>
+            </View>
+          </ImageBackground>
         </View>
-        <View>
-          <Text>{renderName(user.firstName, user.lastName)}</Text>
-          <Text>{renderPronouns(user.pronouns)}</Text>
-        </View>
-        <View>{renderInterests(user.interests)}</View>
         <View style={styles.confirmButtonContainer}>
           <TouchableOpacity style={styles.button} onPress={registerUser}>
             <Text style={styles.buttonText}>Confirm</Text>
