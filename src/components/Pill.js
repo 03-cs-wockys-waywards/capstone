@@ -2,8 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export const Pill = ({ text, backgroundColor }) => {
+  const bgColor = {
+    backgroundColor,
+  };
+
   return (
-    <View style={[styles.pillContainer, backgroundColor]}>
+    <View style={[styles.pillContainer, bgColor]}>
       <Text style={styles.pillText}>{text}</Text>
     </View>
   );

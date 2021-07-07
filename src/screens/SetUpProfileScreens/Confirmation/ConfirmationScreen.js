@@ -10,9 +10,9 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
+import { Pill } from '../../../components/Pill';
 import { firebase } from '../../../firebaseSpecs/config';
+import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
 import styles from './styles';
 
 export default function ConfirmationScreen({ navigation }) {
@@ -66,7 +66,18 @@ export default function ConfirmationScreen({ navigation }) {
               .join(', ')}
           </Text>
         </View>
-        <View></View>
+        <View>
+          {user.interests.map((interest, index) => {
+            const backgroundColor = getRandomLightColor();
+            return (
+              <Pill
+                key={index}
+                text={interest}
+                backgroundColor={backgroundColor}
+              />
+            );
+          })}
+        </View>
         <View style={styles.confirmButtonContainer}>
           <TouchableOpacity style={styles.button} onPress={registerUser}>
             <Text style={styles.buttonText}>Confirm</Text>
