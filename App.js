@@ -1,10 +1,20 @@
-import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, Platform, StyleSheet } from 'react-native';
+import 'react-native-gesture-handler'
+import React, { useEffect, useState } from 'react'
+import {
+  View,
+  SafeAreaView,
+  Platform,
+  StyleSheet,
+  Text,
+  Button,
+} from 'react-native'
 import { StatusBar } from 'expo-status-bar';
-import { firebase } from './src/firebaseSpecs/config';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { firebase } from './src/firebaseSpecs/config'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import {
   LoginScreen,
   HomeScreen,
@@ -25,7 +35,14 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
+const Tab = createMaterialBottomTabNavigator()
+
+// Placeholder screen for testing
+const EmptyScreen = () => {
+  return null
+}
+
 const screenOptions = {
   cardStyle: { backgroundColor: 'white' },
 };
@@ -87,43 +104,69 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
-          {user ? (
-            <>
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen
-                name="Registration"
-                component={RegistrationScreen}
-              />
-              <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
-              <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
-              <Stack.Screen
-                name="ProfileStepThree"
-                component={ProfileStepThree}
-              />
-              <Stack.Screen name="Confirmation" component={Confirmation} />
-              {/* <Stack.Screen name="Home">
-                {(props) => <HomeScreen {...props} extraData={user} />}
-              </Stack.Screen> */}
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen
-                name="Registration"
-                component={RegistrationScreen}
-              />
-              <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
-              <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
-              <Stack.Screen
-                name="ProfileStepThree"
-                component={ProfileStepThree}
-              />
-              <Stack.Screen name="Confirmation" component={Confirmation} />
-            </>
-          )}
-        </Stack.Navigator>
-        <MyStatusBar backgroundColor="white" barStyle="dark-content" />
+        {user ? (
+          <Tab.Navigator
+            initialRouteName="Home"
+            activeColor="#d7f81e"
+            inactiveColor="#e4dbff"
+            labeled={false}
+            labelStyle={{ fontSize: 12 }}
+            barStyle={{ backgroundColor: '#106563' }}
+          >
+            <Tab.Screen
+              name="Search"
+              component={EmptyScreen}
+              options={{
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons
+                    name="magnify"
+                    color={color}
+                    size={28}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons name="home" color={color} size={28} />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Profile"
+              component={EmptyScreen}
+              options={{
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons
+                    name="account"
+                    color={color}
+                    size={28}
+                  />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        ) : (
+          <Stack.Navigator headerMode="none" initialRouteName="Login">
+            {/* <Stack.Screen
+              name="Landing"
+              component={LandingScreen}
+              options={{ headerShown: false }}
+            /> */}
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
+            <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
+            <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
+            <Stack.Screen
+              name="ProfileStepThree"
+              component={ProfileStepThree}
+            />
+            <Stack.Screen name="Confirmation" component={Confirmation} />
+          </Stack.Navigator>
+        )}
       </NavigationContainer>
     </Provider>
   );
