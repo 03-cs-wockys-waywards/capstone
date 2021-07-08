@@ -3,12 +3,15 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { firebase } from '../../firebaseSpecs/config';
+import { useDispatch } from 'react-redux';
+import { editUserInfo } from '../../store/userReducer';
 
 export default function RegistrationScreen({ navigation }) {
-  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const dispatch = useDispatch();
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login');
@@ -17,7 +20,6 @@ export default function RegistrationScreen({ navigation }) {
   const onRegisterPress = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match.");
-      return;
     }
 
     firebase
@@ -26,20 +28,12 @@ export default function RegistrationScreen({ navigation }) {
       .then((response) => {
         const uid = response.user.uid;
         const data = {
-          id: uid,
+          userId: uid,
           email,
-          fullName,
         };
-        const usersRef = firebase.firestore().collection('users');
-        usersRef
-          .doc(uid)
-          .set(data)
-          .then(() => {
-            navigation.navigate('Home', { user: data });
-          })
-          .catch((error) => {
-            alert(error);
-          });
+
+        dispatch(editUserInfo(data));
+        navigation.navigate('ProfileStepOne');
       })
       .catch((error) => {
         alert(error);
@@ -55,15 +49,6 @@ export default function RegistrationScreen({ navigation }) {
         <Image
           style={styles.logo}
           source={require('../../../assets/icon.png')}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Full Name"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setFullName(text)}
-          value={fullName}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
         />
         <TextInput
           style={styles.input}
