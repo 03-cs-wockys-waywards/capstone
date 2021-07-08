@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import {
-  ActivityIndicator,
-  Button,
-  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -15,6 +12,7 @@ import { Pill } from '../../../components/Pill';
 import { firebase } from '../../../firebaseSpecs/config';
 import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
 import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns';
+import defaultProfilePicture from '../../../images/default-profile-picture.jpg';
 import styles from './styles';
 
 export default function ConfirmationScreen({ navigation }) {
@@ -66,7 +64,12 @@ export default function ConfirmationScreen({ navigation }) {
           </Text>
         </View>
         <View style={styles.profilePreviewContainer}>
-          <ImageBackground source={user.image} style={styles.image}>
+          <ImageBackground
+            source={user.image}
+            defaultSource={defaultProfilePicture}
+            style={styles.image}
+            imageStyle={styles.imageStyle}
+          >
             <View style={styles.profileInfoContainer}>
               <Text style={styles.nameText}>
                 {renderName(user.firstName, user.lastName)}

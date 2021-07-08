@@ -55,6 +55,9 @@ export default StyleSheet.create({
     height: 600,
     backgroundColor: '#d3d3d3',
   },
+  imageStyle: {
+    borderRadius: 15,
+  },
   profileInfoContainer: {
     position: 'absolute',
     bottom: 10,
