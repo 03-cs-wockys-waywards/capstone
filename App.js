@@ -22,11 +22,9 @@ import {
   ProfileStepThree,
   Confirmation,
 } from './src/screens'
-import Main from './src/Main'
 import { decode, encode } from 'base-64'
 import { Provider } from 'react-redux'
 import store from './src/store'
-import AllUsersList from './src/screens/HomeScreen/AllUsersList'
 
 if (!global.btoa) {
   global.btoa = encode
@@ -38,6 +36,7 @@ if (!global.atob) {
 const Stack = createStackNavigator()
 const Tab = createMaterialBottomTabNavigator()
 
+// Placeholder screen for testing
 const EmptyScreen = () => {
   return null
 }
@@ -98,7 +97,7 @@ export default function App() {
             />
             <Tab.Screen
               name="Home"
-              component={AllUsersList}
+              component={HomeScreen}
               options={{
                 tabBarIcon: ({ color }) => (
                   <MaterialCommunityIcons name="home" color={color} size={28} />
@@ -120,7 +119,7 @@ export default function App() {
             />
           </Tab.Navigator>
         ) : (
-          <Stack.Navigator headerMode="none" initialRouteName="Landing">
+          <Stack.Navigator headerMode="none" initialRouteName="Login">
             {/* <Stack.Screen
               name="Landing"
               component={LandingScreen}

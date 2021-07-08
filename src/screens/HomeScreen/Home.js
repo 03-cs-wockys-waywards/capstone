@@ -13,18 +13,20 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import styles from './styles'
 import { firebase } from '../../firebaseSpecs/config'
 
+import UsersList from './UsersList'
+
 const HomeStack = createStackNavigator()
 
 const EmptyScreen = () => {
   return null
 }
 
-export default function AllUsersList() {
+export default function Home() {
   return (
     <HomeStack.Navigator initialRouteName="Home">
       <HomeStack.Screen
         name="Home"
-        component={EmptyScreen}
+        component={UsersList}
         options={{
           headerLeft: () => <Text>Logo Placeholder</Text>,
           headerTitle: '',
@@ -39,7 +41,3 @@ export default function AllUsersList() {
     </HomeStack.Navigator>
   )
 }
-
-// calendar-check-outline
-// message-outline
-// heart, heart-outline, heart-plus-outline

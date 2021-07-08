@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import AllUsersList from './screens/HomeScreen/AllUsersList'
+import AllUsersList from './screens/HomeScreen/Home'
 
 const Tab = createMaterialBottomTabNavigator()
 
