@@ -2,10 +2,11 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
+  },
+  scrollContainer: {
     marginTop: '10%',
-    height: '100%',
-    paddingBottom: '10%',
+    paddingBottom: '15%',
   },
   headerContainer: {
     justifyContent: 'center',
@@ -51,12 +52,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     width: '100%',
-    height: '80%',
+    height: 600,
     backgroundColor: '#d3d3d3',
   },
   profileInfoContainer: {
     position: 'absolute',
-    bottom: '2.5%',
+    bottom: 10,
     backgroundColor: '#fff',
     width: '95%',
     borderRadius: 15,
@@ -64,11 +65,10 @@ export default StyleSheet.create({
   },
   interestsContainer: {
     flexWrap: 'wrap',
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingLeft: 10,
+    paddingHorizontal: 10,
   },
   button: {
     height: 48,

@@ -29,6 +29,7 @@ export default function ConfirmationScreen({ navigation }) {
       .doc(uid)
       .set(user)
       .then(() => {
+        // TODO: navigation.navigate("Home");
         navigation.navigate('Login');
       })
       .catch((error) => {
@@ -56,8 +57,8 @@ export default function ConfirmationScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Profile Confirmation</Text>
           <Text style={styles.labelText}>
@@ -67,19 +68,15 @@ export default function ConfirmationScreen({ navigation }) {
         <View style={styles.profilePreviewContainer}>
           <ImageBackground source={user.image} style={styles.image}>
             <View style={styles.profileInfoContainer}>
-              <View>
-                <Text style={styles.nameText}>
-                  {renderName(user.firstName, user.lastName)}
-                </Text>
-                <Text style={styles.pronounText}>
-                  {renderPronouns(user.pronouns)}
-                </Text>
-              </View>
-              <View>
-                <Text style={styles.subheadingText}>Interests</Text>
-                <View style={styles.interestsContainer}>
-                  {renderInterests(user.interests)}
-                </View>
+              <Text style={styles.nameText}>
+                {renderName(user.firstName, user.lastName)}
+              </Text>
+              <Text style={styles.pronounText}>
+                {renderPronouns(user.pronouns)}
+              </Text>
+              <Text style={styles.subheadingText}>Interests</Text>
+              <View style={styles.interestsContainer}>
+                {renderInterests(user.interests)}
               </View>
             </View>
           </ImageBackground>
