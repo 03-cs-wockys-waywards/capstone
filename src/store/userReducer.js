@@ -1,7 +1,6 @@
 const EDIT_USER_INFO = 'editUserInfo'
 
 export const editUserInfo = (userInfo) => {
-  console.log('userInfo in action creator =', userInfo)
   return { type: EDIT_USER_INFO, userInfo }
 }
 

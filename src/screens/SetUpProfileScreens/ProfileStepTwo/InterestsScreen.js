@@ -10,7 +10,7 @@ import { Button, Icon } from 'react-native-elements'
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
 import interests from './interestsArray'
 import styles from './styles'
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { editUserInfo } from "../../../store/userReducer";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -20,9 +20,11 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 )
 
 export default function InterestsScreen({navigation}) {
-  const [selectedInterests, setSelectedInterests] = useState([]);
-
+  const user = useSelector((state) => state.user);
+  const init = user.interests.length? user.interests : [];
+  const [selectedInterests, setSelectedInterests] = useState(init);
   const dispatch = useDispatch();
+
 
   const handlePress = (item) => {
     if (selectedInterests.includes(item)) {
@@ -35,8 +37,10 @@ export default function InterestsScreen({navigation}) {
   }
 
   const navigateToNext = () => {
-    dispatch(editUserInfo({interests: selectedInterests}));
-    navigation.navigate("ProfileStepThree")
+    if (selectedInterests.length) {
+      dispatch(editUserInfo({interests: selectedInterests}));
+      navigation.navigate("ProfileStepThree");
+    }
   }
 
   const renderItem = ({ item }) => {
