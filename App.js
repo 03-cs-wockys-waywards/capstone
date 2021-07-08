@@ -13,6 +13,7 @@ import {
   ProfileStepTwo,
   ProfileStepThree,
   Confirmation,
+  EditProfile
 } from './src/screens'
 import { decode, encode } from 'base-64'
 import { Provider } from 'react-redux'
@@ -101,7 +102,8 @@ export default function App() {
                 name="ProfileStepThree"
                 component={ProfileStepThree}
               />
-              <Stack.Screen name="Confirmation" component={Confirmation} />
+              <Stack.Screen name="EditProfile" component={EditProfile} />
+              {/* <Stack.Screen name="Confirmation" component={Confirmation} /> */}
               {/* <Stack.Screen name="Home">
                 {(props) => <HomeScreen {...props} extraData={user} />}
               </Stack.Screen> */}
@@ -119,7 +121,8 @@ export default function App() {
                 name="ProfileStepThree"
                 component={ProfileStepThree}
               />
-              <Stack.Screen name="Confirmation" component={Confirmation} />
+              {/* <Stack.Screen name="Confirmation" component={Confirmation} /> */}
+              <Stack.Screen name="EditProfile" component={EditProfile} />
             </>
           )}
         </Stack.Navigator>

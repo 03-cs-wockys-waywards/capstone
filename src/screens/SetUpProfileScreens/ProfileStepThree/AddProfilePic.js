@@ -87,7 +87,9 @@ export default function AddProfilePic({ navigation }) {
         setImage(url)
       })
     */
-    navigation.navigate('Confirmation')
+   // navigating to EditProfileScreen for testing purposes 
+      navigation.navigate('EditProfile')
+    // navigation.navigate('Confirmation')
   }
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
