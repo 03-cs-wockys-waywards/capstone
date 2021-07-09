@@ -26,6 +26,7 @@ export default function AddProfilePic({ navigation }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(profilePicture || null);
   const [loading, setLoading] = useState(true);
+  const [url, setUrl] = useState('');
 
   const dispatch = useDispatch();
 
@@ -72,26 +73,33 @@ export default function AddProfilePic({ navigation }) {
   const uploadPicture = async () => {
     const uri = image;
     const childPath = `profile/${firebase.auth().currentUser.uid}`;
-    console.log('childPath', childPath);
-
     const response = await fetch(uri);
     const blob = await response.blob();
 
-    firebase
+    const task = firebase
       .storage()
       .ref()
       .child(childPath)
       .put(blob)
       .then(() => {
-        setLoading(false);
-        console.log(`${uri} has been successfully uploaded.`);
+        // setLoading(false);
+        console.log(
+          `AddProfilePic component: ${uri} has been successfully uploaded.`
+        );
       });
+
+    const fileRef = firebase.storage().ref().child(childPath);
+    fileRef.getDownloadURL().then((url) => {
+      console.log('url in addprofilepic', url);
+      setUrl(url);
+      setLoading(false);
+    });
   };
 
   const navigateToNext = () => {
     uploadPicture();
     console.log('imageName addprofilepic', image);
-    navigation.navigate('Confirmation', { image, loading });
+    navigation.navigate('Confirmation', { image, loading, url });
   };
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {

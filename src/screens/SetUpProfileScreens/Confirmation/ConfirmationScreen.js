@@ -1,6 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
+  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -8,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { editUserInfo } from '../../../store/userReducer';
 import { Pill } from '../../../components/Pill';
 import { firebase } from '../../../firebaseSpecs/config';
 import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
@@ -15,7 +17,10 @@ import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronoun
 import defaultProfilePicture from '../../../images/default-profile-picture.jpg';
 import styles from './styles';
 
-export default function ConfirmationScreen({ navigation }) {
+export default function ConfirmationScreen({ navigation, route }) {
+  const { image, loading, url } = route.params;
+
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const registerUser = () => {
@@ -27,8 +32,9 @@ export default function ConfirmationScreen({ navigation }) {
       .doc(uid)
       .set(user)
       .then(() => {
-        // TODO: navigation.navigate("Home");
-        navigation.navigate('Login');
+        navigation.navigate('Home');
+        // Route to Login for testing purpose
+        // navigation.navigate('Login');
       })
       .catch((error) => {
         alert(error);
@@ -54,6 +60,37 @@ export default function ConfirmationScreen({ navigation }) {
     });
   };
 
+  // const renderProfilePicture = () => {
+  //   console.log('imageName in confimration screen', imageName);
+  //   let imageRef = firebase.storage().ref('/' + imageName);
+  //   imageRef.getDownloadURL().then((url) => {
+  //     dispatch(editUserInfo({ profilePicture: url }));
+  //     // setImage(url);
+  //     console.log('user profile picture', user.profilePicture);
+  //   });
+  //   console.log('loading props', loading);
+  // };
+
+  // const renderProfilePicture = () => {
+  //   const storageRef = firebase.storage().ref();
+  //   const profilePicRef = storageRef.child(
+  //     `profile/${firebase.auth().currentUser.uid}`
+  //   );
+  //   // console.log('profilePicRef', profilePicRef);
+  //   profilePicRef.getDownloadURL().then((url) => {
+  //     console.log('url', url);
+  //     console.log('loading props', loading);
+  //     setUrl(url);
+  //   });
+  //   console.log('image', image);
+  // };
+
+  // useEffect(() => {
+  //   if (!loading) {
+  //     renderProfilePicture();
+  //   }
+  // }, [loading]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -64,11 +101,16 @@ export default function ConfirmationScreen({ navigation }) {
           </Text>
         </View>
         <View style={styles.profilePreviewContainer}>
+          {/* must be in {uri: linkToPhoto } format! */}
+          {/* <Image source={user.profilePicture} /> */}
+          {/* <Image source={{ uri: url }} style={{ width: 300, height: 600 }} /> */}
           <ImageBackground
-            source={user.image}
-            defaultSource={defaultProfilePicture}
+            // source={user.image}
+            source={{ uri: url }}
+            // defaultSource={defaultProfilePicture}
             style={styles.image}
             imageStyle={styles.imageStyle}
+            resizeMode="cover"
           >
             <View style={styles.profileInfoContainer}>
               <Text style={styles.nameText}>
