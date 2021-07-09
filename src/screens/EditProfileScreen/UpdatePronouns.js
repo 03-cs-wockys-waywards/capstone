@@ -10,39 +10,34 @@ const map = {
   undisclosed: "I'd rather not say",
 };
 
-export default function UpdatePronouns({
-  updatedUser,
-  setUpdatedUser,
-}) {
-  const { pronouns } = updatedUser
+export default function UpdatePronouns({ updatedUser, setUpdatedUser }) {
+  const { pronouns } = updatedUser;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(pronouns);
 
-  const handleClose = () => {
-    setOpen(false);
-    console.log("-------------------");
-    console.log("user before update", updatedUser.pronouns);
+  useEffect(() => {
     setUpdatedUser({ ...updatedUser, pronouns: value });
-    console.log("user after update", updatedUser.pronouns);
-  };
+  }, [value]);
 
   return (
     <View>
       <Text style={styles.label}>Pronouns</Text>
       <DropDownPicker
+        placeholder="Pronouns"
         multiple={true}
         min={1}
         open={open}
-        items={[
-          { label: "She / Her", value: "she" },
-          { label: "He / Him", value: "he" },
-          { label: "They / Them", value: "they" },
-          { label: "I'd rather not say", value: "undisclosed" },
-        ]}
+        items={Object.keys(map).map((item) => {
+          return {
+            label: map[item],
+            value: item,
+            selected: value.includes(item) ? true : false
+          }
+        })}
         value={value}
         onPress={() => setOpen(true)}
         setValue={(value) => setValue(value)}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
       />
     </View>
   );
