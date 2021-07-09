@@ -69,13 +69,13 @@ export default function AddProfilePic({ navigation }) {
   const uploadPicture = () => {
     const imageName = 'profile' + user.userId;
     const uploadUri =
-      Platform.OS === 'ios' ? uri.replace('file://', '') : image;
+      Platform.OS === 'ios' ? image.replace('file://', '') : image;
     setImage(uploadUri);
 
     firebase
       .storage()
       .ref(imageName)
-      .putFile(uploadUri)
+      .put(uploadUri)
       .then((snapshot) => {
         console.log(`${imageName} has been successfully uploaded.`);
       })

@@ -1,5 +1,5 @@
-import 'react-native-gesture-handler'
-import React, { useEffect, useState } from 'react'
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -7,13 +7,13 @@ import {
   StyleSheet,
   Text,
   Button,
-} from 'react-native'
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { firebase } from './src/firebaseSpecs/config'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { firebase } from './src/firebaseSpecs/config';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   LoginScreen,
@@ -35,13 +35,13 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-const Stack = createStackNavigator()
-const Tab = createMaterialBottomTabNavigator()
+const Stack = createStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 // Placeholder screen for testing
 const EmptyScreen = () => {
-  return null
-}
+  return null;
+};
 
 const screenOptions = {
   cardStyle: { backgroundColor: 'white' },
@@ -150,22 +150,32 @@ export default function App() {
             />
           </Tab.Navigator>
         ) : (
-          <Stack.Navigator headerMode="none" initialRouteName="Login">
-            {/* <Stack.Screen
+          <>
+            <Stack.Navigator
+              headerMode="none"
+              initialRouteName="Login"
+              screenOptions={screenOptions}
+            >
+              {/* <Stack.Screen
               name="Landing"
               component={LandingScreen}
               options={{ headerShown: false }}
             /> */}
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
-            <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
-            <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
-            <Stack.Screen
-              name="ProfileStepThree"
-              component={ProfileStepThree}
-            />
-            <Stack.Screen name="Confirmation" component={Confirmation} />
-          </Stack.Navigator>
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen
+                name="Registration"
+                component={RegistrationScreen}
+              />
+              <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
+              <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
+              <Stack.Screen
+                name="ProfileStepThree"
+                component={ProfileStepThree}
+              />
+              <Stack.Screen name="Confirmation" component={Confirmation} />
+            </Stack.Navigator>
+            <MyStatusBar backgroundColor="white" barStyle="dark-content" />
+          </>
         )}
       </NavigationContainer>
     </Provider>
