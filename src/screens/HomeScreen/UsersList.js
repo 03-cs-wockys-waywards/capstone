@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   SafeAreaView,
   View,
   FlatList,
   StyleSheet,
   Text,
-  StatusBar,
-  Image,
   TouchableOpacity,
-  SectionList,
 } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import DoubleTap from 'react-native-double-tap'
 
 const DATA = [
   {
@@ -123,7 +121,7 @@ const DATA = [
   },
 ]
 
-const Item = ({ item }) => (
+const UserRow = ({ item, like }) => (
   <View style={styles.item}>
     <Avatar size="large" rounded source={{ uri: item.profilePicture }} />
     <View style={{ flex: 1 }}>
@@ -131,7 +129,11 @@ const Item = ({ item }) => (
         <Text style={styles.title}>
           {item.firstName} {item.lastName[0]}.
         </Text>
-        <MaterialCommunityIcons name="heart-outline" size={18} />
+        {like ? (
+          <MaterialCommunityIcons name="heart" size={18} />
+        ) : (
+          <MaterialCommunityIcons name="heart-outline" size={18} />
+        )}
       </View>
       <FlatList
         style={{ flexDirection: 'row', flexWrap: 'wrap' }}
@@ -150,13 +152,17 @@ const Item = ({ item }) => (
 // heart, heart-outline, heart-plus-outline
 
 export default function UsersList({ navigation }) {
+  const [like, setLike] = useState(false)
+
   const handlePress = (item) => {
     // navigate to single user profile
     return
   }
 
   const renderItem = ({ item }) => (
-    <Item item={item} onPress={() => handlePress(item)} />
+    <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
+      <UserRow like={like} item={item} onPress={() => handlePress(item)} />
+    </DoubleTap>
   )
 
   return (
