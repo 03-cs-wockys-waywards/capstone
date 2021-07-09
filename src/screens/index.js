@@ -1,3 +1,4 @@
+export { default as LandingScreen} from "./LandingScreen/Landing"
 export { default as LoginScreen } from './LoginScreen/LoginScreen'
 export { default as RegistrationScreen } from './RegistrationScreen/RegistrationScreen'
 export { default as ProfileStepTwo } from './SetUpProfileScreens/ProfileStepTwo/InterestsScreen'
