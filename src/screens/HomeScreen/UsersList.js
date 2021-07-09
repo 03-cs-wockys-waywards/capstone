@@ -1,15 +1,7 @@
 import React, { useState } from 'react'
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native'
-import { Avatar } from 'react-native-elements'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import DoubleTap from 'react-native-double-tap'
+import { SafeAreaView, FlatList } from 'react-native'
+import UserRow from './UserRow'
+import styles from './styles'
 
 const DATA = [
   {
@@ -121,52 +113,18 @@ const DATA = [
   },
 ]
 
-const UserRow = ({ item, like }) => (
-  <View style={styles.item}>
-    <Avatar size="large" rounded source={{ uri: item.profilePicture }} />
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <Text style={styles.title}>
-          {item.firstName} {item.lastName[0]}.
-        </Text>
-        {like ? (
-          <MaterialCommunityIcons name="heart" size={18} />
-        ) : (
-          <MaterialCommunityIcons name="heart-outline" size={18} />
-        )}
-      </View>
-      <FlatList
-        style={{ flexDirection: 'row', flexWrap: 'wrap' }}
-        data={item.interests}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.interest}>
-            <Text style={styles.interestText}>{item}</Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item, index) => item + index}
-      />
-    </View>
-  </View>
-)
-
-// heart, heart-outline, heart-plus-outline
-
-export default function UsersList({ navigation }) {
-  const [like, setLike] = useState(false)
-
+export default function UsersList() {
   const handlePress = (item) => {
     // navigate to single user profile
     return
   }
 
   const renderItem = ({ item }) => (
-    <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
-      <UserRow like={like} item={item} onPress={() => handlePress(item)} />
-    </DoubleTap>
+    <UserRow item={item} onPress={() => handlePress(item)} />
   )
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         data={DATA}
         renderItem={renderItem}
@@ -175,44 +133,3 @@ export default function UsersList({ navigation }) {
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 30,
-  },
-  item: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#e4dbff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 6,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  tinyPic: {
-    width: 50,
-    height: 50,
-  },
-  interest: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginLeft: 10,
-    marginTop: 8,
-    borderRadius: 45,
-    backgroundColor: '#fff',
-  },
-  interestText: {
-    fontSize: 11,
-    color: 'black',
-  },
-})
