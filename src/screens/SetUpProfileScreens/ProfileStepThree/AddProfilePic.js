@@ -25,6 +25,7 @@ export default function AddProfilePic({ navigation }) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(profilePicture || null);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -66,31 +67,31 @@ export default function AddProfilePic({ navigation }) {
     }
   };
 
-  const uploadPicture = () => {
-    const imageName = 'profile' + user.userId;
-    const uploadUri =
-      Platform.OS === 'ios' ? image.replace('file://', '') : image;
-    setImage(uploadUri);
+  // const imageName = 'profile' + user.userId;
+
+  const uploadPicture = async () => {
+    const uri = image;
+    const childPath = `profile/${firebase.auth().currentUser.uid}`;
+    console.log('childPath', childPath);
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
 
     firebase
       .storage()
-      .ref(imageName)
-      .put(uploadUri)
-      .then((snapshot) => {
-        console.log(`${imageName} has been successfully uploaded.`);
-      })
-      .catch((err) => console.log('uploading image error => ', err));
-
-    let imageRef = firebase.storage().ref('/' + imageName);
-    imageRef.getDownloadURL().then((url) => {
-      dispatch(editUserInfo({ profilePicture: url }));
-      setImage(url);
-    });
+      .ref()
+      .child(childPath)
+      .put(blob)
+      .then(() => {
+        setLoading(false);
+        console.log(`${uri} has been successfully uploaded.`);
+      });
   };
 
   const navigateToNext = () => {
     uploadPicture();
-    navigation.navigate('Confirmation');
+    console.log('imageName addprofilepic', image);
+    navigation.navigate('Confirmation', { image, loading });
   };
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
