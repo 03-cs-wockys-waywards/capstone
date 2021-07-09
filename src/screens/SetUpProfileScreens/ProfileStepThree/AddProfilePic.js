@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import { firebase } from '../../../firebaseSpecs/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUserInfo } from '../../../store/userReducer';
 
@@ -64,29 +66,30 @@ export default function AddProfilePic({ navigation }) {
     }
   };
 
-  const navigateToNext = () => {
-    /*
-    const imageName = 'profile' + user.userId
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : image;
-    setImage(uploadUri)
+  const uploadPicture = () => {
+    const imageName = 'profile' + user.userId;
+    const uploadUri =
+      Platform.OS === 'ios' ? uri.replace('file://', '') : image;
+    setImage(uploadUri);
 
     firebase
       .storage()
       .ref(imageName)
       .putFile(uploadUri)
       .then((snapshot) => {
-        console.log(`${imageName} has been successfully uploaded.`)
+        console.log(`${imageName} has been successfully uploaded.`);
       })
-      .catch((err) => console.log('uploading image error => ', err))
+      .catch((err) => console.log('uploading image error => ', err));
 
-    let imageRef = firebase.storage().ref('/' + imageName)
-    imageRef
-      .getDownloadURL()
-      .then((url) => {
-        dispatch(editUserInfo({ profilePicture: url }))
-        setImage(url)
-      })
-    */
+    let imageRef = firebase.storage().ref('/' + imageName);
+    imageRef.getDownloadURL().then((url) => {
+      dispatch(editUserInfo({ profilePicture: url }));
+      setImage(url);
+    });
+  };
+
+  const navigateToNext = () => {
+    uploadPicture();
     navigation.navigate('Confirmation');
   };
 
