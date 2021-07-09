@@ -26,13 +26,12 @@ export default function UpdateImage({ updatedUser, setUpdatedUser }) {
       });
       if (!image.cancelled) {
         setUpdatedUser({ ...updatedUser, profilePicture: image.uri });
-        setModalVisible(false);
       }
     }
+    setModalVisible(false)
   };
 
   const useLibrary = async () => {
-    setModalVisible(false);
     const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (galleryStatus.status === "granted") {
@@ -46,6 +45,7 @@ export default function UpdateImage({ updatedUser, setUpdatedUser }) {
         setUpdatedUser({ ...updatedUser, profilePicture: image.uri });
       }
     }
+    setModalVisible(false)
   };
 
   return (
@@ -56,7 +56,9 @@ export default function UpdateImage({ updatedUser, setUpdatedUser }) {
           <View style={styles.modalView}>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => useCamera()}
+              onPress={() => {
+                useCamera();
+              }}
             >
               <Text style={styles.textStyle}>Take Picture</Text>
             </Pressable>
