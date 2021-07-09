@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,49 +6,49 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
-} from 'react-native'
-import { Icon } from 'react-native-elements'
-import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
-import { Camera } from 'expo-camera'
-import * as ImagePicker from 'expo-image-picker'
-import { useDispatch, useSelector } from 'react-redux'
-import { editUserInfo } from '../../../store/userReducer'
+} from 'react-native';
+import { Icon } from 'react-native-elements';
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { editUserInfo } from '../../../store/userReducer';
 
-import styles from './styles'
+import styles from './styles';
 
 export default function AddProfilePic({ navigation }) {
-  const user = useSelector((state) => state.user)
-  const profilePicture = user.profilePicture
+  const user = useSelector((state) => state.user);
+  const profilePicture = user.profilePicture;
 
-  const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
-  const [hasCameraPermission, setHasCameraPermission] = useState(null)
-  const [image, setImage] = useState(profilePicture || null)
+  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [image, setImage] = useState(profilePicture || null);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    ;(async () => {
-      const cameraStatus = await Camera.requestPermissionsAsync()
-      setHasCameraPermission(cameraStatus.status === 'granted')
+    (async () => {
+      const cameraStatus = await Camera.requestPermissionsAsync();
+      setHasCameraPermission(cameraStatus.status === 'granted');
 
       const galleryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync()
-      setHasGalleryPermission(galleryStatus.status === 'granted')
-    })()
-  }, [])
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setHasGalleryPermission(galleryStatus.status === 'granted');
+    })();
+  }, []);
 
   const useCamera = async () => {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
-    })
+    });
 
     if (!result.cancelled) {
-      dispatch(editUserInfo({ profilePicture: result.uri }))
-      setImage(result.uri)
+      dispatch(editUserInfo({ profilePicture: result.uri }));
+      setImage(result.uri);
     }
-  }
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -56,13 +56,13 @@ export default function AddProfilePic({ navigation }) {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
-    })
+    });
 
     if (!result.cancelled) {
-      dispatch(editUserInfo({ profilePicture: result.uri }))
-      setImage(result.uri)
+      dispatch(editUserInfo({ profilePicture: result.uri }));
+      setImage(result.uri);
     }
-  }
+  };
 
   const navigateToNext = () => {
     /*
@@ -87,17 +87,15 @@ export default function AddProfilePic({ navigation }) {
         setImage(url)
       })
     */
-   // navigating to EditProfileScreen for testing purposes 
-      navigation.navigate('EditProfile')
-    // navigation.navigate('Confirmation')
-  }
+    navigation.navigate('Confirmation');
+  };
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
-    return <View />
+    return <View />;
   }
 
   if (hasCameraPermission === false || hasGalleryPermission === false) {
-    return <Text>No access</Text>
+    return <Text>No access</Text>;
   }
 
   return (
@@ -134,5 +132,5 @@ export default function AddProfilePic({ navigation }) {
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-  )
+  );
 }
