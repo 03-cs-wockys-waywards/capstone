@@ -11,6 +11,7 @@ import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import { firebase } from '../../../firebaseSpecs/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUserInfo } from '../../../store/userReducer';
 
@@ -23,6 +24,7 @@ export default function AddProfilePic({ navigation }) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(profilePicture || null);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -38,6 +40,7 @@ export default function AddProfilePic({ navigation }) {
   }, []);
 
   const useCamera = async () => {
+    setLoading(true);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
@@ -51,6 +54,7 @@ export default function AddProfilePic({ navigation }) {
   };
 
   const pickImage = async () => {
+    setLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -64,29 +68,23 @@ export default function AddProfilePic({ navigation }) {
     }
   };
 
-  const navigateToNext = () => {
-    /*
-    const imageName = 'profile' + user.userId
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : image;
-    setImage(uploadUri)
+  const uploadPicture = async () => {
+    const uri = image;
+    const childPath = `profile/${firebase.auth().currentUser.uid}`;
+    const response = await fetch(uri);
+    const blob = await response.blob();
 
-    firebase
+    const task = firebase
       .storage()
-      .ref(imageName)
-      .putFile(uploadUri)
-      .then((snapshot) => {
-        console.log(`${imageName} has been successfully uploaded.`)
-      })
-      .catch((err) => console.log('uploading image error => ', err))
+      .ref()
+      .child(childPath)
+      .put(blob)
+      .then(() => {
+        setLoading(false);
+      });
+  };
 
-    let imageRef = firebase.storage().ref('/' + imageName)
-    imageRef
-      .getDownloadURL()
-      .then((url) => {
-        dispatch(editUserInfo({ profilePicture: url }))
-        setImage(url)
-      })
-    */
+  const navigateToNext = () => {
     navigation.navigate('Confirmation');
   };
 
@@ -127,7 +125,16 @@ export default function AddProfilePic({ navigation }) {
         <FilledCircle />
         <FilledCircle />
         <EmptyCircle />
-        <TouchableOpacity onPress={navigateToNext}>
+        <TouchableOpacity
+          onPress={() => {
+            uploadPicture();
+            if (loading) {
+              alert('Please wait until the photo has been uploaded...');
+            } else {
+              navigateToNext();
+            }
+          }}
+        >
           <Icon type="font-awesome" name="chevron-right" color="#000" />
         </TouchableOpacity>
       </View>

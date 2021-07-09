@@ -1,5 +1,5 @@
-import 'react-native-gesture-handler'
-import React, { useEffect, useState } from 'react'
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -7,11 +7,14 @@ import {
   StyleSheet,
   Text,
   Button,
+} from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { firebase } from './src/firebaseSpecs/config';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
-import { firebase } from './src/firebaseSpecs/config'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 
 import {
   LoginScreen,
@@ -33,7 +36,13 @@ if (!global.atob) {
   global.atob = decode
 }
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+// Placeholder screen for testing
+const EmptyScreen = () => {
+  return null;
+};
 
 const screenOptions = {
   cardStyle: { backgroundColor: 'white' },
@@ -105,7 +114,7 @@ export default function App() {
               name="Landing"
               component={LandingScreen}
               options={{ headerShown: false }}
-            /> */}
+              /> */}
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen
                 name="Registration"
@@ -119,10 +128,10 @@ export default function App() {
               />
               <Stack.Screen name="Confirmation" component={Confirmation} />
               <Stack.Screen name="Main" component={MainScreen} />
-            </>
-          )}
-        </Stack.Navigator>
-        <MyStatusBar />
+            </Stack.Navigator>
+            <MyStatusBar backgroundColor="white" barStyle="dark-content" />
+          </>
+        )}
       </NavigationContainer>
     </Provider>
   )
