@@ -17,11 +17,10 @@ import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronoun
 import defaultProfilePicture from '../../../images/default-profile-picture.jpg';
 import styles from './styles';
 
-export default function ConfirmationScreen({ navigation, route }) {
-  const { image, loading, url } = route.params;
-
+export default function ConfirmationScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const [picURL, setPicURL] = useState('');
 
   const registerUser = () => {
     // Create user in users collection with uid
@@ -71,25 +70,47 @@ export default function ConfirmationScreen({ navigation, route }) {
   //   console.log('loading props', loading);
   // };
 
-  // const renderProfilePicture = () => {
-  //   const storageRef = firebase.storage().ref();
-  //   const profilePicRef = storageRef.child(
-  //     `profile/${firebase.auth().currentUser.uid}`
-  //   );
-  //   // console.log('profilePicRef', profilePicRef);
-  //   profilePicRef.getDownloadURL().then((url) => {
-  //     console.log('url', url);
-  //     console.log('loading props', loading);
-  //     setUrl(url);
-  //   });
-  //   console.log('image', image);
-  // };
+  const loadProfilePicture = () => {
+    const profilePicRef = firebase
+      .storage()
+      .ref()
+      .child(`profile/${firebase.auth().currentUser.uid}`);
 
-  // useEffect(() => {
-  //   if (!loading) {
-  //     renderProfilePicture();
-  //   }
-  // }, [loading]);
+    profilePicRef.getDownloadURL().then((url) => {
+      setPicURL(url);
+    });
+  };
+
+  useEffect(() => {
+    loadProfilePicture();
+  }, []);
+
+  const renderProfilePicture = () => {
+    if (picURL) {
+      return (
+        <ImageBackground
+          // image source must be in {uri: linkToPhoto } format!
+          source={{ uri: picURL }}
+          style={styles.image}
+          imageStyle={styles.imageStyle}
+          resizeMode="cover"
+        >
+          <View style={styles.profileInfoContainer}>
+            <Text style={styles.nameText}>
+              {renderName(user.firstName, user.lastName)}
+            </Text>
+            <Text style={styles.pronounText}>
+              {renderPronouns(user.pronouns)}
+            </Text>
+            <Text style={styles.subheadingText}>Interests</Text>
+            <View style={styles.interestsContainer}>
+              {renderInterests(user.interests)}
+            </View>
+          </View>
+        </ImageBackground>
+      );
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -101,30 +122,7 @@ export default function ConfirmationScreen({ navigation, route }) {
           </Text>
         </View>
         <View style={styles.profilePreviewContainer}>
-          {/* must be in {uri: linkToPhoto } format! */}
-          {/* <Image source={user.profilePicture} /> */}
-          {/* <Image source={{ uri: url }} style={{ width: 300, height: 600 }} /> */}
-          <ImageBackground
-            // source={user.image}
-            source={{ uri: url }}
-            // defaultSource={defaultProfilePicture}
-            style={styles.image}
-            imageStyle={styles.imageStyle}
-            resizeMode="cover"
-          >
-            <View style={styles.profileInfoContainer}>
-              <Text style={styles.nameText}>
-                {renderName(user.firstName, user.lastName)}
-              </Text>
-              <Text style={styles.pronounText}>
-                {renderPronouns(user.pronouns)}
-              </Text>
-              <Text style={styles.subheadingText}>Interests</Text>
-              <View style={styles.interestsContainer}>
-                {renderInterests(user.interests)}
-              </View>
-            </View>
-          </ImageBackground>
+          {renderProfilePicture()}
         </View>
         <View style={styles.confirmButtonContainer}>
           <TouchableOpacity style={styles.button} onPress={registerUser}>

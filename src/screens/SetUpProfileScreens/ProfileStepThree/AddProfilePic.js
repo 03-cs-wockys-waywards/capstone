@@ -42,6 +42,7 @@ export default function AddProfilePic({ navigation }) {
   }, []);
 
   const useCamera = async () => {
+    setLoading(true);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
@@ -55,6 +56,7 @@ export default function AddProfilePic({ navigation }) {
   };
 
   const pickImage = async () => {
+    setLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -68,8 +70,6 @@ export default function AddProfilePic({ navigation }) {
     }
   };
 
-  // const imageName = 'profile' + user.userId;
-
   const uploadPicture = async () => {
     const uri = image;
     const childPath = `profile/${firebase.auth().currentUser.uid}`;
@@ -82,24 +82,12 @@ export default function AddProfilePic({ navigation }) {
       .child(childPath)
       .put(blob)
       .then(() => {
-        // setLoading(false);
-        console.log(
-          `AddProfilePic component: ${uri} has been successfully uploaded.`
-        );
+        setLoading(false);
       });
-
-    const fileRef = firebase.storage().ref().child(childPath);
-    fileRef.getDownloadURL().then((url) => {
-      console.log('url in addprofilepic', url);
-      setUrl(url);
-      setLoading(false);
-    });
   };
 
   const navigateToNext = () => {
-    uploadPicture();
-    console.log('imageName addprofilepic', image);
-    navigation.navigate('Confirmation', { image, loading, url });
+    navigation.navigate('Confirmation');
   };
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
@@ -139,7 +127,16 @@ export default function AddProfilePic({ navigation }) {
         <FilledCircle />
         <FilledCircle />
         <EmptyCircle />
-        <TouchableOpacity onPress={navigateToNext}>
+        <TouchableOpacity
+          onPress={() => {
+            uploadPicture();
+            if (loading) {
+              alert('Please wait until the photo has been uploaded...');
+            } else {
+              navigateToNext();
+            }
+          }}
+        >
           <Icon type="font-awesome" name="chevron-right" color="#000" />
         </TouchableOpacity>
       </View>
