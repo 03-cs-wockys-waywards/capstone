@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -14,7 +13,6 @@ import { Pill } from '../../../components/Pill';
 import { firebase } from '../../../firebaseSpecs/config';
 import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
 import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns';
-import defaultProfilePicture from '../../../images/default-profile-picture.jpg';
 import styles from './styles';
 
 export default function ConfirmationScreen({ navigation }) {
@@ -32,8 +30,6 @@ export default function ConfirmationScreen({ navigation }) {
       .set(user)
       .then(() => {
         navigation.navigate('Home');
-        // Route to Login for testing purpose
-        // navigation.navigate('Login');
       })
       .catch((error) => {
         alert(error);
@@ -59,17 +55,6 @@ export default function ConfirmationScreen({ navigation }) {
     });
   };
 
-  // const renderProfilePicture = () => {
-  //   console.log('imageName in confimration screen', imageName);
-  //   let imageRef = firebase.storage().ref('/' + imageName);
-  //   imageRef.getDownloadURL().then((url) => {
-  //     dispatch(editUserInfo({ profilePicture: url }));
-  //     // setImage(url);
-  //     console.log('user profile picture', user.profilePicture);
-  //   });
-  //   console.log('loading props', loading);
-  // };
-
   const loadProfilePicture = () => {
     const profilePicRef = firebase
       .storage()
@@ -78,6 +63,8 @@ export default function ConfirmationScreen({ navigation }) {
 
     profilePicRef.getDownloadURL().then((url) => {
       setPicURL(url);
+      // Save user profile photo in redux
+      dispatch(editUserInfo({ profilePicture: url }));
     });
   };
 

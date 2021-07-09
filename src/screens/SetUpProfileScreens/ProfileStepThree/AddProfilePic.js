@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
-  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
@@ -26,7 +25,6 @@ export default function AddProfilePic({ navigation }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(profilePicture || null);
   const [loading, setLoading] = useState(true);
-  const [url, setUrl] = useState('');
 
   const dispatch = useDispatch();
 
