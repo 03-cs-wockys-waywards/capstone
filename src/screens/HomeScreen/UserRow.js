@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useDispatch } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -32,7 +32,7 @@ export default function UserRow({ item }) {
                 <Text style={styles.interestText}>{item}</Text>
               </TouchableOpacity>
             )}
-            keyExtractor={(item, index) => item + index}
+            keyExtractor={(item, index) => (item + index).toString()}
           />
         </View>
       </View>

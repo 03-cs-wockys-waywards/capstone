@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import { firebase } from './firebaseSpecs/config'
 import { HomeScreen } from './screens'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -11,6 +11,10 @@ const EmptyScreen = () => {
 }
 
 class Main extends Component {
+  // useEffect(() => {
+  //   dispatch(editUserInfo(props.user))
+  // })
+
   render() {
     return (
       <Tab.Navigator
@@ -21,15 +25,6 @@ class Main extends Component {
         labelStyle={{ fontSize: 12 }}
         barStyle={{ backgroundColor: '#106563' }}
       >
-        <Tab.Screen
-          name="Search"
-          component={EmptyScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="magnify" color={color} size={28} />
-            ),
-          }}
-        />
         <Tab.Screen
           name="Home"
           component={HomeScreen}
@@ -42,6 +37,14 @@ class Main extends Component {
         <Tab.Screen
           name="Profile"
           component={EmptyScreen}
+          listeners={({ navigation }) => ({
+            tabPress: (evt) => {
+              evt.preventDefault()
+              navigation.navigate('Profile', {
+                uid: firebase.auth().currentUser.uid,
+              })
+            },
+          })}
           options={{
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="account" color={color} size={28} />

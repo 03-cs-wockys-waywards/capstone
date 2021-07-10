@@ -1,13 +1,7 @@
 import 'react-native-gesture-handler'
 import React, { useEffect, useState } from 'react'
-import {
-  View,
-  SafeAreaView,
-  Platform,
-  StyleSheet,
-  Text,
-  Button,
-} from 'react-native'
+import { Provider } from 'react-redux'
+import { View, SafeAreaView, Platform, StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { firebase } from './src/firebaseSpecs/config'
 import { NavigationContainer } from '@react-navigation/native'
@@ -23,7 +17,6 @@ import {
 } from './src/screens'
 import MainScreen from './src/Main'
 import { decode, encode } from 'base-64'
-import { Provider } from 'react-redux'
 import store from './src/store'
 
 if (!global.btoa) {
@@ -66,7 +59,7 @@ const styles = StyleSheet.create({
 
 export default function App() {
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({})
 
   useEffect(() => {
     const usersRef = firebase.firestore().collection('users')
@@ -98,7 +91,9 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
           {user ? (
-            <Stack.Screen name="Main" component={MainScreen} />
+            <Stack.Screen name="Main">
+              {(props) => <MainScreen {...props} user={user} />}
+            </Stack.Screen>
           ) : (
             <>
               {/* <Stack.Screen
@@ -118,7 +113,7 @@ export default function App() {
                 component={ProfileStepThree}
               />
               <Stack.Screen name="Confirmation" component={Confirmation} />
-              <Stack.Screen name="Main" component={MainScreen} />
+              {/* <Stack.Screen name="Main" component={MainScreen} /> */}
             </>
           )}
         </Stack.Navigator>

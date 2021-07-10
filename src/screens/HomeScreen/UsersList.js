@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { SafeAreaView, FlatList } from 'react-native'
+import { firebase } from '../../firebaseSpecs/config'
+import { setAllUsers } from '../../store/usersReducer'
+
 import UserRow from './UserRow'
-import styles from './styles'
 
 const DATA = [
   {
@@ -113,7 +116,53 @@ const DATA = [
   },
 ]
 
+const user = {
+  id: 1,
+  email: 'petedays@gmail.com',
+  firstName: 'Peter',
+  lastName: 'Days',
+  interests: ['Graffiti', 'Parkour', 'Ghost hunting', 'Larping', 'Cooking'],
+  profilePicture:
+    'https://images.unsplash.com/photo-1532318065232-2ba7c6676cd5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTY0fHxwb3J0cmFpdHxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+  pronouns: ['he'],
+}
+
+// async function fetchUsers() {
+//   const usersRef = firebase.firestore().collection('users')
+//   const usersData = await usersRef
+//     .where('interests', 'array-contains-any', user.interests)
+//     .get()
+//   usersData.forEach((user) => {
+//     console.log(user.id, '=>', user.data())
+//   })
+//   console.log('>>>>>>>>>>>> USERS DATA FROM FIRESTORE: ', usersData)
+//   return
+// }
+
 export default function UsersList() {
+  const user = useSelector((state) => state.user)
+  const users = useSelector((state) => state.users)
+
+  const [currentUser, setCurrentUser] = useState(user || {})
+  const [usersList, setUsersList] = useState(users || [])
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('users')
+      .where('interests', 'array-contains-any', ['Cooking'])
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          setUsersList(snapshot.data())
+          console.log('>>>>>>>>>> USERS DATA FROM FIRESTORE: ', snapshot.data)
+        } else console.log('does not exist')
+      })
+    // dispatch(setAllUsers())
+  }, [dispatch])
+
   const handlePress = (item) => {
     // navigate to single user profile
     return
@@ -128,7 +177,7 @@ export default function UsersList() {
       <FlatList
         data={DATA}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </SafeAreaView>
   )
