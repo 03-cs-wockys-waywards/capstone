@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -14,7 +15,6 @@ import { Pill } from "../../../components/Pill";
 import { getColorsArray } from "../../../helpers/getColorsArray";
 
 export default function InterestsModal({ updatedUser, setUpdatedUser }) {
-  // const { interests } = updatedUser;
   const [interests, setInterests] = useState(updatedUser.interests);
   const [modalVisible, setModalVisible] = useState(false);
   const [colors, setColors] = useState([]);
@@ -27,31 +27,39 @@ export default function InterestsModal({ updatedUser, setUpdatedUser }) {
   const handlePress = (item) => {
     if (interests.includes(item)) {
       setInterests(interests.filter((interest) => interest !== item));
-      // console.log('interests after filter >>>>>', interests)
     } else if (interests.length < 5) {
       setInterests([ ...interests, item ]);
-      // console.log('interests after adding an interest >>>>>', interests)
     }
   };
 
-  console.log('interests >>>>', interests)
-
   return (
-    <View>
+    <SafeAreaView>
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
         <View style={styles.centeredView}>
+          <Text style={styles.title}>Update Your Interests</Text>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => {
+              if (interests.length) {
+                setUpdatedUser({ ...updatedUser, interests: interests });
+                setModalVisible(false);
+              }
+            }}
+          >
+            <Text>✅</Text>
+          </TouchableOpacity>
           <FlatList
             style={{ flexDirection: "row", flexWrap: "wrap" }}
             data={allInterests}
             renderItem={({ item, index }) => (
               <TouchableOpacity onPress={() => handlePress(item)}>
-                <Pill 
-                  key={index} 
+                <Pill  
                   text={item} 
                   backgroundColor={interests.includes(item) ? "#6e3b6e" : colors[index]}
                 />
               </TouchableOpacity>
             )}
+            keyExtractor={(item, index) => index.toString()}
           />
         </View>
       </Modal>
@@ -61,6 +69,6 @@ export default function InterestsModal({ updatedUser, setUpdatedUser }) {
       >
         <Text style={styles.textStyle}>+ / -</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }

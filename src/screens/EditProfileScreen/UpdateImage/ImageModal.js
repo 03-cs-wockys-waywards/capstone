@@ -127,4 +127,12 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 30,
+    marginBottom: 15,
+    marginLeft: 10,
+    marginRight: 10,
+  },
 });
