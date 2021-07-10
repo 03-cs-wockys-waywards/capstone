@@ -20,24 +20,24 @@ export default function RegistrationScreen({ navigation }) {
   const onRegisterPress = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match.");
+    } else {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((response) => {
+          const uid = response.user.uid;
+          const data = {
+            userId: uid,
+            email,
+          };
+
+          dispatch(editUserInfo(data));
+          navigation.navigate('ProfileStepOne');
+        })
+        .catch((error) => {
+          alert(error);
+        });
     }
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid;
-        const data = {
-          userId: uid,
-          email,
-        };
-
-        dispatch(editUserInfo(data));
-        navigation.navigate('ProfileStepOne');
-      })
-      .catch((error) => {
-        alert(error);
-      });
   };
 
   return (
