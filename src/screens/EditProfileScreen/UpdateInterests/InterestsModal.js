@@ -14,6 +14,8 @@ import { Pill } from "../../../components/Pill";
 import { getColorsArray } from "../../../helpers/getColorsArray";
 
 export default function InterestsModal({ updatedUser, setUpdatedUser }) {
+  // const { interests } = updatedUser;
+  const [interests, setInterests] = useState(updatedUser.interests);
   const [modalVisible, setModalVisible] = useState(false);
   const [colors, setColors] = useState([]);
 
@@ -21,6 +23,18 @@ export default function InterestsModal({ updatedUser, setUpdatedUser }) {
     const colors = getColorsArray(allInterests.length);
     setColors(colors);
   }, []);
+
+  const handlePress = (item) => {
+    if (interests.includes(item)) {
+      setInterests(interests.filter((interest) => interest !== item));
+      // console.log('interests after filter >>>>>', interests)
+    } else if (interests.length < 5) {
+      setInterests([ ...interests, item ]);
+      // console.log('interests after adding an interest >>>>>', interests)
+    }
+  };
+
+  console.log('interests >>>>', interests)
 
   return (
     <View>
@@ -30,7 +44,13 @@ export default function InterestsModal({ updatedUser, setUpdatedUser }) {
             style={{ flexDirection: "row", flexWrap: "wrap" }}
             data={allInterests}
             renderItem={({ item, index }) => (
-              <Pill key={index} text={item} backgroundColor={colors[index]} />
+              <TouchableOpacity onPress={() => handlePress(item)}>
+                <Pill 
+                  key={index} 
+                  text={item} 
+                  backgroundColor={interests.includes(item) ? "#6e3b6e" : colors[index]}
+                />
+              </TouchableOpacity>
             )}
           />
         </View>
