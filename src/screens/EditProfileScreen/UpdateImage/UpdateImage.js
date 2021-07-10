@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  StyleSheet,
   View,
-  Text,
-  TouchableOpacity,
   Image,
-  Modal,
-  Pressable,
 } from "react-native";
-import { Camera } from "expo-camera";
-import * as ImagePicker from "expo-image-picker";
 import ImageModal from "./ImageModal";
 import styles from "../styles";
 

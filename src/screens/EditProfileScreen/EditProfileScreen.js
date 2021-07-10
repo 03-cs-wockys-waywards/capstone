@@ -9,6 +9,7 @@ import { editUserInfo } from "../../store/userReducer";
 import UpdateImage from "./UpdateImage/UpdateImage";
 import UpdateName from "./UpdateName";
 import UpdatePronouns from "./UpdatePronouns";
+import UpdateInterests from "./UpdateInterests/UpdateInterests";
 
 export default function EditProfile({ navigation }) {
   const user = useSelector((state) => state.user);
@@ -26,6 +27,10 @@ export default function EditProfile({ navigation }) {
         <UpdatePronouns
           updatedUser={updatedUser}
           setUpdatedUser={setUpdatedUser}
+        />
+        <UpdateInterests 
+          updatedUser={updatedUser} 
+          setUpdatedUser={setUpdatedUser} 
         />
       </ScrollView>
     </SafeAreaView>
