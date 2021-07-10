@@ -7,7 +7,8 @@ import {
 import styles from "./styles";
 
 export default function UpdateName({ updatedUser, setUpdatedUser }) {
-  const { firstName, lastName } = updatedUser
+  const { firstName, lastName } = updatedUser;
+  
   return (
     <View>
       <Text style={styles.label}>First Name</Text>

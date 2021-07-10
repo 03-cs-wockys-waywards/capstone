@@ -84,7 +84,7 @@ export default function ImageModal({ updatedUser, setUpdatedUser }) {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: "center",
