@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { firebase } from './firebaseSpecs/config'
 import { HomeScreen } from './screens'
+import { clearUserData, fetchUser } from './store/userReducer'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -11,9 +13,10 @@ const EmptyScreen = () => {
 }
 
 class Main extends Component {
-  // useEffect(() => {
-  //   dispatch(editUserInfo(props.user))
-  // })
+  componentDidMount() {
+    // this.props.clearUserData()
+    this.props.setUser()
+  }
 
   render() {
     return (
@@ -56,4 +59,13 @@ class Main extends Component {
   }
 }
 
-export default Main
+const mapState = (store) => ({
+  currentUser: store.user,
+})
+
+const mapDispatch = (dispatch) => ({
+  clearUserData: () => dispatch(clearUserData()),
+  setUser: () => dispatch(fetchUser()),
+})
+
+export default connect(mapState, mapDispatch)(Main)

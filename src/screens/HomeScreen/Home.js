@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import styles from './styles'
-import { firebase } from '../../firebaseSpecs/config'
 
 import UsersList from './UsersList'
 
