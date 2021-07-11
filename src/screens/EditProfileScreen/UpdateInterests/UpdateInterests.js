@@ -18,7 +18,7 @@ export default function UpdateInterests({ updatedUser, setUpdatedUser }) {
   const [colors, setColors] = useState([]);
   
   useEffect(() => {
-    const colors = getColorsArray(interests.length);
+    const colors = getColorsArray(5);
     setColors(colors);
   }, []);
 
