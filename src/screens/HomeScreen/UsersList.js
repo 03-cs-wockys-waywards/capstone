@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { SafeAreaView, FlatList } from 'react-native';
-import { fetchUsersWithInterests } from '../../store/usersReducer';
-import styles from './styles';
-import UserRow from './UserRow';
-import SearchBar from '../../components/SearchBar';
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { SafeAreaView, FlatList } from 'react-native'
+import { fetchUsersWithInterests } from '../../store/usersReducer'
+import styles from './styles'
+import UserRow from './UserRow'
+import SearchBar from '../../components/SearchBar'
 
 const DATA = [
   {
@@ -114,46 +114,47 @@ const DATA = [
       'https://images.unsplash.com/photo-1485893226355-9a1c32a0c81e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
     pronouns: ['they'],
   },
-];
+]
 
 export default function UsersList({ navigation }) {
-  const interests = useSelector((state) => state.user.interests);
-  const users = useSelector((state) => state.users);
+  const user = useSelector((state) => state.user)
+  const interests = useSelector((state) => state.user.interests)
+  const users = useSelector((state) => state.users)
+  console.log('Current user: ', user)
+  console.log('Current user interests on state: ', interests)
+  console.log('USERS in UsersList: ', users.length)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // making a firebase call to get the users with interests
-  // useEffect(() => {
-  //   dispatch(fetchUsersWithInterests(interests));
-  // }, []);
-
-  //console.log('Current user interests on state: ', userInterests)
-  //console.log('USERS in UsersList: ', users.length)
+  useEffect(() => {
+    dispatch(fetchUsersWithInterests(interests))
+  }, [])
 
   const renderItem = ({ item }) => (
     <UserRow item={item} navigation={navigation} />
-  );
-  const [searchText, setSearchText] = useState('');
+  )
+  const [searchText, setSearchText] = useState('')
   // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
-  const [discoverData, setDiscoverData] = useState([...DATA]);
-  // const [discoverData, setDiscoverData] = useState([...users]);
+  //const [discoverData, setDiscoverData] = useState([...DATA])
+  const [discoverData, setDiscoverData] = useState([...users])
 
   const updateSearchText = (text) => {
-    setSearchText(text);
-    filterDiscover(text);
-  };
+    setSearchText(text)
+    filterDiscover(text)
+  }
 
   // TODO: convert into a helper function to use in the Chats screen as well
   const filterDiscover = (text) => {
-    const tempDiscoverData = [...DATA];
-    // const tempDiscoverData = [...users];
+    //const tempDiscoverData = [...DATA]
+    const tempDiscoverData = [...users]
     const newDiscoverData = tempDiscoverData.filter((user) => {
-      const firstName = user.firstName.toUpperCase();
-      const searchTerm = text.toUpperCase();
-      return firstName.indexOf(searchTerm) > -1;
-    });
-    setDiscoverData(newDiscoverData);
-  };
+      const firstName = user.firstName.toUpperCase()
+      const searchTerm = text.toUpperCase()
+      return firstName.indexOf(searchTerm) > -1
+    })
+    setDiscoverData(newDiscoverData)
+  }
 
   return (
     <SafeAreaView style={styles.listContainer}>
@@ -173,5 +174,5 @@ export default function UsersList({ navigation }) {
         stickyHeaderIndices={[0]}
       />
     </SafeAreaView>
-  );
+  )
 }
