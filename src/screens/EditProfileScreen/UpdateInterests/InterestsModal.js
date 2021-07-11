@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
-  StyleSheet,
   View,
   Text,
   TouchableOpacity,
   Modal,
-  Pressable,
   FlatList,
 } from "react-native";
 import { styles } from "../UpdateImage/ImageModal";
@@ -14,8 +12,8 @@ import allInterests from "../../SetUpProfileScreens/ProfileStepTwo/interestsArra
 import { Pill } from "../../../components/Pill";
 import { getColorsArray } from "../../../helpers/getColorsArray";
 
-export default function InterestsModal({ updatedUser, setUpdatedUser }) {
-  const [interests, setInterests] = useState(updatedUser.interests);
+export default function InterestsModal({ user, setUser }) {
+  const [interests, setInterests] = useState(user.interests);
   const [modalVisible, setModalVisible] = useState(false);
   const [colors, setColors] = useState([]);
 
@@ -28,7 +26,7 @@ export default function InterestsModal({ updatedUser, setUpdatedUser }) {
     if (interests.includes(item)) {
       setInterests(interests.filter((interest) => interest !== item));
     } else if (interests.length < 5) {
-      setInterests([ ...interests, item ]);
+      setInterests([...interests, item]);
     }
   };
 
@@ -41,7 +39,7 @@ export default function InterestsModal({ updatedUser, setUpdatedUser }) {
             style={[styles.button, styles.buttonOpen]}
             onPress={() => {
               if (interests.length) {
-                setUpdatedUser({ ...updatedUser, interests: interests });
+                setUser({ ...user, interests: interests });
                 setModalVisible(false);
               }
             }}
@@ -53,9 +51,11 @@ export default function InterestsModal({ updatedUser, setUpdatedUser }) {
             data={allInterests}
             renderItem={({ item, index }) => (
               <TouchableOpacity onPress={() => handlePress(item)}>
-                <Pill  
-                  text={item} 
-                  backgroundColor={interests.includes(item) ? "#6e3b6e" : colors[index]}
+                <Pill
+                  text={item}
+                  backgroundColor={
+                    interests.includes(item) ? "#6e3b6e" : colors[index]
+                  }
                 />
               </TouchableOpacity>
             )}

@@ -6,12 +6,12 @@ import {
 import ImageModal from "./ImageModal";
 import styles from "../styles";
 
-export default function UpdateImage({ updatedUser, setUpdatedUser }) {
-  const { profilePicture } = updatedUser
+export default function UpdateImage({ user, setUser }) {
+  const { profilePicture } = user;
   return (
     <View>
       <Image source={{ uri: profilePicture }} style={styles.image} />
-      <ImageModal updatedUser={updatedUser} setUpdatedUser={setUpdatedUser} />
+      <ImageModal user={user} setUser={setUser} />
     </View>
   );
 }

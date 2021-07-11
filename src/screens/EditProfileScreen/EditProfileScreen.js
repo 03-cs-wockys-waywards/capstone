@@ -1,38 +1,55 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
-import styles from "./styles";
+import { SafeAreaView, ScrollView, View, StyleSheet } from "react-native";
+// import styles from "./styles";
 import { useSelector, useDispatch } from "react-redux";
-import { editUserInfo } from "../../store/userReducer";
 import UpdateImage from "./UpdateImage/UpdateImage";
 import UpdateName from "./UpdateName";
 import UpdatePronouns from "./UpdatePronouns";
 import UpdateInterests from "./UpdateInterests/UpdateInterests";
+import Header from "./Header";
 
 export default function EditProfile({ navigation }) {
-  const user = useSelector((state) => state.user);
-  const [updatedUser, setUpdatedUser] = useState(user);
-  const dispatch = useDispatch();
+  const _user = useSelector((state) => state.user);
+  const [user, setUser] = useState(_user);
+
+  console.log("------------------")
+  console.log('user data from redux store >>>>>', _user)
+  console.log("------------------")
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
+      <Header user={user} />
       <ScrollView>
-        <UpdateImage
-          updatedUser={updatedUser}
-          setUpdatedUser={setUpdatedUser}
-        />
-        <UpdateName updatedUser={updatedUser} setUpdatedUser={setUpdatedUser} />
-        <UpdatePronouns
-          updatedUser={updatedUser}
-          setUpdatedUser={setUpdatedUser}
-        />
-        <UpdateInterests 
-          updatedUser={updatedUser} 
-          setUpdatedUser={setUpdatedUser} 
-        />
+        <View style={styles.container}>
+          <UpdateImage
+            user={user}
+            setUser={setUser}
+          />
+          <UpdateName
+            user={user}
+            setUser={setUser}
+          />
+          <UpdatePronouns
+            user={user}
+            setUser={setUser}
+          />
+          <UpdateInterests
+            user={user}
+            setUser={setUser}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: 20,
+    marginRight: 20,
+    // justifyContent: "center",
+    // alignItems: "center",
+  }
+});

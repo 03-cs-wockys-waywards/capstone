@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     flexGrow: 1,
     marginHorizontal: '10%',
-    marginTop: '10%',
+    // marginTop: '10%',
     height: '100%',
   },
   label: {

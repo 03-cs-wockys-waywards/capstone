@@ -10,7 +10,7 @@ import {
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 
-export default function ImageModal({ updatedUser, setUpdatedUser }) {
+export default function ImageModal({ user, setUser }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const useCamera = async () => {
@@ -23,7 +23,7 @@ export default function ImageModal({ updatedUser, setUpdatedUser }) {
         quality: 1,
       });
       if (!image.cancelled) {
-        setUpdatedUser({ ...updatedUser, profilePicture: image.uri });
+        setUser({ ...user, profilePicture: image.uri });
       }
     }
     setModalVisible(false)
@@ -40,7 +40,7 @@ export default function ImageModal({ updatedUser, setUpdatedUser }) {
         quality: 1,
       });
       if (!image.cancelled) {
-        setUpdatedUser({ ...updatedUser, profilePicture: image.uri });
+        setUser({ ...user, profilePicture: image.uri });
       }
     }
     setModalVisible(false)

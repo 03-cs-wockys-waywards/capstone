@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   View,
   Text,
-  TouchableOpacity,
-  Image,
-  Modal,
-  Pressable,
 } from "react-native";
 import styles from "../styles";
 import { Pill } from "../../../components/Pill";
 import { getColorsArray } from "../../../helpers/getColorsArray";
 import InterestsModal from "./InterestsModal";
 
-export default function UpdateInterests({ updatedUser, setUpdatedUser }) {
-  const { interests } = updatedUser;
+export default function UpdateInterests({ user, setUser }) {
+  const { interests } = user;
   const [colors, setColors] = useState([]);
   
   useEffect(() => {
@@ -25,7 +20,7 @@ export default function UpdateInterests({ updatedUser, setUpdatedUser }) {
   return (
     <View>
       <Text style={styles.label}>Interests</Text>
-      <InterestsModal updatedUser={updatedUser} setUpdatedUser={setUpdatedUser} />
+      <InterestsModal user={user} setUser={setUser} />
       <View style={styles.interestsContainer}>
         {interests.map((interest, idx) => {
           return (

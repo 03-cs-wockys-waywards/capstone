@@ -6,16 +6,16 @@ import {
 } from "react-native";
 import styles from "./styles";
 
-export default function UpdateName({ updatedUser, setUpdatedUser }) {
-  const { firstName, lastName } = updatedUser;
-  
+export default function UpdateName({ user, setUser }) {
+  const { firstName, lastName } = user;
+
   return (
     <View>
       <Text style={styles.label}>First Name</Text>
       <TextInput
         style={styles.input}
         onChange={(value) =>
-          setUpdatedUser({ ...updatedUser, firstName: value })
+          setUser({ ...user, firstName: value })
         }
         value={firstName || ""}
       />
@@ -23,7 +23,7 @@ export default function UpdateName({ updatedUser, setUpdatedUser }) {
       <TextInput
         style={styles.input}
         onChange={(value) =>
-          setUpdatedUser({ ...updatedUser, lastName: value })
+          setUser({ ...user, lastName: value })
         }
         value={lastName || ""}
       />

@@ -10,13 +10,13 @@ const map = {
   undisclosed: "I'd rather not say",
 };
 
-export default function UpdatePronouns({ updatedUser, setUpdatedUser }) {
-  const { pronouns } = updatedUser;
+export default function UpdatePronouns({ user, setUser }) {
+  const { pronouns } = user;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(pronouns);
 
   useEffect(() => {
-    setUpdatedUser({ ...updatedUser, pronouns: value });
+    setUser({ ...user, pronouns: value });
   }, [value]);
 
   return (

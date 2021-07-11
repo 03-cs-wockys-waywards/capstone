@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { Button, Icon } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import { EmptyCircle, FilledCircle } from "../../../components/ProgressCircles";
 import interests from "./interestsArray";
 import styles from "./styles";
@@ -25,7 +25,6 @@ export default function InterestsScreen({ navigation }) {
   const [selectedInterests, setSelectedInterests] = useState(init);
   const dispatch = useDispatch();
 
-
   const handlePress = (item) => {
     if (selectedInterests.includes(item)) {
       setSelectedInterests(
@@ -38,10 +37,10 @@ export default function InterestsScreen({ navigation }) {
 
   const navigateToNext = () => {
     if (selectedInterests.length) {
-      dispatch(editUserInfo({interests: selectedInterests}));
+      dispatch(editUserInfo({ interests: selectedInterests }));
       navigation.navigate("ProfileStepThree");
     }
-  }
+  };
 
   const renderItem = ({ item }) => {
     const backgroundColor = selectedInterests.includes(item)
