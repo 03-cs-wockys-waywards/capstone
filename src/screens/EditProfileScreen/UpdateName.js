@@ -14,7 +14,7 @@ export default function UpdateName({ user, setUser }) {
       <Text style={styles.label}>First Name</Text>
       <TextInput
         style={styles.input}
-        onChange={(value) =>
+        onChangeText={(value) =>
           setUser({ ...user, firstName: value })
         }
         value={firstName || ""}
@@ -22,7 +22,7 @@ export default function UpdateName({ user, setUser }) {
       <Text style={styles.label}>Last Name</Text>
       <TextInput
         style={styles.input}
-        onChange={(value) =>
+        onChangeText={(value) =>
           setUser({ ...user, lastName: value })
         }
         value={lastName || ""}
