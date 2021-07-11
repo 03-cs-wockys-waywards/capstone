@@ -123,9 +123,9 @@ export default function UsersList({ navigation }) {
   const dispatch = useDispatch();
 
   // making a firebase call to get the users with interests
-  useEffect(() => {
-    dispatch(fetchUsersWithInterests(interests));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchUsersWithInterests(interests));
+  // }, []);
 
   //console.log('Current user interests on state: ', userInterests)
   //console.log('USERS in UsersList: ', users.length)
@@ -135,8 +135,8 @@ export default function UsersList({ navigation }) {
   );
   const [searchText, setSearchText] = useState('');
   // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
-  // const [discoverData, setDiscoverData] = useState([...DATA]);
-  const [discoverData, setDiscoverData] = useState([...users]);
+  const [discoverData, setDiscoverData] = useState([...DATA]);
+  // const [discoverData, setDiscoverData] = useState([...users]);
 
   const updateSearchText = (text) => {
     setSearchText(text);
@@ -145,8 +145,8 @@ export default function UsersList({ navigation }) {
 
   // TODO: convert into a helper function to use in the Chats screen as well
   const filterDiscover = (text) => {
-    // const tempDiscoverData = [...DATA];
-    const tempDiscoverData = [...users];
+    const tempDiscoverData = [...DATA];
+    // const tempDiscoverData = [...users];
     const newDiscoverData = tempDiscoverData.filter((user) => {
       const firstName = user.firstName.toUpperCase();
       const searchTerm = text.toUpperCase();

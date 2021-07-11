@@ -89,7 +89,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
-          {user ? (
+          {firebase.auth().currentUser ? (
             <Stack.Screen name="Main">
               {(props) => <MainScreen {...props} user={user} />}
             </Stack.Screen>

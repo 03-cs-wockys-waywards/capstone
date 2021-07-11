@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { firebase } from './firebaseSpecs/config'
-import { HomeScreen } from './screens'
-import { clearUserData, fetchUser } from './store/userReducer'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { firebase } from './firebaseSpecs/config';
+import { HomeScreen } from './screens';
+import { editUserInfo, clearUserData, fetchUser } from './store/userReducer';
 
-const Tab = createMaterialBottomTabNavigator()
+const Tab = createMaterialBottomTabNavigator();
 
 const EmptyScreen = () => {
-  return null
-}
+  return null;
+};
 
 class Main extends Component {
   componentDidMount() {
-    // this.props.clearUserData()
-    this.props.setUser()
+    const currentUser = this.props.user;
+    this.props.setUser(currentUser);
   }
 
   render() {
@@ -42,10 +42,10 @@ class Main extends Component {
           component={EmptyScreen}
           listeners={({ navigation }) => ({
             tabPress: (evt) => {
-              evt.preventDefault()
+              evt.preventDefault();
               navigation.navigate('Profile', {
-                uid: firebase.auth().currentUser.uid,
-              })
+                uid: this.props.user.id,
+              });
             },
           })}
           options={{
@@ -55,18 +55,13 @@ class Main extends Component {
           }}
         />
       </Tab.Navigator>
-    )
+    );
   }
 }
 
-const mapState = (store) => ({
-  currentUser: store.user,
-})
-
 const mapDispatch = (dispatch) => ({
   clearUserData: () => dispatch(clearUserData()),
-  setUser: () => dispatch(fetchUser()),
-})
+  setUser: (userInfo) => dispatch(editUserInfo(userInfo)),
+});
 
-export default connect(mapState, mapDispatch)(Main)
-
+export default connect(null, mapDispatch)(Main);
