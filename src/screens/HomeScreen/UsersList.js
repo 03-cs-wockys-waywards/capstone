@@ -172,6 +172,7 @@ export default function UsersList({ navigation }) {
     filterDiscover(text);
   };
 
+  // TODO: convert into a helper function to use in the Chats screen as well
   const filterDiscover = (text) => {
     const tempDiscoverData = [...DATA];
     const newDiscoverData = tempDiscoverData.filter((user) => {
