@@ -7,7 +7,7 @@ export default function Search({ updateSearchText, searchText }) {
     <View style={styles.searchContainer}>
       <SearchBar
         placeholder="Search"
-        onChangeText={(searchText) => updateSearchText(searchText)}
+        onChangeText={(value) => updateSearchText(value)}
         value={searchText}
         showCancel={true}
         lightTheme={true}
