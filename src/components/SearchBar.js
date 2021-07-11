@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SearchBar } from 'react-native-elements';
 import { View, StyleSheet } from 'react-native';
 
-export default function Search({ updateSearch, searchText }) {
+export default function Search({ updateSearchText, searchText }) {
   return (
     <View style={styles.searchContainer}>
       <SearchBar
         placeholder="Search"
-        onChangeText={updateSearch}
+        onChangeText={(searchText) => updateSearchText(searchText)}
         value={searchText}
         showCancel={true}
         lightTheme={true}
