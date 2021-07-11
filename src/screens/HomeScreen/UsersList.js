@@ -120,11 +120,12 @@ export default function UsersList({ navigation }) {
   const user = useSelector((state) => state.user)
   const interests = useSelector((state) => state.user.interests)
   const users = useSelector((state) => state.users)
+  const dispatch = useDispatch();
   console.log('Current user: ', user)
   console.log('Current user interests on state: ', interests)
   console.log('USERS in UsersList: ', users.length)
 
-  const dispatch = useDispatch()
+
 
   // making a firebase call to get the users with interests
   useEffect(() => {
@@ -136,7 +137,7 @@ export default function UsersList({ navigation }) {
   )
   const [searchText, setSearchText] = useState('')
   // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
-  //const [discoverData, setDiscoverData] = useState([...DATA])
+  // const [discoverData, setDiscoverData] = useState([...DATA])
   const [discoverData, setDiscoverData] = useState([...users])
 
   const updateSearchText = (text) => {
@@ -146,7 +147,7 @@ export default function UsersList({ navigation }) {
 
   // TODO: convert into a helper function to use in the Chats screen as well
   const filterDiscover = (text) => {
-    //const tempDiscoverData = [...DATA]
+    // const tempDiscoverData = [...DATA]
     const tempDiscoverData = [...users]
     const newDiscoverData = tempDiscoverData.filter((user) => {
       const firstName = user.firstName.toUpperCase()
