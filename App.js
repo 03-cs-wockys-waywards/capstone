@@ -6,6 +6,7 @@ import { firebase } from './src/firebaseSpecs/config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
+
 import {
   LoginScreen,
   RegistrationScreen,
@@ -17,6 +18,7 @@ import {
 import MainScreen from './src/Main'
 import { decode, encode } from 'base-64'
 import store from './src/store'
+
 
 if (!global.btoa) {
   global.btoa = encode
@@ -112,11 +114,12 @@ export default function App() {
                 component={ProfileStepThree}
               />
               <Stack.Screen name="Confirmation" component={Confirmation} />
-              {/* <Stack.Screen name="Main" component={MainScreen} /> */}
+
+              <Stack.Screen name="Main" component={MainScreen} />
             </>
           )}
         </Stack.Navigator>
-        <MyStatusBar />
+        <MyStatusBar backgroundColor="white" barStyle="dark-content" />
       </NavigationContainer>
     </Provider>
   )
