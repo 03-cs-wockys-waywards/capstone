@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,9 +9,10 @@ import {
   Image,
   TouchableOpacity,
   SectionList,
-} from 'react-native'
-import { Avatar } from 'react-native-elements'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+} from 'react-native';
+import { Avatar } from 'react-native-elements';
+import SearchBar from '../../components/SearchBar';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const DATA = [
   {
@@ -121,10 +122,15 @@ const DATA = [
       'https://images.unsplash.com/photo-1485893226355-9a1c32a0c81e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
     pronouns: ['they'],
   },
-]
+];
 
 const Item = ({ item }) => (
-  <View style={styles.item}>
+  <TouchableOpacity
+    style={styles.item}
+    onPress={() => {
+      handlePress(item);
+    }}
+  >
     <Avatar size="large" rounded source={{ uri: item.profilePicture }} />
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -144,30 +150,57 @@ const Item = ({ item }) => (
         keyExtractor={(item, index) => item + index}
       />
     </View>
-  </View>
-)
+  </TouchableOpacity>
+);
+
+const handlePress = (item) => {
+  // navigate to single user profile
+  return;
+};
 
 // heart, heart-outline, heart-plus-outline
 
 export default function UsersList({ navigation }) {
-  const handlePress = (item) => {
-    // navigate to single user profile
-    return
-  }
+  const [searchText, setSearchText] = useState('');
+  // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
+  const [discoverData, setDiscoverData] = useState([...DATA]);
 
-  const renderItem = ({ item }) => (
-    <Item item={item} onPress={() => handlePress(item)} />
-  )
+  const renderItem = ({ item }) => <Item item={item} />;
+
+  const updateSearchText = (text) => {
+    setSearchText(text);
+    filterDiscover(text);
+  };
+
+  // TODO: convert into a helper function to use in the Chats screen as well
+  const filterDiscover = (text) => {
+    const tempDiscoverData = [...DATA];
+    const newDiscoverData = tempDiscoverData.filter((user) => {
+      const firstName = user.firstName.toUpperCase();
+      const searchTerm = text.toUpperCase();
+      return firstName.indexOf(searchTerm) > -1;
+    });
+    setDiscoverData(newDiscoverData);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={DATA}
+        data={discoverData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        // To prevent SearchBar component from re-rendering (i.e. keyboard losing focus),
+        // directly render SearchBar inside of ListHeaderComponent rather than using a separate function
+        ListHeaderComponent={
+          <SearchBar
+            updateSearchText={updateSearchText}
+            searchText={searchText}
+          />
+        }
+        stickyHeaderIndices={[0]}
       />
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -209,4 +242,4 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: 'black',
   },
-})
+});

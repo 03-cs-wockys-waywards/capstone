@@ -29,7 +29,7 @@ export default function ConfirmationScreen({ navigation }) {
       .doc(uid)
       .set(user)
       .then(() => {
-        navigation.navigate('Home');
+        navigation.navigate('Main');
       })
       .catch((error) => {
         alert(error);
