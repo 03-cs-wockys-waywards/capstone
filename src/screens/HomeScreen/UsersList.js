@@ -196,6 +196,7 @@ export default function UsersList({ navigation }) {
             searchText={searchText}
           />
         }
+        stickyHeaderIndices={[0]}
       />
     </SafeAreaView>
   );

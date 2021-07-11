@@ -1,36 +1,31 @@
 import React from 'react';
 import { SearchBar } from 'react-native-elements';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default function Search({ updateSearchText, searchText }) {
   return (
-    <View style={styles.searchContainer}>
-      <SearchBar
-        placeholder="Search"
-        onChangeText={(value) => updateSearchText(value)}
-        value={searchText}
-        showCancel={true}
-        lightTheme={true}
-        containerStyle={styles.container}
-        inputContainerStyle={styles.inputContainer}
-      />
-    </View>
+    <SearchBar
+      placeholder="Search"
+      onChangeText={(value) => updateSearchText(value)}
+      value={searchText}
+      showCancel={true}
+      lightTheme={true}
+      containerStyle={styles.container}
+      inputContainerStyle={styles.inputContainer}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
-    borderBottomColor: 'transparent',
-    borderTopColor: 'transparent',
+    width: '100%',
+    backgroundColor: 'white',
+    borderBottomColor: 'white',
+    borderTopColor: 'white',
   },
   inputContainer: {
     borderRadius: 50,
     backgroundColor: '#FAFBFC',
-    width: '90%',
-  },
-  searchContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginHorizontal: 10,
   },
 });
