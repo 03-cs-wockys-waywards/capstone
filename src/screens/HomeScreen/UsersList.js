@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-  Image,
-  TouchableOpacity,
-  SectionList,
-} from 'react-native';
-import { Avatar } from 'react-native-elements';
-import SearchBar from '../../components/SearchBar';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { SafeAreaView, FlatList } from 'react-native'
+import { fetchUsersWithInterests } from '../../store/usersReducer'
+import styles from './styles'
+import UserRow from './UserRow'
+import SearchBar from '../../components/SearchBar'
 
 const DATA = [
   {
@@ -122,73 +114,55 @@ const DATA = [
       'https://images.unsplash.com/photo-1485893226355-9a1c32a0c81e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
     pronouns: ['they'],
   },
-];
-
-const Item = ({ item }) => (
-  <TouchableOpacity
-    style={styles.item}
-    onPress={() => {
-      handlePress(item);
-    }}
-  >
-    <Avatar size="large" rounded source={{ uri: item.profilePicture }} />
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <Text style={styles.title}>
-          {item.firstName} {item.lastName[0]}.
-        </Text>
-        <MaterialCommunityIcons name="heart-outline" size={18} />
-      </View>
-      <FlatList
-        style={{ flexDirection: 'row', flexWrap: 'wrap' }}
-        data={item.interests}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.interest}>
-            <Text style={styles.interestText}>{item}</Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item, index) => item + index}
-      />
-    </View>
-  </TouchableOpacity>
-);
-
-const handlePress = (item) => {
-  // navigate to single user profile
-  return;
-};
-
-// heart, heart-outline, heart-plus-outline
+]
 
 export default function UsersList({ navigation }) {
-  const [searchText, setSearchText] = useState('');
-  // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
-  const [discoverData, setDiscoverData] = useState([...DATA]);
+  const user = useSelector((state) => state.user)
+  const interests = useSelector((state) => state.user.interests)
+  const users = useSelector((state) => state.users)
+  console.log('Current user: ', user)
+  console.log('Current user interests on state: ', interests)
+  console.log('USERS in UsersList: ', users.length)
 
-  const renderItem = ({ item }) => <Item item={item} />;
+  const dispatch = useDispatch()
+
+  // making a firebase call to get the users with interests
+  useEffect(() => {
+    dispatch(fetchUsersWithInterests(interests))
+  }, [])
+
+  const renderItem = ({ item }) => (
+    <UserRow item={item} navigation={navigation} />
+  )
+  const [searchText, setSearchText] = useState('')
+  // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
+  //const [discoverData, setDiscoverData] = useState([...DATA])
+  const [discoverData, setDiscoverData] = useState([...users])
 
   const updateSearchText = (text) => {
-    setSearchText(text);
-    filterDiscover(text);
-  };
+    setSearchText(text)
+    filterDiscover(text)
+  }
 
   // TODO: convert into a helper function to use in the Chats screen as well
   const filterDiscover = (text) => {
-    const tempDiscoverData = [...DATA];
+    //const tempDiscoverData = [...DATA]
+    const tempDiscoverData = [...users]
     const newDiscoverData = tempDiscoverData.filter((user) => {
-      const firstName = user.firstName.toUpperCase();
-      const searchTerm = text.toUpperCase();
-      return firstName.indexOf(searchTerm) > -1;
-    });
-    setDiscoverData(newDiscoverData);
-  };
+      const firstName = user.firstName.toUpperCase()
+      const searchTerm = text.toUpperCase()
+      return firstName.indexOf(searchTerm) > -1
+    })
+    setDiscoverData(newDiscoverData)
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.listContainer}>
       <FlatList
         data={discoverData}
+        keyExtractor={(item) => item.id.toString()}
+        // data={users}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
         // To prevent SearchBar component from re-rendering (i.e. keyboard losing focus),
         // directly render SearchBar inside of ListHeaderComponent rather than using a separate function
         ListHeaderComponent={
@@ -200,46 +174,5 @@ export default function UsersList({ navigation }) {
         stickyHeaderIndices={[0]}
       />
     </SafeAreaView>
-  );
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 30,
-  },
-  item: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#e4dbff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 6,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  tinyPic: {
-    width: 50,
-    height: 50,
-  },
-  interest: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginLeft: 10,
-    marginTop: 8,
-    borderRadius: 45,
-    backgroundColor: '#fff',
-  },
-  interestText: {
-    fontSize: 11,
-    color: 'black',
-  },
-});
