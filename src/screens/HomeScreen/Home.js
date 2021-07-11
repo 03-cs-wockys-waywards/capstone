@@ -35,6 +35,15 @@ const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`
 }
 
+const userChatIcon = (navigation) => (
+  <Icon
+    type="material-community"
+    name="message-outline"
+    size={25}
+    onPress={() => navigation.navigate('Chat')}
+  />
+)
+
 export default function Home({ navigation }) {
   return (
     <HomeStack.Navigator initialRouteName="Home">
@@ -54,6 +63,7 @@ export default function Home({ navigation }) {
         component={SingleUserProfile}
         options={({ route }) => ({
           title: renderName(route),
+          headerRight: () => userChatIcon(navigation),
         })}
       />
     </HomeStack.Navigator>

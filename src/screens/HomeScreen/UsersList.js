@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/usersReducer'
-
+import styles from './styles'
 import UserRow from './UserRow'
 
 const DATA = [
@@ -130,15 +130,11 @@ export default function UsersList({ navigation }) {
   // }, [dispatch])
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('Single User', { user: item })}
-    >
-      <UserRow item={item} />
-    </TouchableOpacity>
+    <UserRow item={item} navigation={navigation} />
   )
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.listContainer}>
       <FlatList
         data={DATA}
         renderItem={renderItem}

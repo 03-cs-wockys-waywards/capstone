@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   ImageBackground,
   SafeAreaView,
@@ -9,16 +10,32 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
 import { Pill } from '../../components/Pill'
-import { firebase } from '../../firebaseSpecs/config'
 import { getRandomLightColor } from '../../helpers/getRandomLightColor'
 import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
+import { editUserInfo } from '../../store/userReducer'
 
 export default function SingleUserProfile({ route }) {
-  const [like, setLike] = useState(false)
+  const likes = useSelector((state) => state.user.likes)
 
-  const { user } = route.params
+  const { user, liked } = route.params
+  const [like, setLike] = useState(liked)
+
+  const dispatch = useDispatch()
+
+  const likesFilter = (id) => {
+    return likes.filter((likeId) => likeId !== id)
+  }
+
+  const handleLike = (id) => {
+    setLike(!like)
+    if (!likes.includes(id) && !like) {
+      dispatch(editUserInfo({ likes: [...likes, id] }))
+    } else {
+      dispatch(editUserInfo({ likes: [...likesFilter(id)] }))
+    }
+  }
 
   const renderName = (firstName, lastName) => {
     return `${firstName} ${lastName[0]}.`
@@ -56,7 +73,7 @@ export default function SingleUserProfile({ route }) {
                 <Text style={styles.nameText}>
                   {renderName(user.firstName, user.lastName)}
                 </Text>
-                <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
+                <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
                   {like ? (
                     <MaterialCommunityIcons
                       name="heart"

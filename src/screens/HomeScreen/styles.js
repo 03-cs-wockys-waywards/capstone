@@ -1,30 +1,45 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-  container: {
+  listContainer: {
     flex: 1,
-    marginTop: 30,
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignContent: 'center',
+    backgroundColor: '#e4dbff',
   },
-  item: {
+  userRowContainer: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#e4dbff',
-    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    padding: 12,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 6,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
+  infoContainer: {
+    flex: 1,
+    marginLeft: 8,
+  },
+  userTitle: {
+    flex: 1,
+    flexDirection: 'row',
+    alignContent: 'center',
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 3,
     marginLeft: 10,
     marginRight: 10,
   },
-  tinyPic: {
-    width: 50,
-    height: 50,
+  userName: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginRight: 10,
+  },
+  interestsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   interest: {
     flex: 1,
