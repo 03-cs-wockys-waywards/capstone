@@ -28,7 +28,7 @@ export const fetchUsersWithInterests = (interests) => {
 export default function (state = [], action) {
   switch (action.type) {
     case SET_ALL_USERS:
-      return [...state, action.users]
+      return action.users
     default:
       return state
   }
