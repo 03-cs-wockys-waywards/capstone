@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/usersReducer'
+
 import UserRow from './UserRow'
 
 const DATA = [
@@ -128,12 +129,6 @@ export default function UsersList({ navigation }) {
   //   dispatch(fetchUsersWithInterests(user.interests))
   // }, [dispatch])
 
-  const handlePress = ({ navigation }) => {
-    // navigate to single user profile
-    console.log('user row pressed')
-    navigation.push('Single Profile')
-  }
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => navigation.navigate('Single User', { user: item })}
@@ -141,8 +136,6 @@ export default function UsersList({ navigation }) {
       <UserRow item={item} />
     </TouchableOpacity>
   )
-
-  //      onPress={() => navigation.navigate('Calendar')}
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

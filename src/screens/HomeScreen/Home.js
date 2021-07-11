@@ -31,6 +31,10 @@ const rightIcons = (navigation) => (
   </View>
 )
 
+const renderName = (route) => {
+  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`
+}
+
 export default function Home({ navigation }) {
   return (
     <HomeStack.Navigator initialRouteName="Home">
@@ -48,7 +52,9 @@ export default function Home({ navigation }) {
       <HomeStack.Screen
         name="Single User"
         component={SingleUserProfile}
-        options={{ headerTitle: 'name' }}
+        options={({ route }) => ({
+          title: renderName(route),
+        })}
       />
     </HomeStack.Navigator>
   )

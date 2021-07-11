@@ -29,30 +29,14 @@ export default StyleSheet.create({
   interest: {
     flex: 1,
     flexDirection: 'row',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginLeft: 10,
+    paddingVertical: 7,
+    paddingHorizontal: 14,
+    marginLeft: 7,
     marginTop: 8,
     borderRadius: 45,
-    backgroundColor: '#fff',
   },
   interestText: {
     fontSize: 11,
     color: 'black',
   },
 })
-
-// listContainer: {
-//     marginTop: 20,
-//     padding: 20,
-//   },
-//   entityContainer: {
-//     marginTop: 16,
-//     borderBottomColor: '#cccccc',
-//     borderBottomWidth: 1,
-//     paddingBottom: 16,
-//   },
-//   entityText: {
-//     fontSize: 20,
-//     color: '#333333',
-//   },

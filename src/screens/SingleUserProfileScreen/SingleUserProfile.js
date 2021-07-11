@@ -50,19 +50,30 @@ export default function SingleUserProfile({ route }) {
             imageStyle={styles.imageStyle}
           >
             <View style={styles.profileInfoContainer}>
-              <Text style={styles.nameText}>
-                {renderName(user.firstName, user.lastName)}
-              </Text>
+              <View
+                style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}
+              >
+                <Text style={styles.nameText}>
+                  {renderName(user.firstName, user.lastName)}
+                </Text>
+                <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
+                  {like ? (
+                    <MaterialCommunityIcons
+                      name="heart"
+                      size={25}
+                      color="#96171B"
+                    />
+                  ) : (
+                    <MaterialCommunityIcons
+                      name="heart-plus-outline"
+                      size={25}
+                    />
+                  )}
+                </DoubleTap>
+              </View>
               <Text style={styles.pronounText}>
                 {renderPronouns(user.pronouns)}
               </Text>
-              <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
-                {like ? (
-                  <MaterialCommunityIcons name="heart" size={18} />
-                ) : (
-                  <MaterialCommunityIcons name="heart-plus-outline" size={18} />
-                )}
-              </DoubleTap>
               <Text style={styles.subheadingText}>Interests</Text>
               <View style={styles.interestsContainer}>
                 {renderInterests(user.interests)}
