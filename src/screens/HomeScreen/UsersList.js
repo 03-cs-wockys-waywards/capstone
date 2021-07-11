@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { SafeAreaView, FlatList } from 'react-native'
+import { SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/usersReducer'
-
 import UserRow from './UserRow'
 
 const DATA = [
@@ -118,26 +117,32 @@ const DATA = [
 export default function UsersList({ navigation }) {
   const user = useSelector((state) => state.user)
   const users = useSelector((state) => state.users)
-  console.log('USERS in UsersList: ', users)
+  //console.log('USERS in UsersList: ', users)
 
   const [currentUser, setCurrentUser] = useState(user || {})
   const [usersList, setUsersList] = useState(users || [])
 
-  const dispatch = useDispatch()
+  //const dispatch = useDispatch()
 
   // useEffect(() => {
   //   dispatch(fetchUsersWithInterests(user.interests))
   // }, [dispatch])
 
-  const handlePress = (item) => {
+  const handlePress = ({ navigation }) => {
     // navigate to single user profile
-    console.log('ITEM in UsersList', item)
-    navigation.navigate('User Profile', { item })
+    console.log('user row pressed')
+    navigation.push('Single Profile')
   }
 
   const renderItem = ({ item }) => (
-    <UserRow item={item} onPress={() => handlePress(item)} />
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Single User', { user: item })}
+    >
+      <UserRow item={item} />
+    </TouchableOpacity>
   )
+
+  //      onPress={() => navigation.navigate('Calendar')}
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

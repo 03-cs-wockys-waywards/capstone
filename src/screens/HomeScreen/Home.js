@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import UsersList from './UsersList'
+import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile'
 
 const HomeStack = createStackNavigator()
 
@@ -44,6 +45,11 @@ export default function Home({ navigation }) {
       />
       <HomeStack.Screen name="Chat" component={EmptyScreen} />
       <HomeStack.Screen name="Calendar" component={EmptyScreen} />
+      <HomeStack.Screen
+        name="Single User"
+        component={SingleUserProfile}
+        options={{ headerTitle: 'name' }}
+      />
     </HomeStack.Navigator>
   )
 }

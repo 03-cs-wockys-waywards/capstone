@@ -10,33 +10,33 @@ export default function UserRow({ item }) {
   const [likes, setLikes] = useState([])
 
   return (
-    <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
-      <View style={styles.item}>
-        <Avatar size="large" rounded source={{ uri: item.profilePicture }} />
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <Text style={styles.title}>
-              {item.firstName} {item.lastName[0]}.
-            </Text>
+    <View style={styles.item}>
+      <Avatar size="large" rounded source={{ uri: item.profilePicture }} />
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Text style={styles.title}>
+            {item.firstName} {item.lastName[0]}.
+          </Text>
+          <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
             {like ? (
               <MaterialCommunityIcons name="heart" size={18} />
             ) : (
               <MaterialCommunityIcons name="heart-plus-outline" size={18} />
             )}
-          </View>
-          <FlatList
-            style={{ flexDirection: 'row', flexWrap: 'wrap' }}
-            data={item.interests}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.interest}>
-                <Text style={styles.interestText}>{item}</Text>
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => (item + index).toString()}
-          />
+          </DoubleTap>
         </View>
+        <FlatList
+          style={{ flexDirection: 'row', flexWrap: 'wrap' }}
+          data={item.interests}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.interest}>
+              <Text style={styles.interestText}>{item}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item, index) => (item + index).toString()}
+        />
       </View>
-    </DoubleTap>
+    </View>
   )
 }
 

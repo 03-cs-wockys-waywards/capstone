@@ -1,39 +1,24 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
 import {
   ImageBackground,
   SafeAreaView,
   ScrollView,
   View,
   Text,
-  TouchableOpacity,
 } from 'react-native'
-import { Pill } from '../../../components/Pill'
-import { firebase } from '../../../firebaseSpecs/config'
-import { getRandomLightColor } from '../../../helpers/getRandomLightColor'
-import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns'
-import defaultProfilePicture from '../../../images/default-profile-picture.jpg'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import DoubleTap from 'react-native-double-tap'
+import { Pill } from '../../components/Pill'
+import { firebase } from '../../firebaseSpecs/config'
+import { getRandomLightColor } from '../../helpers/getRandomLightColor'
+import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
+import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
 
-export default function ConfirmationScreen({ navigation }) {
-  const user = useSelector((state) => state.user)
+export default function SingleUserProfile({ route }) {
+  const [like, setLike] = useState(false)
 
-  const registerUser = () => {
-    // Create user in users collection with uid
-    const uid = user.userId
-    const usersRef = firebase.firestore().collection('users')
-
-    usersRef
-      .doc(uid)
-      .set(user)
-      .then(() => {
-        // TODO: navigation.navigate("Home");
-        navigation.navigate('Login')
-      })
-      .catch((error) => {
-        alert(error)
-      })
-  }
+  const { user } = route.params
 
   const renderName = (firstName, lastName) => {
     return `${firstName} ${lastName[0]}.`
@@ -57,15 +42,9 @@ export default function ConfirmationScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Profile Confirmation</Text>
-          <Text style={styles.labelText}>
-            This is how your profile appears to others.
-          </Text>
-        </View>
         <View style={styles.profilePreviewContainer}>
           <ImageBackground
-            source={user.image}
+            source={{ uri: user.profilePicture }}
             defaultSource={defaultProfilePicture}
             style={styles.image}
             imageStyle={styles.imageStyle}
@@ -77,17 +56,19 @@ export default function ConfirmationScreen({ navigation }) {
               <Text style={styles.pronounText}>
                 {renderPronouns(user.pronouns)}
               </Text>
+              <DoubleTap doubleTap={() => setLike(!like)} delay={200}>
+                {like ? (
+                  <MaterialCommunityIcons name="heart" size={18} />
+                ) : (
+                  <MaterialCommunityIcons name="heart-plus-outline" size={18} />
+                )}
+              </DoubleTap>
               <Text style={styles.subheadingText}>Interests</Text>
               <View style={styles.interestsContainer}>
                 {renderInterests(user.interests)}
               </View>
             </View>
           </ImageBackground>
-        </View>
-        <View style={styles.confirmButtonContainer}>
-          <TouchableOpacity style={styles.button} onPress={registerUser}>
-            <Text style={styles.buttonText}>Confirm</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
