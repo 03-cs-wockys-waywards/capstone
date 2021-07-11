@@ -5,6 +5,8 @@ import { StatusBar } from 'expo-status-bar'
 import { firebase } from './src/firebaseSpecs/config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { useSelector, useDispatch } from 'react-redux';
+import { editUserInfo } from "./src/store/userReducer";
 
 import {
   LoginScreen,
@@ -57,42 +59,51 @@ const styles = StyleSheet.create({
 })
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState({})
+  // const [loading, setLoading] = useState(true)
+  // const [user, setUser] = useState({});
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    const usersRef = firebase.firestore().collection('users')
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            const userData = document.data()
-            setLoading(false)
-            setUser(userData)
-          })
-          .catch((error) => {
-            setLoading(false)
-          })
-      } else {
-        setLoading(false)
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   const usersRef = firebase.firestore().collection('users')
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       usersRef
+  //       .doc(user.uid)
+  //       .get()
+  //       .then((document) => {
+  //         const userData = document.data()
+  //         console.log('userData in useEffect >>>>>>', userData)
+  //         dispatch(editUserInfo(userData))
+  //         console.log('----------------')
+  //         setLoading(false)
+  //         setUser(userData)
+  //         console.log('user after setUser >>>>>>>>>', user);
+  //       })
+  //       .catch((error) => {
+  //         setLoading(false)
+  //       })
+  //       // console.log('user in useEffect', user);
+  //     } else {
+  //       setLoading(false)
+  //     }
+  //   });
+  // }, [])
 
-  if (loading) {
-    return <></>
-  }
+  // console.log('user outside useEffect', user)
+
+  // if (loading) {
+  //   return <></>
+  // }
 
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
           {firebase.auth().currentUser ? (
-            <Stack.Screen name="Main">
-              {(props) => <MainScreen {...props} user={user} />}
-            </Stack.Screen>
+            // <Stack.Screen name="Main">
+            //   {(props) => <MainScreen {...props} user={user} />}
+            // </Stack.Screen>
+            <Stack.Screen name="Main" component={MainScreen} />
           ) : (
             <>
               {/* <Stack.Screen

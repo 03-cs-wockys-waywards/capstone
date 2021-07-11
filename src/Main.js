@@ -13,10 +13,10 @@ const EmptyScreen = () => {
 }
 
 class Main extends Component {
-  componentDidMount() {
-    const currentUser = this.props.user
-    this.props.setUser(currentUser)
-  }
+  // componentDidMount() {
+  //   const currentUser = this.props.user
+  //   this.props.setUser(currentUser)
+  // }
 
   render() {
     return (
@@ -40,14 +40,6 @@ class Main extends Component {
         <Tab.Screen
           name="Profile"
           component={EmptyScreen}
-          listeners={({ navigation }) => ({
-            tabPress: (evt) => {
-              evt.preventDefault()
-              navigation.navigate('Profile', {
-                uid: this.props.user.id,
-              })
-            },
-          })}
           options={{
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="account" color={color} size={28} />
