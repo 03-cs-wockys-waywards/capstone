@@ -7,23 +7,6 @@ export default StyleSheet.create({
     // marginTop: '10%',
     height: '100%',
   },
-  label: {
-    fontSize: 16,
-    lineHeight: 19,
-    marginTop: 15,
-    marginBottom: 15,
-  },
-  input: {
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#BDBDBD',
-    borderRadius: 10,
-    backgroundColor: '#F6F6F6',
-    width: '100%',
-    height: 45,
-    marginBottom: 17,
-    paddingLeft: 15,
-  },
   image: {
     width: 300,
     height: 300,

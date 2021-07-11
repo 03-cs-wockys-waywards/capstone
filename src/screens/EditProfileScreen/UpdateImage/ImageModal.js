@@ -14,9 +14,9 @@ export default function ImageModal({ user, setUser }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const useCamera = async () => {
-    const cameraStatus = await Camera.requestPermissionsAsync();
+    const { status } = await Camera.requestPermissionsAsync();
 
-    if (cameraStatus.status === "granted") {
+    if (status === "granted") {
       const image = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [1, 1],
@@ -30,9 +30,9 @@ export default function ImageModal({ user, setUser }) {
   };
 
   const useLibrary = async () => {
-    const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (galleryStatus.status === "granted") {
+    if (status === "granted") {
       const image = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
