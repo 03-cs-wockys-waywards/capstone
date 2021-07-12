@@ -5,7 +5,6 @@ import { Avatar } from 'react-native-elements'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
 
-import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import { getRandomLightColor } from '../../helpers/getRandomLightColor'
 import styles from './styles'
 import { editUserInfo } from '../../store/userReducer'

@@ -62,29 +62,10 @@ export class App extends Component {
   constructor() {
     super()
     this.state = {
-      user: {},
+      user: null,
       loading: true,
     }
   }
-  // const [loading, setLoading] = useState(true)
-  // const [user, setUser] = useState({});
-
-  //const [loading, setLoading] = useState(false)
-  //const [user, setUser] = useState({})
-  //const [isLoggedIn, setLoggedIn] = useState(false)
-
-  // useEffect(() => {
-  //   //const usersRef = firebase.firestore().collection('users')
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (!user) {
-  //       setLoading(true)
-  //       setLoggedIn(false)
-  //     } else {
-  //       setLoading(true)
-  //       setLoggedIn(true)
-  //     }
-  //   })
-  // }, [])
 
   componentDidMount() {
     const usersRef = firebase.firestore().collection('users')
@@ -135,7 +116,6 @@ export class App extends Component {
               component={ProfileStepThree}
             />
             <Stack.Screen name="Confirmation" component={Confirmation} />
-            <Stack.Screen name="Main" component={MainScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       )
