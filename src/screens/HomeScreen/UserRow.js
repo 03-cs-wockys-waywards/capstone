@@ -9,17 +9,27 @@ import { getRandomLightColor } from '../../helpers/getRandomLightColor'
 import styles from './styles'
 import { editUserInfo } from '../../store/userReducer'
 
+export const getColorsArray = (num) => {
+  const colors = new Array(num)
+  for (let i = 0; i < colors.length; i++) {
+    colors[i] = getRandomLightColor()
+  }
+  return colors
+}
+
 export default function UserRow({ item, navigation }) {
   const likes = useSelector((state) => state.user.likes)
-  //console.log('user likes on state: ', likes)
   const [like, setLike] = useState(false)
+  const [colors, setColors] = useState([])
+  //console.log('user likes on state: ', likes)
   //const [userLikes, setUserLikes] = useState([])
 
   const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   setUserLikes(likes)
-  // }, [])
+  useEffect(() => {
+    const colors = getColorsArray(5)
+    setColors(colors)
+  }, [])
 
   const likesFilter = (id) => {
     return likes.filter((likeId) => likeId !== id)
@@ -62,11 +72,8 @@ export default function UserRow({ item, navigation }) {
           <FlatList
             style={styles.interestsContainer}
             data={item.interests}
-            renderItem={({ item }) => (
-              <View
-                style={styles.interest}
-                backgroundColor={getRandomLightColor()}
-              >
+            renderItem={({ item, index }) => (
+              <View style={styles.interest} backgroundColor={colors[index]}>
                 <Text style={styles.interestText}>{item}</Text>
               </View>
             )}
