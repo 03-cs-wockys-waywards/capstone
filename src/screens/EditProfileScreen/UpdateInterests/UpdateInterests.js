@@ -20,7 +20,7 @@ export default function UpdateInterests({ user, setUser }) {
         <Text style={styles.label}>Interests</Text>
         <InterestsModal user={user} setUser={setUser} />
       </View>
-      <View style={styles.interestsContainer}>
+      <View style={[styles.container, styles.interestsContainer]}>
         {interests.map((interest, idx) => {
           return (
             <Pill key={idx} text={interest} backgroundColor={colors[idx]} />
@@ -46,4 +46,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingTop: 3,
   },
+  interestsContainer: {
+    marginTop: 10,
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+  }
 });
