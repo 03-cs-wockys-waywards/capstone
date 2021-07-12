@@ -15,6 +15,7 @@ import {
   ProfileStepTwo,
   ProfileStepThree,
   Confirmation,
+  ProfileScreen
 } from './src/screens'
 import MainScreen from './src/Main'
 import { decode, encode } from 'base-64'
@@ -99,18 +100,11 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
-          {firebase.auth().currentUser ? (
-            // <Stack.Screen name="Main">
-            //   {(props) => <MainScreen {...props} user={user} />}
-            // </Stack.Screen>
+          {firebase.auth().currentUser && <Stack.Screen name="Profile" component={ProfileScreen} />}
+          {/* {firebase.auth().currentUser ? (
             <Stack.Screen name="Main" component={MainScreen} />
           ) : (
             <>
-              {/* <Stack.Screen
-              name="Landing"
-              component={LandingScreen}
-              options={{ headerShown: false }}
-            /> */}
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen
                 name="Registration"
@@ -126,7 +120,7 @@ export default function App() {
 
               <Stack.Screen name="Main" component={MainScreen} />
             </>
-          )}
+          )} */}
         </Stack.Navigator>
         <MyStatusBar backgroundColor="white" barStyle="dark-content" />
       </NavigationContainer>
