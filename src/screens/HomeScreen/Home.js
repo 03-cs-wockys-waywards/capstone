@@ -5,7 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { rightIcons } from '../../components/HeaderRightIcons'
 
-import UsersList from './UsersList'
+import UsersList from './DiscoverList'
+import MatchesList from './MatchesList'
 import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile'
 
 const HomeStack = createStackNavigator()
@@ -31,7 +32,7 @@ const userChatIcon = (navigation) => (
 
 export default function Home({ navigation }) {
   return (
-    <HomeStack.Navigator initialRouteName="UsersList">
+    <HomeStack.Navigator>
       <HomeStack.Screen
         name="UsersList"
         component={UsersList}
@@ -41,6 +42,7 @@ export default function Home({ navigation }) {
           headerRight: () => rightIcons(navigation),
         }}
       />
+      {/* <HomeStack.Screen name="MatchesList" component={MatchesList} /> */}
       <HomeStack.Screen name="ChatList" component={EmptyScreen} />
       <HomeStack.Screen name="ChatConversation" component={EmptyScreen} />
       <HomeStack.Screen name="Calendar" component={EmptyScreen} />
@@ -55,3 +57,5 @@ export default function Home({ navigation }) {
     </HomeStack.Navigator>
   )
 }
+
+//initialRouteName="UsersList"

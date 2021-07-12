@@ -12,6 +12,8 @@ const EmptyScreen = () => {
 }
 
 export default function MainScreen(props) {
+  //console.log('MAIN component runnning...')
+
   const user = props.route.params.user
 
   const dispatch = useDispatch()
