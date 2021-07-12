@@ -8,10 +8,9 @@ export const setAllUsers = (users) => ({
 })
 
 export const fetchUsersWithInterests = (interests) => {
-  return (dispatch) => {
-    firebase
-      .firestore()
-      .collection('users')
+  return async (dispatch) => {
+    const usersRef = firebase.firestore().collection('users')
+    await usersRef
       .where('interests', 'array-contains-any', interests)
       .get()
       .then((snapshot) => {

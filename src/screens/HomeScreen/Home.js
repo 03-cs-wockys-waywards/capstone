@@ -66,9 +66,9 @@ export default function Home({ navigation }) {
   // }, [])
 
   return (
-    <HomeStack.Navigator initialRouteName="Home">
+    <HomeStack.Navigator initialRouteName="UsersList">
       <HomeStack.Screen
-        name="Home"
+        name="UsersList"
         component={UsersList}
         options={{
           headerLeft: () => logo(),

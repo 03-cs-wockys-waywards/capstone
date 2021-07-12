@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { Component, useState, useEffect } from 'react'
+import { useSelector, useDispatch, connect } from 'react-redux'
 import { SafeAreaView, FlatList } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/usersReducer'
 import styles from './styles'
@@ -117,22 +117,13 @@ const DATA = [
   },
 ]
 
-export default function UsersList({ navigation }) {
-  // const user = useSelector((state) => state.user)
-  // const interests = useSelector((state) => state.user.interests)
-  const users = useSelector((state) => state.users)
-  const dispatch = useDispatch()
-  // console.log('Current user: ', user)
-  // console.log('Current user interests on state: ', interests)
-  // console.log('USERS in UsersList: ', users.length)
+export class UsersList extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-  // making a firebase call to get the users with interests
-  // useEffect(() => {
-  //   dispatch(fetchUsersWithInterests(interests))
-  // }, [])
-
-  // make a firebase call to get user doc
-  useEffect(() => {
+  componentDidMount() {
+    console.log('useEffect in UsersList running...')
     firebase
       .firestore()
       .collection('users')
@@ -142,55 +133,151 @@ export default function UsersList({ navigation }) {
         if (snapshot.exists) {
           const user = snapshot.data()
           const interests = user.interests
-          dispatch(fetchUsersWithInterests(interests))
+          this.props.setInterests(interests)
         } else {
           console.log('user does not exist')
         }
       })
-  }, [])
-
-  const renderItem = ({ item }) => (
-    <UserRow item={item} navigation={navigation} />
-  )
-  const [searchText, setSearchText] = useState('')
-  // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
-  //const [discoverData, setDiscoverData] = useState([...DATA])
-  const [discoverData, setDiscoverData] = useState([...users])
-
-  const updateSearchText = (text) => {
-    setSearchText(text)
-    filterDiscover(text)
+    // console.log('UserList user interests: ', this.props.user.interests)
+    // this.props.setInterests(this.props.user.interests)
   }
 
-  // TODO: convert into a helper function to use in the Chats screen as well
-  const filterDiscover = (text) => {
-    //const tempDiscoverData = [...DATA]
-    const tempDiscoverData = [...users]
-    const newDiscoverData = tempDiscoverData.filter((user) => {
-      const firstName = user.firstName.toUpperCase()
-      const searchTerm = text.toUpperCase()
-      return firstName.indexOf(searchTerm) > -1
-    })
-    setDiscoverData(newDiscoverData)
-  }
+  render() {
+    // console.log('UserList user interests: ', this.props.user.interests)
+    const { users, navigation } = this.props
+    const renderItem = ({ item }) => (
+      <UserRow item={item} navigation={navigation} />
+    )
 
-  return (
-    <SafeAreaView style={styles.listContainer}>
-      <FlatList
-        data={discoverData}
-        keyExtractor={(item) => item.id.toString()}
-        // data={users}
-        renderItem={renderItem}
-        // To prevent SearchBar component from re-rendering (i.e. keyboard losing focus),
-        // directly render SearchBar inside of ListHeaderComponent rather than using a separate function
-        ListHeaderComponent={
-          <SearchBar
-            updateSearchText={updateSearchText}
-            searchText={searchText}
-          />
-        }
-        stickyHeaderIndices={[0]}
-      />
-    </SafeAreaView>
-  )
+    // const [searchText, setSearchText] = useState('')
+    // // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
+    // //const [discoverData, setDiscoverData] = useState([...DATA])
+    // const [discoverData, setDiscoverData] = useState([...users])
+
+    // const updateSearchText = (text) => {
+    //   setSearchText(text)
+    //   filterDiscover(text)
+    // }
+
+    // // TODO: convert into a helper function to use in the Chats screen as well
+    // const filterDiscover = (text) => {
+    //   //const tempDiscoverData = [...DATA]
+    //   const tempDiscoverData = [...users]
+    //   const newDiscoverData = tempDiscoverData.filter((user) => {
+    //     const firstName = user.firstName.toUpperCase()
+    //     const searchTerm = text.toUpperCase()
+    //     return firstName.indexOf(searchTerm) > -1
+    //   })
+    //   setDiscoverData(newDiscoverData)
+    // }
+
+    return (
+      <SafeAreaView style={styles.listContainer}>
+        <FlatList
+          data={users}
+          keyExtractor={(item) => item.id.toString()}
+          // data={users}
+          renderItem={renderItem}
+          // To prevent SearchBar component from re-rendering (i.e. keyboard losing focus),
+          // directly render SearchBar inside of ListHeaderComponent rather than using a separate function
+          //ListHeaderComponent={
+          // <SearchBar
+          //   updateSearchText={updateSearchText}
+          //   searchText={searchText}
+          // />
+          //}
+          //stickyHeaderIndices={[0]}
+        />
+      </SafeAreaView>
+    )
+  }
 }
+
+const mapState = (state) => ({
+  user: state.user,
+  users: state.users,
+})
+
+const mapDispatch = (dispatch) => ({
+  setInterests: (interests) => dispatch(fetchUsersWithInterests(interests)),
+})
+
+export default connect(mapState, mapDispatch)(UsersList)
+// const user = useSelector((state) => state.user)
+// const interests = useSelector((state) => state.user.interests)
+// const users = useSelector((state) => state.users)
+// const dispatch = useDispatch()
+// console.log('Current user: ', user)
+// console.log('Current user interests on state: ', interests)
+// console.log('USERS in UsersList: ', users.length)
+// console.log('UsersList function running...')
+
+// making a firebase call to get the users with interests
+// useEffect(() => {
+//   dispatch(fetchUsersWithInterests(interests))
+// }, [])
+
+// make a firebase call to get user doc
+// useEffect(() => {
+//   console.log('useEffect in UsersList running...')
+//   firebase
+//     .firestore()
+//     .collection('users')
+//     .doc(firebase.auth().currentUser.uid)
+//     .get()
+//     .then((snapshot) => {
+//       if (snapshot.exists) {
+//         const user = snapshot.data()
+//         const interests = user.interests
+//         dispatch(fetchUsersWithInterests(interests))
+//       } else {
+//         console.log('user does not exist')
+//       }
+//     })
+// }, [])
+
+//   const renderItem = ({ item }) => (
+//     <UserRow item={item} navigation={navigation} />
+//   )
+//   const [searchText, setSearchText] = useState('')
+//   // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
+//   //const [discoverData, setDiscoverData] = useState([...DATA])
+//   const [discoverData, setDiscoverData] = useState([...users])
+
+//   const updateSearchText = (text) => {
+//     setSearchText(text)
+//     filterDiscover(text)
+//   }
+
+//   // TODO: convert into a helper function to use in the Chats screen as well
+//   const filterDiscover = (text) => {
+//     //const tempDiscoverData = [...DATA]
+//     const tempDiscoverData = [...users]
+//     const newDiscoverData = tempDiscoverData.filter((user) => {
+//       const firstName = user.firstName.toUpperCase()
+//       const searchTerm = text.toUpperCase()
+//       return firstName.indexOf(searchTerm) > -1
+//     })
+//     setDiscoverData(newDiscoverData)
+//   }
+
+//   return (
+//     <SafeAreaView style={styles.listContainer}>
+//       <FlatList
+//         data={discoverData}
+//         keyExtractor={(item) => item.id.toString()}
+//         // data={users}
+//         renderItem={renderItem}
+//         // To prevent SearchBar component from re-rendering (i.e. keyboard losing focus),
+//         // directly render SearchBar inside of ListHeaderComponent rather than using a separate function
+//         ListHeaderComponent={
+//           <SearchBar
+//             updateSearchText={updateSearchText}
+//             searchText={searchText}
+//           />
+//         }
+//         stickyHeaderIndices={[0]}
+//       />
+//     </SafeAreaView>
+//   )
+// }
