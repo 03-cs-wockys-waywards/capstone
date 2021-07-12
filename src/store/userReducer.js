@@ -54,13 +54,22 @@ const removeRes = await washingtonRef.update({
 export const _addLike = (likeId) => {
   return async (dispatch) => {
     const currentUserId = firebase.auth().currentUser.uid
-    // console.log('LikeId: ', likeId)
-    // console.log('currentUserId: ', currentUserId)
     const userRef = firebase.firestore().collection('users').doc(currentUserId)
     await userRef.update({
       likes: firebase.firestore.FieldValue.arrayUnion(likeId),
     })
     dispatch(addLike(likeId))
+  }
+}
+
+export const _removeLike = (likeId) => {
+  return async (dispatch) => {
+    const currentUserId = firebase.auth().currentUser.uid
+    const userRef = firebase.firestore().collection('users').doc(currentUserId)
+    await userRef.update({
+      likes: firebase.firestore.FieldValue.arrayRemove(likeId),
+    })
+    dispatch(removeLike(likeId))
   }
 }
 
@@ -78,12 +87,13 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case EDIT_USER_INFO:
       return { ...state, ...action.userInfo }
-    // const newState = { ...state, ...action.userInfo };
-    // console.log('newState from the reducer', newState);
-    // return newState;
     case ADD_LIKE:
-      console.log({ ...state, likes: [...state.likes, action.id] })
       return { ...state, likes: [...state.likes, action.id] }
+    case REMOVE_LIKE:
+      const newLikes = state.likes.filter((uid) => uid !== action.id)
+      console.log('New likes after remove like: ', newLikes)
+      console.log('Updated state after remove: ', { ...state, likes: newLikes })
+      return { ...state, likes: newLikes }
     default:
       return state
   }

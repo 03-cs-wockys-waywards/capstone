@@ -39,10 +39,12 @@ export default function UserRow({ item, navigation }) {
   const handleLike = (id) => {
     if (!like) {
       dispatch(_addLike(id))
+      setLike(true)
+    } else {
+      console.log('going into else statement')
+      dispatch(_removeLike(id))
+      setLike(false)
     }
-    //else {
-    //   dispatch(_removeLike(id))
-    // }
   }
 
   return (
