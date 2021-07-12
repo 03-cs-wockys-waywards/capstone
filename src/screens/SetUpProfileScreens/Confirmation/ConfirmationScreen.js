@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   ImageBackground,
   SafeAreaView,
@@ -8,15 +8,17 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { editUserInfo } from '../../../store/userReducer';
 import { Pill } from '../../../components/Pill';
 import { firebase } from '../../../firebaseSpecs/config';
 import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
 import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns';
-import defaultProfilePicture from '../../../images/default-profile-picture.jpg';
 import styles from './styles';
 
 export default function ConfirmationScreen({ navigation }) {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const [picURL, setPicURL] = useState('');
 
   const registerUser = () => {
     // Create user in users collection with uid
@@ -30,7 +32,8 @@ export default function ConfirmationScreen({ navigation }) {
         // TODO: navigation.navigate("Home");
         // navigation.navigate('Login');
         // navigating to EditProfile for testing purposes
-        navigation.navigate('EditProfile')
+        //navigation.navigate('EditProfile')
+        navigation.navigate('Main');
       })
       .catch((error) => {
         alert(error);
@@ -56,6 +59,50 @@ export default function ConfirmationScreen({ navigation }) {
     });
   };
 
+  const loadProfilePicture = () => {
+    const profilePicRef = firebase
+      .storage()
+      .ref()
+      .child(`profile/${firebase.auth().currentUser.uid}`);
+
+    profilePicRef.getDownloadURL().then((url) => {
+      setPicURL(url);
+      // Save user profile photo in redux
+      dispatch(editUserInfo({ profilePicture: url }));
+    });
+  };
+
+  useEffect(() => {
+    loadProfilePicture();
+  }, []);
+
+  const renderProfilePicture = () => {
+    if (picURL) {
+      return (
+        <ImageBackground
+          // image source must be in {uri: linkToPhoto } format!
+          source={{ uri: picURL }}
+          style={styles.image}
+          imageStyle={styles.imageStyle}
+          resizeMode="cover"
+        >
+          <View style={styles.profileInfoContainer}>
+            <Text style={styles.nameText}>
+              {renderName(user.firstName, user.lastName)}
+            </Text>
+            <Text style={styles.pronounText}>
+              {renderPronouns(user.pronouns)}
+            </Text>
+            <Text style={styles.subheadingText}>Interests</Text>
+            <View style={styles.interestsContainer}>
+              {renderInterests(user.interests)}
+            </View>
+          </View>
+        </ImageBackground>
+      );
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -66,25 +113,7 @@ export default function ConfirmationScreen({ navigation }) {
           </Text>
         </View>
         <View style={styles.profilePreviewContainer}>
-          <ImageBackground
-            source={user.image}
-            defaultSource={defaultProfilePicture}
-            style={styles.image}
-            imageStyle={styles.imageStyle}
-          >
-            <View style={styles.profileInfoContainer}>
-              <Text style={styles.nameText}>
-                {renderName(user.firstName, user.lastName)}
-              </Text>
-              <Text style={styles.pronounText}>
-                {renderPronouns(user.pronouns)}
-              </Text>
-              <Text style={styles.subheadingText}>Interests</Text>
-              <View style={styles.interestsContainer}>
-                {renderInterests(user.interests)}
-              </View>
-            </View>
-          </ImageBackground>
+          {renderProfilePicture()}
         </View>
         <View style={styles.confirmButtonContainer}>
           <TouchableOpacity style={styles.button} onPress={registerUser}>
