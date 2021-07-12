@@ -5,8 +5,8 @@ import { StatusBar } from 'expo-status-bar'
 import { firebase } from './src/firebaseSpecs/config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { useSelector, useDispatch } from 'react-redux';
-import { editUserInfo } from "./src/store/userReducer";
+import { useSelector, useDispatch } from 'react-redux'
+import { editUserInfo } from './src/store/userReducer'
 
 import {
   LoginScreen,
@@ -62,6 +62,23 @@ export default function App() {
   // const [loading, setLoading] = useState(true)
   // const [user, setUser] = useState({});
   // const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false)
+  //const [user, setUser] = useState({})
+  const [isLoggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    //const usersRef = firebase.firestore().collection('users')
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        setLoading(true)
+        setLoggedIn(false)
+      } else {
+        setLoading(true)
+        setLoggedIn(true)
+      }
+    })
+  }, [])
 
   // useEffect(() => {
   //   const usersRef = firebase.firestore().collection('users')
