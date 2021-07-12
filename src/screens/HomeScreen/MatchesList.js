@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 import { useSelector, useDispatch, connect } from 'react-redux'
 import { SafeAreaView, FlatList } from 'react-native'
-import { fetchUsersWithInterests } from '../../store/usersReducer'
+import { fetchPotentialMatches } from '../../store/usersReducer'
 import styles from './styles'
 import UserRow from './UserRow'
 import SearchBar from '../../components/SearchBar'
@@ -35,7 +35,6 @@ export class MatchesList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      potentialMatches: [],
       matchedUsers: [],
     }
   }
@@ -43,34 +42,15 @@ export class MatchesList extends Component {
   async componentDidMount() {
     // get all users have our user (Rhetta) in their likes array
     const currentUserId = firebase.auth().currentUser.uid
-    console.log('>>>>>> Current USER ID: ', currentUserId)
-    const userRef = firebase.firestore().collection('users')
-    await userRef
-      .where('likes', 'array-contains', currentUserId)
-      .get()
-      .then((snapshot) => {
-        if (snapshot) {
-          let users = snapshot.docs.map((doc) => {
-            const data = doc.data()
-            const id = doc.id
-            return { id, ...data }
-          })
-          console.log('>>>>>> Users pulled from firestore: ', users)
-          //this.setState({ potentialMatches: users })
-          // console.log(
-          //   '>>>>>> Potential matches on state: ',
-          //   this.state.potentialMatches
-          // )
-        } else {
-          console.log('users do not exist')
-        }
-      })
-    // grab Rhetta's likes array
-    //const currentUserLikes = this.props.user.likes
-    //console.log(">>>>>Current user's LIKES array: ", currentUserLikes)
+    console.log('>>>>>> Current USER ID from AUTH: ', currentUserId)
+    this.props.setPotentials(currentUserId)
   }
 
   render() {
+    const { users } = this.props
+    if (this.props.user.likes.length) {
+      console.log('>>>> user likes: ', this.props.user.likes)
+    }
     //console.log('>>>>> User PROPS on Matches List: ', this.props.user)
     return (
       <SafeAreaView></SafeAreaView>
@@ -98,12 +78,12 @@ export class MatchesList extends Component {
 const mapState = (state) => ({
   // logged-in user
   user: state.user,
-  // users with similar interests
+  // users that are potential matches
   users: state.users,
 })
 
 const mapDispatch = (dispatch) => ({
-  setInterests: (interests) => dispatch(fetchUsersWithInterests(interests)),
+  setPotentials: (id) => dispatch(fetchPotentialMatches(id)),
 })
 
 export default connect(mapState, mapDispatch)(MatchesList)
