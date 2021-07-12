@@ -91,8 +91,10 @@ export class App extends Component {
   }
 
   render() {
+    //console.log('APP component runnning...')
+
     const { loading, user } = this.state
-    console.log('>>>>>user state in app component render: ', user)
+    //console.log('>>>>>user state in app component render: ', user)
 
     if (loading) {
       return <></>
