@@ -35,7 +35,7 @@ export default function Home({ navigation }) {
 
   return (
     <HomeStack.Navigator>
-      {/* <HomeStack.Screen
+      <HomeStack.Screen
         name="UsersList"
         component={UsersList}
         options={{
@@ -43,8 +43,8 @@ export default function Home({ navigation }) {
           headerTitle: '',
           headerRight: () => rightIcons(navigation),
         }}
-      /> */}
-      <HomeStack.Screen name="MatchesList" component={MatchesList} />
+      />
+      {/* <HomeStack.Screen name="MatchesList" component={MatchesList} /> */}
       <HomeStack.Screen name="ChatList" component={EmptyScreen} />
       <HomeStack.Screen name="ChatConversation" component={EmptyScreen} />
       <HomeStack.Screen name="Calendar" component={EmptyScreen} />

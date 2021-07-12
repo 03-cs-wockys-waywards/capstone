@@ -8,10 +8,6 @@ import SearchBar from '../../components/SearchBar'
 import { firebase } from '../../firebaseSpecs/config'
 
 /*
-
-Look through Rhetta’s likes array (array 2)
-All users in array 1 AND array 2 are matches
-
 Happens while Rhetta uses App, after log in
 If Rhetta likes a user who isn’t in array 1, this means the user liked her after she signed in
 Grab that user from firestore, and check if Rhetta is in their likes array

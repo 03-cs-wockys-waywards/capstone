@@ -7,7 +7,8 @@ import DoubleTap from 'react-native-double-tap'
 
 import { getRandomLightColor } from '../../helpers/getRandomLightColor'
 import styles from './styles'
-import { editUserInfo } from '../../store/userReducer'
+import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
+import { firebase } from '../../firebaseSpecs/config'
 
 export const getColorsArray = (num) => {
   const colors = new Array(num)
@@ -36,12 +37,12 @@ export default function UserRow({ item, navigation }) {
   }
 
   const handleLike = (id) => {
-    setLike(!like)
-    if (!likes.includes(id) && !like) {
-      dispatch(editUserInfo({ likes: [...likes, id] }))
-    } else {
-      dispatch(editUserInfo({ likes: [...likesFilter(id)] }))
+    if (!like) {
+      dispatch(_addLike(id))
     }
+    //else {
+    //   dispatch(_removeLike(id))
+    // }
   }
 
   return (
