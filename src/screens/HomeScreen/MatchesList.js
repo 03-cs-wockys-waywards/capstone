@@ -7,26 +7,6 @@ import UserRow from './UserRow'
 import SearchBar from '../../components/SearchBar'
 import { firebase } from '../../firebaseSpecs/config'
 
-/*
-Happens while Rhetta uses App, after log in
-If Rhetta likes a user who isn’t in array 1, this means the user liked her after she signed in
-Grab that user from firestore, and check if Rhetta is in their likes array
-If yes, match
-Add user B’s uid to Rhetta’s likes array (firestore)
-If no, no match
-Add user B’s uid to Rhetta’s likes array (firestore)
-
-Is user B in Array 1?
-	If yes, they’re a match.
-If no, then make firestore call for user B’s likes.
-	Is Rhetta in user B’s likes array?
-		If yes, it’s a match
-		If no, there’s no match
-
-Finally, add user B to Rhetta’s likes array
-
-*/
-
 export class MatchesList extends Component {
   constructor(props) {
     super(props)
@@ -38,7 +18,6 @@ export class MatchesList extends Component {
   componentDidMount() {
     // get all users have our user (Rhetta) in their likes array
     const currentUserId = firebase.auth().currentUser.uid
-    //console.log('>>>>>> Current USER ID from AUTH: ', currentUserId)
     this.props.setPotentials(currentUserId)
   }
 

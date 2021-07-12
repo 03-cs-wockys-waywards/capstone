@@ -22,8 +22,6 @@ export default function UserRow({ item, navigation }) {
   const likes = useSelector((state) => state.user.likes)
   const [like, setLike] = useState(false)
   const [colors, setColors] = useState([])
-  //console.log('user likes on state: ', likes)
-  //const [userLikes, setUserLikes] = useState([])
 
   const dispatch = useDispatch()
 

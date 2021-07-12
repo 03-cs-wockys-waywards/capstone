@@ -31,8 +31,6 @@ const userChatIcon = (navigation) => (
 )
 
 export default function Home({ navigation }) {
-  //console.log('HOME component runnning...')
-
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen

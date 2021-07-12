@@ -36,21 +36,6 @@ export const fetchUser = () => {
   }
 }
 
-/*
-const admin = require('firebase-admin');
-// ...
-const washingtonRef = db.collection('cities').doc('DC');
-
-// Atomically add a new region to the "regions" array field.
-const unionRes = await washingtonRef.update({
-  regions: admin.firestore.FieldValue.arrayUnion('greater_virginia')
-});
-// Atomically remove a region from the "regions" array field.
-const removeRes = await washingtonRef.update({
-  regions: admin.firestore.FieldValue.arrayRemove('east_coast')
-});
-*/
-
 export const _addLike = (likeId) => {
   return async (dispatch) => {
     const currentUserId = firebase.auth().currentUser.uid
@@ -91,8 +76,6 @@ export default function (state = initialState, action) {
       return { ...state, likes: [...state.likes, action.id] }
     case REMOVE_LIKE:
       const newLikes = state.likes.filter((uid) => uid !== action.id)
-      console.log('New likes after remove like: ', newLikes)
-      console.log('Updated state after remove: ', { ...state, likes: newLikes })
       return { ...state, likes: newLikes }
     default:
       return state

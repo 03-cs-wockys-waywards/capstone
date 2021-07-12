@@ -57,7 +57,6 @@ const Stack = createStackNavigator()
 //   },
 // })
 
-// export default function App() {
 export class App extends Component {
   constructor() {
     super()
@@ -91,10 +90,7 @@ export class App extends Component {
   }
 
   render() {
-    //console.log('APP component runnning...')
-
     const { loading, user } = this.state
-    //console.log('>>>>>user state in app component render: ', user)
 
     if (loading) {
       return <></>
