@@ -1,5 +1,6 @@
 src/firebaseSpecs/config.js
 seed.js
+package-lock.json
 
 # Logs
 logs
