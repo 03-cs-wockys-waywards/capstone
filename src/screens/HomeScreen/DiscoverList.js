@@ -37,46 +37,10 @@ export class DiscoverList extends Component {
 
   render() {
     const { users, navigation } = this.props;
-    const { searchText } = this.state;
 
     const renderItem = ({ item }) => (
       <UserRow item={item} navigation={navigation} />
     );
-
-    //const [searchText, setSearchText] = useState('')
-    // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
-    //const [discoverData, setDiscoverData] = useState([...DATA])
-    //const [discoverData, setDiscoverData] = useState([...users])
-
-    // const updateSearchText = (text) => {
-    //   setSearchText(text)
-    //   filterDiscover(text)
-    // }
-    const updateSearchText = (text) => {
-      this.setState({ searchText: text });
-      filterDiscover(text);
-    };
-
-    // TODO: convert into a helper function to use in the Chats screen as well
-    // const filterDiscover = (text) => {
-    //   //const tempDiscoverData = [...DATA]
-    //   const tempDiscoverData = [...users]
-    //   const newDiscoverData = tempDiscoverData.filter((user) => {
-    //     const firstName = user.firstName.toUpperCase()
-    //     const searchTerm = text.toUpperCase()
-    //     return firstName.indexOf(searchTerm) > -1
-    //   })
-    //   setDiscoverData(newDiscoverData)
-    // }
-    const filterDiscover = (text) => {
-      const tempDiscoverData = [...users];
-      const newDiscoverData = tempDiscoverData.filter((user) => {
-        const firstName = user.firstName.toUpperCase();
-        const searchTerm = text.toUpperCase();
-        return firstName.indexOf(searchTerm) > -1;
-      });
-      this.setState({ discoverData: newDiscoverData });
-    };
 
     return (
       <SafeAreaView style={styles.listContainer}>
@@ -84,15 +48,6 @@ export class DiscoverList extends Component {
           data={users}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
-          // To prevent SearchBar component from re-rendering (i.e. keyboard losing focus),
-          // directly render SearchBar inside of ListHeaderComponent rather than using a separate function
-          ListHeaderComponent={
-            <SearchBar
-              updateSearchText={updateSearchText}
-              searchText={searchText}
-            />
-          }
-          stickyHeaderIndices={[0]}
         />
       </SafeAreaView>
     );

@@ -1,11 +1,9 @@
-import React, { Component, useState, useEffect } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { SafeAreaView, FlatList, Text } from 'react-native';
 import { fetchUsersWithInterests } from '../../store/usersReducer';
 import styles from './styles';
-import UserRow from './UserRow';
 import SearchBar from '../../components/SearchBar';
-import { firebase } from '../../firebaseSpecs/config';
 import { ButtonGroup } from 'react-native-elements';
 import DiscoverList from './DiscoverList';
 import MatchesList from './MatchesList';
@@ -24,7 +22,7 @@ export class UsersList extends Component {
   }
 
   render() {
-    const { users, navigation } = this.props;
+    const { navigation } = this.props;
     const { selectedIndex } = this.state;
 
     const buttonOne = () => <Text>Discover</Text>;

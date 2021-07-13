@@ -46,7 +46,6 @@ export default function UserRow({ item, navigation }) {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log('{ user: item, liked: like }', { user: item, liked: like });
         navigation.navigate('Single User', { user: item, liked: like });
       }}
     >
