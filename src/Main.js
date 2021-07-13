@@ -29,7 +29,10 @@ export default function MainScreen(props) {
       inactiveColor="#e4dbff"
       labeled={false}
       labelStyle={{ fontSize: 12 }}
-      barStyle={{ backgroundColor: '#106563' }}
+      barStyle={{
+        backgroundColor: '#106563',
+        alignItems: 'center',
+      }}
     >
       <Tab.Screen
         name="Home"
@@ -37,6 +40,28 @@ export default function MainScreen(props) {
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={28} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={EmptyScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="magnify" color={color} size={28} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={EmptyScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="forum-outline"
+              color={color}
+              size={28}
+            />
           ),
         }}
       />

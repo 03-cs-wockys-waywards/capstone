@@ -3,8 +3,6 @@ import { Text } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { rightIcons } from '../../components/HeaderRightIcons'
-
 import UsersList from './DiscoverList'
 import MatchesList from './MatchesList'
 import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile'
@@ -39,19 +37,16 @@ export default function Home({ navigation }) {
         options={{
           headerLeft: () => logo(),
           headerTitle: '',
-          headerRight: () => rightIcons(navigation),
         }}
       />
       {/* <HomeStack.Screen name="MatchesList" component={MatchesList} /> */}
-      <HomeStack.Screen name="ChatList" component={EmptyScreen} />
-      <HomeStack.Screen name="ChatConversation" component={EmptyScreen} />
-      <HomeStack.Screen name="Calendar" component={EmptyScreen} />
+      {/* <HomeStack.Screen name="Calendar" component={EmptyScreen} /> */}
       <HomeStack.Screen
         name="Single User"
         component={SingleUserProfile}
         options={({ route }) => ({
           title: renderName(route),
-          headerRight: () => userChatIcon(navigation),
+          // headerRight: () => userChatIcon(navigation),
         })}
       />
     </HomeStack.Navigator>
