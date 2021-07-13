@@ -90,7 +90,7 @@ export class App extends Component {
               component={ProfileStepThree}
             />
             <Stack.Screen name="Confirmation" component={Confirmation} />
-            <Stack.Screen name="EditProfile" component={EditProfile} />
+            {/* <Stack.Screen name="EditProfile" component={EditProfile} /> */}
           </Stack.Navigator>
           <MyStatusBar backgroundColor="white" barStyle="dark-content" />
         </NavigationContainer>
