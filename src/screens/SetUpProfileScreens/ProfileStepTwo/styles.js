@@ -2,7 +2,7 @@ import { StyleSheet, StatusBar } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
   headerContainer: {

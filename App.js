@@ -11,11 +11,13 @@ import {
   ProfileStepTwo,
   ProfileStepThree,
   Confirmation,
-} from './src/screens';
-import MainScreen from './src/Main';
-import { decode, encode } from 'base-64';
-import store from './src/store';
+  ProfileScreen,
+  EditProfile
+} from './src/screens'
+import MainScreen from './src/Main'
 import { screenOptions, MyStatusBar } from './src/components/StatusBar';
+import { decode, encode } from 'base-64'
+import store from './src/store'
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -88,6 +90,7 @@ export class App extends Component {
               component={ProfileStepThree}
             />
             <Stack.Screen name="Confirmation" component={Confirmation} />
+            <Stack.Screen name="EditProfile" component={EditProfile} />
           </Stack.Navigator>
           <MyStatusBar backgroundColor="white" barStyle="dark-content" />
         </NavigationContainer>
