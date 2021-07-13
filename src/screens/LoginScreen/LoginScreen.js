@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
 import { firebase } from '../../firebaseSpecs/config'
@@ -40,15 +47,12 @@ export default function LoginScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-        <Image
-          style={styles.logo}
-          source={require('../../../assets/icon.png')}
-        />
+        <Text style={styles.sparkle}>✨</Text>
         <TextInput
           style={styles.input}
           placeholder="E-mail"
@@ -80,6 +84,6 @@ export default function LoginScreen({ navigation }) {
           </Text>
         </View>
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   )
 }

@@ -6,7 +6,6 @@ import { Icon } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "./ProfileScreen";
 import EditProfileScreen from "../EditProfileScreen/EditProfileScreen";
-import { LoginScreen } from "../../screens";
 import { clearData } from "../../store/userReducer"
 
 const ProfileStack = createStackNavigator();
@@ -31,11 +30,11 @@ export default function ProfileNavigator({ navigation }) {
       .signOut()
       .then(() => {
         console.log("log out successful");
-        dispatch(clearData());
       })
       .catch((error) => {
         console.error(error);
       });
+      dispatch(clearData());
       navigation.navigate("Login")
     }}>
       <Text>Log Out</Text>
