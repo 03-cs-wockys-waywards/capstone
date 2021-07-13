@@ -1,12 +1,64 @@
-const EDIT_USER_INFO = 'editUserInfo'
+import { firebase } from '../firebaseSpecs/config'
 
-export const editUserInfo = (userInfo) => {
-  console.log('userInfo in editUserInfo >>>>', userInfo)
-  return { type: EDIT_USER_INFO, userInfo }
+const EDIT_USER_INFO = 'EDIT_USER_INFO'
+const ADD_LIKE = 'ADD_LIKE'
+const REMOVE_LIKE = 'REMOVE_LIKE'
+
+export const editUserInfo = (userInfo) => ({
+  type: EDIT_USER_INFO,
+  userInfo,
+})
+
+const addLike = (id) => ({
+  type: ADD_LIKE,
+  id,
+})
+
+const removeLike = (id) => ({
+  type: REMOVE_LIKE,
+  id,
+})
+
+export const fetchUser = () => {
+  return (dispatch) => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          dispatch(editUserInfo(snapshot.data()))
+        } else {
+          console.log('user does not exist')
+        }
+      })
+  }
+}
+
+export const _addLike = (likeId) => {
+  return async (dispatch) => {
+    const currentUserId = firebase.auth().currentUser.uid
+    const userRef = firebase.firestore().collection('users').doc(currentUserId)
+    await userRef.update({
+      likes: firebase.firestore.FieldValue.arrayUnion(likeId),
+    })
+    dispatch(addLike(likeId))
+  }
+}
+
+export const _removeLike = (likeId) => {
+  return async (dispatch) => {
+    const currentUserId = firebase.auth().currentUser.uid
+    const userRef = firebase.firestore().collection('users').doc(currentUserId)
+    await userRef.update({
+      likes: firebase.firestore.FieldValue.arrayRemove(likeId),
+    })
+    dispatch(removeLike(likeId))
+  }
 }
 
 const initialState = {
-  userId: '',
   email: '',
   firstName: '',
   lastName: '',
@@ -19,11 +71,12 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case EDIT_USER_INFO:
-      console.log('----- in reducer --------')
-      const newState = { ...state, ...action.userInfo }
-      console.log('new user state >>>>>', newState)
-      console.log("-------------")
-      return newState
+      return { ...state, ...action.userInfo }
+    case ADD_LIKE:
+      return { ...state, likes: [...state.likes, action.id] }
+    case REMOVE_LIKE:
+      const newLikes = state.likes.filter((uid) => uid !== action.id)
+      return { ...state, likes: newLikes }
     default:
       return state
   }
