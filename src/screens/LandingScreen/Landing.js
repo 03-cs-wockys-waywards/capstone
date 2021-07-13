@@ -6,6 +6,7 @@ import styles from './styles'
 export default function Landing({ navigation }) {
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>✨</Text>
       <Text style={styles.title}>tingle</Text>
       <Text style={styles.subtitle}>mingle til you tingle</Text>
 
