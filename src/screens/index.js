@@ -7,4 +7,4 @@ export { default as ProfileStepThree } from './SetUpProfileScreens/ProfileStepTh
 export { default as EditProfile } from './EditProfileScreen/EditProfileScreen'
 export { default as Confirmation } from './SetUpProfileScreens/Confirmation/ConfirmationScreen';
 export { default as HomeScreen } from './HomeScreen/Home'
-export { default as ProfileScreen } from "./ProfileScreen/ProfileScreen";
+export { default as ProfileNavigator } from "./ProfileScreen/ProfileNavigator"

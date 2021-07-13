@@ -14,7 +14,7 @@ import {
   ProfileStepTwo,
   ProfileStepThree,
   Confirmation,
-  ProfileScreen
+  ProfileScreen,
   EditProfile
 } from './src/screens'
 import MainScreen from './src/Main'
