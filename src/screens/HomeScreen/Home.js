@@ -4,16 +4,16 @@ import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { rightIcons } from '../../components/HeaderRightIcons';
 import UsersList from './UsersList';
-import DiscoverList from './DiscoverList';
-import MatchesList from './MatchesList';
 import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
 
 const HomeStack = createStackNavigator();
 
+// to be removed - for testing purposes
 const EmptyScreen = () => {
   return null;
 };
 
+// replace with our actual logo
 const logo = () => <Text>Logo Placeholder</Text>;
 
 const renderName = (route) => {
@@ -41,7 +41,6 @@ export default function Home({ navigation }) {
           headerRight: () => rightIcons(navigation),
         }}
       />
-      {/* <HomeStack.Screen name="MatchesList" component={MatchesList} /> */}
       <HomeStack.Screen name="ChatList" component={EmptyScreen} />
       <HomeStack.Screen name="ChatConversation" component={EmptyScreen} />
       <HomeStack.Screen name="Calendar" component={EmptyScreen} />
@@ -56,5 +55,3 @@ export default function Home({ navigation }) {
     </HomeStack.Navigator>
   );
 }
-
-//initialRouteName="UsersList"

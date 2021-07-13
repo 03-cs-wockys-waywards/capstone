@@ -16,7 +16,7 @@ export class MatchesList extends Component {
   }
 
   componentDidMount() {
-    // get all users have our user (Rhetta) in their likes array
+    // get all users have our user in their likes array
     const currentUserId = firebase.auth().currentUser.uid;
     this.props.setPotentials(currentUserId);
   }
@@ -31,7 +31,6 @@ export class MatchesList extends Component {
 
     // look through current user's likes array & find matches
     const matches = users.filter((user) => currentUserLikes.includes(user.id));
-    // console.log('>>>> Matches in render: ', matches)
 
     if (matches.length > 0) {
       return (

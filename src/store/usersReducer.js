@@ -54,14 +54,8 @@ export const fetchPotentialMatches = (id) => {
 export default function (state = [], action) {
   switch (action.type) {
     case SET_DISCOVER_USERS:
-      // console.log('SET_DISCOVER_USERS - action.users in usersReducer', action.users);
       return action.users;
     case SET_POTENTIAL_MATCHES:
-      console.log(
-        'SET_POTENTIAL_MATCHES - action.users in usersReducer',
-        action.users
-      );
-
       return action.users;
     default:
       return state;
