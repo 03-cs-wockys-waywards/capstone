@@ -65,10 +65,15 @@ export class App extends Component {
       return <></>;
     }
 
+    // if the user is NOT logged in, render the below screens
     if (!user) {
       return (
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Landing" headerMode="none">
+          <Stack.Navigator
+            initialRouteName="Landing"
+            headerMode="none"
+            screenOptions={screenOptions}
+          >
             <Stack.Screen
               name="Landing"
               component={LandingScreen}
@@ -84,10 +89,12 @@ export class App extends Component {
             />
             <Stack.Screen name="Confirmation" component={Confirmation} />
           </Stack.Navigator>
+          <MyStatusBar backgroundColor="white" barStyle="dark-content" />
         </NavigationContainer>
       );
     }
 
+    // if the user is logged in, render the below screens
     return (
       <Provider store={store}>
         <NavigationContainer>
