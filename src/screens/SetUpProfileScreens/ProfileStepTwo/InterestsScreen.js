@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   View,
   FlatList,
   SafeAreaView,
   Text,
   TouchableOpacity,
-} from 'react-native'
-import { Button, Icon } from 'react-native-elements'
-import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
-import interests from './interestsArray'
-import styles from './styles'
+} from "react-native";
+import { Icon } from "react-native-elements";
+import { EmptyCircle, FilledCircle } from "../../../components/ProgressCircles";
+import interests from "./interestsArray";
+import styles from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { editUserInfo } from "../../../store/userReducer";
 
@@ -17,37 +17,36 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
     <Text style={[styles.itemName, textColor]}>{item}</Text>
   </TouchableOpacity>
-)
+);
 
-export default function InterestsScreen({navigation}) {
+export default function InterestsScreen({ navigation }) {
   const user = useSelector((state) => state.user);
-  const init = user.interests.length? user.interests : [];
+  const init = user.interests.length ? user.interests : [];
   const [selectedInterests, setSelectedInterests] = useState(init);
   const dispatch = useDispatch();
-
 
   const handlePress = (item) => {
     if (selectedInterests.includes(item)) {
       setSelectedInterests(
         selectedInterests.filter((interest) => interest !== item)
-      )
+      );
     } else if (selectedInterests.length < 5) {
-      setSelectedInterests([...selectedInterests, item])
+      setSelectedInterests([...selectedInterests, item]);
     }
-  }
+  };
 
   const navigateToNext = () => {
     if (selectedInterests.length) {
-      dispatch(editUserInfo({interests: selectedInterests}));
+      dispatch(editUserInfo({ interests: selectedInterests }));
       navigation.navigate("ProfileStepThree");
     }
-  }
+  };
 
   const renderItem = ({ item }) => {
     const backgroundColor = selectedInterests.includes(item)
-      ? '#6e3b6e'
-      : '#f9c2ff'
-    const color = selectedInterests.includes(item) ? 'white' : 'black'
+      ? "#6e3b6e"
+      : "#f9c2ff";
+    const color = selectedInterests.includes(item) ? "white" : "black";
 
     return (
       <Item
@@ -56,8 +55,8 @@ export default function InterestsScreen({navigation}) {
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
-    )
-  }
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -87,5 +86,5 @@ export default function InterestsScreen({navigation}) {
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-  )
+  );
 }

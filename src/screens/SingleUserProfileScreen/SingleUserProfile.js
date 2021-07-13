@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   ImageBackground,
@@ -16,13 +16,27 @@ import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
 import { editUserInfo } from '../../store/userReducer'
 
+export const getColorsArray = (num) => {
+  const colors = new Array(num)
+  for (let i = 0; i < colors.length; i++) {
+    colors[i] = getRandomLightColor()
+  }
+  return colors
+}
+
 export default function SingleUserProfile({ route }) {
   const likes = useSelector((state) => state.user.likes)
 
   const { user, liked } = route.params
   const [like, setLike] = useState(liked)
+  const [colors, setColors] = useState([])
 
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    const colors = getColorsArray(5)
+    setColors(colors)
+  }, [])
 
   const likesFilter = (id) => {
     return likes.filter((likeId) => likeId !== id)
@@ -49,9 +63,8 @@ export default function SingleUserProfile({ route }) {
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
-      const backgroundColor = getRandomLightColor()
       return (
-        <Pill key={index} text={interest} backgroundColor={backgroundColor} />
+        <Pill key={index} text={interest} backgroundColor={colors[index]} />
       )
     })
   }

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { View, SafeAreaView, Platform, StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { firebase } from './src/firebaseSpecs/config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { useSelector, useDispatch } from 'react-redux';
-import { editUserInfo } from "./src/store/userReducer";
 
 import {
+  LandingScreen,
   LoginScreen,
   RegistrationScreen,
   ProfileStepOne,
@@ -16,6 +15,7 @@ import {
   ProfileStepThree,
   Confirmation,
   ProfileScreen
+  EditProfile
 } from './src/screens'
 import MainScreen from './src/Main'
 import { decode, encode } from 'base-64'
@@ -30,100 +30,112 @@ if (!global.atob) {
 
 const Stack = createStackNavigator()
 
-const screenOptions = {
-  cardStyle: { backgroundColor: 'white' },
+// const screenOptions = {
+//   cardStyle: { backgroundColor: 'white' },
+// }
+// const MyStatusBar = ({ backgroundColor, ...props }) => (
+//   <View style={[styles.statusBar, { backgroundColor }]}>
+//     <SafeAreaView>
+//       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+//     </SafeAreaView>
+//   </View>
+// )
+
+// const STATUSBAR_HEIGHT = StatusBar.currentHeight
+// const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+//   statusBar: {
+//     height: STATUSBAR_HEIGHT,
+//   },
+//   appBar: {
+//     height: APPBAR_HEIGHT,
+//   },
+//   content: {
+//     flex: 1,
+//   },
+// })
+
+export class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      user: null,
+      loading: true,
+    }
+  }
+
+  componentDidMount() {
+    const usersRef = firebase.firestore().collection('users')
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            const userData = document.data()
+            this.setState({
+              loading: false,
+              user: userData,
+            })
+          })
+          .catch((error) => {
+            this.setState({ loading: false })
+          })
+      } else {
+        this.setState({ loading: false })
+      }
+    })
+  }
+
+  render() {
+    const { loading, user } = this.state
+
+    if (loading) {
+      return <></>
+    }
+
+    if (!user) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Landing" headerMode="none">
+            <Stack.Screen
+              name="Landing"
+              component={LandingScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
+            <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
+            <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
+            <Stack.Screen
+              name="ProfileStepThree"
+              component={ProfileStepThree}
+            />
+            <Stack.Screen name="Confirmation" component={Confirmation} />
+            <Stack.Screen name="EditProfile" component={EditProfile} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )
+    }
+
+    return (
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Main" headerMode="none">
+            <Stack.Screen
+              name="Main"
+              component={MainScreen}
+              initialParams={{ user: user }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    )
+  }
 }
-const MyStatusBar = ({ backgroundColor, ...props }) => (
-  <View style={[styles.statusBar, { backgroundColor }]}>
-    <SafeAreaView>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </SafeAreaView>
-  </View>
-)
 
-const STATUSBAR_HEIGHT = StatusBar.currentHeight
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  statusBar: {
-    height: STATUSBAR_HEIGHT,
-  },
-  appBar: {
-    height: APPBAR_HEIGHT,
-  },
-  content: {
-    flex: 1,
-  },
-})
-
-export default function App() {
-  // const [loading, setLoading] = useState(true)
-  // const [user, setUser] = useState({});
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const usersRef = firebase.firestore().collection('users')
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       usersRef
-  //       .doc(user.uid)
-  //       .get()
-  //       .then((document) => {
-  //         const userData = document.data()
-  //         console.log('userData in useEffect >>>>>>', userData)
-  //         dispatch(editUserInfo(userData))
-  //         console.log('----------------')
-  //         setLoading(false)
-  //         setUser(userData)
-  //         console.log('user after setUser >>>>>>>>>', user);
-  //       })
-  //       .catch((error) => {
-  //         setLoading(false)
-  //       })
-  //       // console.log('user in useEffect', user);
-  //     } else {
-  //       setLoading(false)
-  //     }
-  //   });
-  // }, [])
-
-  // console.log('user outside useEffect', user)
-
-  // if (loading) {
-  //   return <></>
-  // }
-
-  return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator headerMode="none" screenOptions={screenOptions}>
-          {firebase.auth().currentUser && <Stack.Screen name="Profile" component={ProfileScreen} />}
-          {/* {firebase.auth().currentUser ? (
-            <Stack.Screen name="Main" component={MainScreen} />
-          ) : (
-            <>
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen
-                name="Registration"
-                component={RegistrationScreen}
-              />
-              <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
-              <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
-              <Stack.Screen
-                name="ProfileStepThree"
-                component={ProfileStepThree}
-              />
-              <Stack.Screen name="Confirmation" component={Confirmation} />
-
-              <Stack.Screen name="Main" component={MainScreen} />
-            </>
-          )} */}
-        </Stack.Navigator>
-        <MyStatusBar backgroundColor="white" barStyle="dark-content" />
-      </NavigationContainer>
-    </Provider>
-  )
-}
+export default App
