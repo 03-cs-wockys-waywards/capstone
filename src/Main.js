@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { HomeScreen, ProfileNavigator } from './screens'
-import { editUserInfo } from './store/userReducer' 
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { HomeScreen, ProfileNavigator, ChatFeedScreen } from './screens';
+import { editUserInfo } from './store/userReducer';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -51,7 +51,7 @@ export default function MainScreen(props) {
       />
       <Tab.Screen
         name="Chat"
-        component={EmptyScreen}
+        component={ChatFeedScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons

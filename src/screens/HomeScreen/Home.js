@@ -1,27 +1,27 @@
-import React from 'react'
-import { Text } from 'react-native'
-import { Icon } from 'react-native-elements'
-import { createStackNavigator } from '@react-navigation/stack'
-import { rightIcons } from '../../components/HeaderRightIcons'
-import UsersList from './UsersList'
-import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile'
+import React from 'react';
+import { Text } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { createStackNavigator } from '@react-navigation/stack';
+import { rightIcons } from '../../components/HeaderRightIcons';
+import UsersList from './UsersList';
+import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
 
-import DiscoverList from './DiscoverList'
-import MatchesList from './MatchesList'
+import DiscoverList from './DiscoverList';
+import MatchesList from './MatchesList';
 
-const HomeStack = createStackNavigator()
+const HomeStack = createStackNavigator();
 
 // to be removed - for testing purposes
 const EmptyScreen = () => {
-  return null
-}
+  return null;
+};
 
 // replace with our actual logo
-const logo = () => <Text>Logo Placeholder</Text>
+const logo = () => <Text>Logo Placeholder</Text>;
 
 const renderName = (route) => {
-  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`
-}
+  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
+};
 
 const userChatIcon = (navigation) => (
   <Icon
@@ -30,7 +30,7 @@ const userChatIcon = (navigation) => (
     size={25}
     onPress={() => navigation.navigate('Chat')}
   />
-)
+);
 
 export default function Home({ navigation }) {
   return (
@@ -50,9 +50,9 @@ export default function Home({ navigation }) {
         component={SingleUserProfile}
         options={({ route }) => ({
           title: renderName(route),
-          // headerRight: () => userChatIcon(navigation),
+          headerRight: () => userChatIcon(navigation),
         })}
       />
     </HomeStack.Navigator>
-  )
+  );
 }
