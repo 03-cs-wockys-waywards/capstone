@@ -15,7 +15,7 @@ import { getColorsArray } from '../../helpers/getColorsArray'
 import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
-import { editUserInfo } from '../../store/userReducer'
+import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
 
 export default function SingleUserProfile({ route }) {
   const likes = useSelector((state) => state.user.likes)
@@ -35,12 +35,21 @@ export default function SingleUserProfile({ route }) {
     return likes.filter((likeId) => likeId !== id)
   }
 
+  // const handleLike = (id) => {
+  //   setLike(!like)
+  //   if (!likes.includes(id) && !like) {
+  //     dispatch(editUserInfo({ likes: [...likes, id] }))
+  //   } else {
+  //     dispatch(editUserInfo({ likes: [...likesFilter(id)] }))
+  //   }
+  // }
   const handleLike = (id) => {
-    setLike(!like)
-    if (!likes.includes(id) && !like) {
-      dispatch(editUserInfo({ likes: [...likes, id] }))
+    if (!like) {
+      dispatch(_addLike(id))
+      setLike(true)
     } else {
-      dispatch(editUserInfo({ likes: [...likesFilter(id)] }))
+      dispatch(_removeLike(id))
+      setLike(false)
     }
   }
 

@@ -152,9 +152,10 @@ export class UsersList extends Component {
     const { users, navigation } = this.props
     const { searchText } = this.state
 
-    const renderItem = ({ item }) => (
-      <UserRow item={item} navigation={navigation} />
-    )
+    const renderItem = ({ item }) => {
+      const isLiked = this.props.likes.includes(item.id)
+      return <UserRow item={item} navigation={navigation} isLiked={isLiked} />
+    }
 
     //const [searchText, setSearchText] = useState('')
     // Once we connect to the firebase, discoverData should be retrieved from firebase through useEffect hook when the component mounts
@@ -217,6 +218,7 @@ export class UsersList extends Component {
 const mapState = (state) => ({
   user: state.user,
   users: state.users,
+  likes: state.user.likes,
 })
 
 const mapDispatch = (dispatch) => ({

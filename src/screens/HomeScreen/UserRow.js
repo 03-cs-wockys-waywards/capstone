@@ -10,9 +10,9 @@ import { getColorsArray } from '../../helpers/getColorsArray'
 import styles from './styles'
 import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
 
-export default function UserRow({ item, navigation }) {
+export default function UserRow({ item, navigation, isLiked }) {
   const likes = useSelector((state) => state.user.likes)
-  const [like, setLike] = useState(false)
+  const [like, setLike] = useState(isLiked)
   const [colors, setColors] = useState([])
 
   const dispatch = useDispatch()
@@ -31,7 +31,6 @@ export default function UserRow({ item, navigation }) {
       dispatch(_addLike(id))
       setLike(true)
     } else {
-      console.log('going into else statement')
       dispatch(_removeLike(id))
       setLike(false)
     }
