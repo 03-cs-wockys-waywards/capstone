@@ -1,11 +1,8 @@
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import { View, SafeAreaView, Platform, StyleSheet } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
-import { firebase } from './src/firebaseSpecs/config'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { firebase } from './src/firebaseSpecs/config';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   LandingScreen,
   LoginScreen,
@@ -14,92 +11,69 @@ import {
   ProfileStepTwo,
   ProfileStepThree,
   Confirmation,
-} from './src/screens'
-import MainScreen from './src/Main'
-import { decode, encode } from 'base-64'
-import store from './src/store'
+} from './src/screens';
+import MainScreen from './src/Main';
+import { decode, encode } from 'base-64';
+import store from './src/store';
+import { screenOptions, MyStatusBar } from './src/components/StatusBar';
 
 if (!global.btoa) {
-  global.btoa = encode
+  global.btoa = encode;
 }
 if (!global.atob) {
-  global.atob = decode
+  global.atob = decode;
 }
 
-const Stack = createStackNavigator()
-
-// const screenOptions = {
-//   cardStyle: { backgroundColor: 'white' },
-// }
-// const MyStatusBar = ({ backgroundColor, ...props }) => (
-//   <View style={[styles.statusBar, { backgroundColor }]}>
-//     <SafeAreaView>
-//       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-//     </SafeAreaView>
-//   </View>
-// )
-
-// const STATUSBAR_HEIGHT = StatusBar.currentHeight
-// const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   statusBar: {
-//     height: STATUSBAR_HEIGHT,
-//   },
-//   appBar: {
-//     height: APPBAR_HEIGHT,
-//   },
-//   content: {
-//     flex: 1,
-//   },
-// })
+const Stack = createStackNavigator();
 
 export class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       user: null,
       loading: true,
-    }
+    };
   }
 
   componentDidMount() {
-    const usersRef = firebase.firestore().collection('users')
+    const usersRef = firebase.firestore().collection('users');
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         usersRef
           .doc(user.uid)
           .get()
           .then((document) => {
-            const userData = document.data()
+            const userData = document.data();
             this.setState({
               loading: false,
               user: userData,
-            })
+            });
           })
           .catch((error) => {
-            this.setState({ loading: false })
-          })
+            this.setState({ loading: false });
+          });
       } else {
-        this.setState({ loading: false })
+        this.setState({ loading: false });
       }
-    })
+    });
   }
 
   render() {
-    const { loading, user } = this.state
+    const { loading, user } = this.state;
 
     if (loading) {
-      return <></>
+      return <></>;
     }
 
+    // if the user is NOT logged in, render the below screens
     if (!user) {
       return (
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Landing" headerMode="none">
+          <Stack.Navigator
+            initialRouteName="Landing"
+            headerMode="none"
+            screenOptions={screenOptions}
+          >
             <Stack.Screen
               name="Landing"
               component={LandingScreen}
@@ -115,24 +89,31 @@ export class App extends Component {
             />
             <Stack.Screen name="Confirmation" component={Confirmation} />
           </Stack.Navigator>
+          <MyStatusBar backgroundColor="white" barStyle="dark-content" />
         </NavigationContainer>
-      )
+      );
     }
 
+    // if the user is logged in, render the below screens
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Main" headerMode="none">
+          <Stack.Navigator
+            initialRouteName="Main"
+            headerMode="none"
+            screenOptions={screenOptions}
+          >
             <Stack.Screen
               name="Main"
               component={MainScreen}
               initialParams={{ user: user }}
             />
           </Stack.Navigator>
+          <MyStatusBar backgroundColor="white" barStyle="dark-content" />
         </NavigationContainer>
       </Provider>
-    )
+    );
   }
 }
 
-export default App
+export default App;

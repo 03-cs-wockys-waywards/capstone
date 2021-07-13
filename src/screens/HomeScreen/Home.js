@@ -2,17 +2,21 @@ import React from 'react'
 import { Text } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
-
-import UsersList from './DiscoverList'
-import MatchesList from './MatchesList'
+import { rightIcons } from '../../components/HeaderRightIcons'
+import UsersList from './UsersList'
 import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile'
+
+import DiscoverList from './DiscoverList'
+import MatchesList from './MatchesList'
 
 const HomeStack = createStackNavigator()
 
+// to be removed - for testing purposes
 const EmptyScreen = () => {
   return null
 }
 
+// replace with our actual logo
 const logo = () => <Text>Logo Placeholder</Text>
 
 const renderName = (route) => {
@@ -52,5 +56,3 @@ export default function Home({ navigation }) {
     </HomeStack.Navigator>
   )
 }
-
-//initialRouteName="UsersList"

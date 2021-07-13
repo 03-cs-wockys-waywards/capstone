@@ -45,9 +45,9 @@ export default function UserRow({ item, navigation }) {
 
   return (
     <TouchableOpacity
-      onPress={() =>
+      onPress={() => {
         navigation.navigate('Single User', { user: item, liked: like })
-      }
+      }}
     >
       <View style={styles.userRowContainer}>
         <Avatar size={95} rounded source={{ uri: item.profilePicture }} />

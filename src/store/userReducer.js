@@ -1,23 +1,23 @@
-import { firebase } from '../firebaseSpecs/config'
+import { firebase } from '../firebaseSpecs/config';
 
-const EDIT_USER_INFO = 'EDIT_USER_INFO'
-const ADD_LIKE = 'ADD_LIKE'
-const REMOVE_LIKE = 'REMOVE_LIKE'
+const EDIT_USER_INFO = 'EDIT_USER_INFO';
+const ADD_LIKE = 'ADD_LIKE';
+const REMOVE_LIKE = 'REMOVE_LIKE';
 
 export const editUserInfo = (userInfo) => ({
   type: EDIT_USER_INFO,
   userInfo,
-})
+});
 
 const addLike = (id) => ({
   type: ADD_LIKE,
   id,
-})
+});
 
 const removeLike = (id) => ({
   type: REMOVE_LIKE,
   id,
-})
+});
 
 export const fetchUser = () => {
   return (dispatch) => {
@@ -28,35 +28,35 @@ export const fetchUser = () => {
       .get()
       .then((snapshot) => {
         if (snapshot.exists) {
-          dispatch(editUserInfo(snapshot.data()))
+          dispatch(editUserInfo(snapshot.data()));
         } else {
-          console.log('user does not exist')
+          console.log('user does not exist');
         }
-      })
-  }
-}
+      });
+  };
+};
 
 export const _addLike = (likeId) => {
   return async (dispatch) => {
-    const currentUserId = firebase.auth().currentUser.uid
-    const userRef = firebase.firestore().collection('users').doc(currentUserId)
+    const currentUserId = firebase.auth().currentUser.uid;
+    const userRef = firebase.firestore().collection('users').doc(currentUserId);
     await userRef.update({
       likes: firebase.firestore.FieldValue.arrayUnion(likeId),
-    })
-    dispatch(addLike(likeId))
-  }
-}
+    });
+    dispatch(addLike(likeId));
+  };
+};
 
 export const _removeLike = (likeId) => {
   return async (dispatch) => {
-    const currentUserId = firebase.auth().currentUser.uid
-    const userRef = firebase.firestore().collection('users').doc(currentUserId)
+    const currentUserId = firebase.auth().currentUser.uid;
+    const userRef = firebase.firestore().collection('users').doc(currentUserId);
     await userRef.update({
       likes: firebase.firestore.FieldValue.arrayRemove(likeId),
-    })
-    dispatch(removeLike(likeId))
-  }
-}
+    });
+    dispatch(removeLike(likeId));
+  };
+};
 
 const initialState = {
   email: '',
@@ -66,18 +66,18 @@ const initialState = {
   interests: [],
   profilePicture: '',
   likes: [],
-}
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case EDIT_USER_INFO:
-      return { ...state, ...action.userInfo }
+      return { ...state, ...action.userInfo };
     case ADD_LIKE:
-      return { ...state, likes: [...state.likes, action.id] }
+      return { ...state, likes: [...state.likes, action.id] };
     case REMOVE_LIKE:
-      const newLikes = state.likes.filter((uid) => uid !== action.id)
-      return { ...state, likes: newLikes }
+      const newLikes = state.likes.filter((uid) => uid !== action.id);
+      return { ...state, likes: newLikes };
     default:
-      return state
+      return state;
   }
 }
