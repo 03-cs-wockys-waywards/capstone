@@ -22,6 +22,7 @@ export default function Header({ navigation, user }) {
       .catch((error) => {
         console.error(error);
       });
+    // TO DO: fix navigation
     navigation.navigate("Login");
   };
   return (
