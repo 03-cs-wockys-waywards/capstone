@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { SafeAreaView, FlatList, Text } from 'react-native';
-import { fetchUsersWithInterests } from '../../store/usersReducer';
-import styles from './styles';
-import SearchBar from '../../components/SearchBar';
+import { SafeAreaView, Text } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import DiscoverList from './DiscoverList';
 import MatchesList from './MatchesList';
+import styles from './styles';
 
-export class UsersList extends Component {
+export default class UsersList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,14 +52,3 @@ export class UsersList extends Component {
     );
   }
 }
-
-const mapState = (state) => ({
-  user: state.user,
-  users: state.users,
-});
-
-const mapDispatch = (dispatch) => ({
-  setInterests: (interests) => dispatch(fetchUsersWithInterests(interests)),
-});
-
-export default connect(mapState, mapDispatch)(UsersList);

@@ -1,10 +1,9 @@
-import React, { Component, useState, useEffect } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { SafeAreaView, FlatList } from 'react-native';
-import { fetchUsersWithInterests } from '../../store/usersReducer';
+import { fetchUsersWithInterests } from '../../store/discoverUsersReducer';
 import styles from './styles';
 import UserRow from './UserRow';
-import SearchBar from '../../components/SearchBar';
 import { firebase } from '../../firebaseSpecs/config';
 
 export class DiscoverList extends Component {
@@ -12,7 +11,6 @@ export class DiscoverList extends Component {
     super(props);
     this.state = {
       searchText: '',
-      discoverData: [],
     };
   }
 
@@ -36,7 +34,7 @@ export class DiscoverList extends Component {
   }
 
   render() {
-    const { users, navigation } = this.props;
+    const { discoverUsers, navigation } = this.props;
 
     const renderItem = ({ item }) => (
       <UserRow item={item} navigation={navigation} />
@@ -45,7 +43,7 @@ export class DiscoverList extends Component {
     return (
       <SafeAreaView style={styles.listContainer}>
         <FlatList
-          data={users}
+          data={discoverUsers}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
         />
@@ -56,7 +54,7 @@ export class DiscoverList extends Component {
 
 const mapState = (state) => ({
   user: state.user,
-  users: state.users,
+  discoverUsers: state.discoverUsers,
 });
 
 const mapDispatch = (dispatch) => ({
