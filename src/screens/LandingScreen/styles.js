@@ -10,10 +10,17 @@ export default StyleSheet.create({
     alignContent: 'center',
   },
   title: {
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: '600',
     textAlign: 'center',
-    marginBottom: 250,
+    marginBottom: 15,
+  },
+  subtitle: {
+    fontSize: 25,
+    fontStyle: 'italic',
+    fontWeight: '400',
+    textAlign: 'center',
+    marginBottom: 75,
   },
   linksContainer: {
     flex: 1,
