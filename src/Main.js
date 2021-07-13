@@ -1,26 +1,23 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { HomeScreen, ProfileNavigator } from './screens'
 import { editUserInfo } from './store/userReducer' 
 
-const Tab = createMaterialBottomTabNavigator()
+const Tab = createMaterialBottomTabNavigator();
 
 const EmptyScreen = () => {
-  return null
-}
+  return null;
+};
 
 export default function MainScreen(props) {
-  //console.log('MAIN component runnning...')
-
-  const user = props.route.params.user
-
-  const dispatch = useDispatch()
+  const user = props.route.params.user;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(editUserInfo(user))
-  }, [])
+    dispatch(editUserInfo(user));
+  }, []);
 
   return (
     <Tab.Navigator
@@ -29,7 +26,10 @@ export default function MainScreen(props) {
       inactiveColor="#e4dbff"
       labeled={false}
       labelStyle={{ fontSize: 12 }}
-      barStyle={{ backgroundColor: '#106563' }}
+      barStyle={{
+        backgroundColor: '#106563',
+        alignItems: 'center',
+      }}
     >
       <Tab.Screen
         name="Home"
@@ -37,6 +37,28 @@ export default function MainScreen(props) {
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={28} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={EmptyScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="magnify" color={color} size={28} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={EmptyScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="forum-outline"
+              color={color}
+              size={28}
+            />
           ),
         }}
       />
@@ -50,5 +72,5 @@ export default function MainScreen(props) {
         }}
       />
     </Tab.Navigator>
-  )
+  );
 }

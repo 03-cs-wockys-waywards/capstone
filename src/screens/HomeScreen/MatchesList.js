@@ -1,37 +1,34 @@
-import React, { Component, useState, useEffect } from 'react'
-import { useSelector, useDispatch, connect } from 'react-redux'
-import { SafeAreaView, FlatList, View, Text } from 'react-native'
-import { fetchPotentialMatches } from '../../store/usersReducer'
-import styles from './styles'
-import UserRow from './UserRow'
-import SearchBar from '../../components/SearchBar'
-import { firebase } from '../../firebaseSpecs/config'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { SafeAreaView, FlatList } from 'react-native';
+import { fetchPotentialMatches } from '../../store/potentialMatchesReducer';
+import styles from './styles';
+import UserRow from './UserRow';
+import { firebase } from '../../firebaseSpecs/config';
 
 export class MatchesList extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      matchedUsers: [],
-    }
+    super(props);
   }
 
   componentDidMount() {
-    // get all users have our user (Rhetta) in their likes array
-    const currentUserId = firebase.auth().currentUser.uid
-    this.props.setPotentials(currentUserId)
+    // get all users have our user in their likes array
+    const currentUserId = firebase.auth().currentUser.uid;
+    this.props.setPotentials(currentUserId);
   }
 
   render() {
-    const { user, users, navigation } = this.props
-    const currentUserLikes = user.likes
+    const { user, potentialMatches, navigation } = this.props;
+    const currentUserLikes = user.likes;
 
     const renderItem = ({ item }) => (
       <UserRow item={item} navigation={navigation} />
-    )
+    );
 
     // look through current user's likes array & find matches
-    const matches = users.filter((user) => currentUserLikes.includes(user.id))
-    console.log('>>>> Matches in render: ', matches)
+    const matches = potentialMatches.filter((user) =>
+      currentUserLikes.includes(user.id)
+    );
 
     if (matches.length > 0) {
       return (
@@ -42,9 +39,9 @@ export class MatchesList extends Component {
             renderItem={renderItem}
           />
         </SafeAreaView>
-      )
+      );
     }
-    return <></>
+    return <></>;
   }
 }
 
@@ -52,11 +49,11 @@ const mapState = (state) => ({
   // logged-in user
   user: state.user,
   // users that are potential matches
-  users: state.users,
-})
+  potentialMatches: state.potentialMatches,
+});
 
 const mapDispatch = (dispatch) => ({
   setPotentials: (id) => dispatch(fetchPotentialMatches(id)),
-})
+});
 
-export default connect(mapState, mapDispatch)(MatchesList)
+export default connect(mapState, mapDispatch)(MatchesList);

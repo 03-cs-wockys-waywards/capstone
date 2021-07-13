@@ -1,11 +1,13 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import userReducer from './userReducer'
-import usersReducer from './usersReducer'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import userReducer from './userReducer';
+import discoverUsersReducer from './discoverUsersReducer';
+import potentialMatchesReducer from './potentialMatchesReducer';
 
 const reducer = combineReducers({
   user: userReducer,
-  users: usersReducer,
-})
+  discoverUsers: discoverUsersReducer,
+  potentialMatches: potentialMatchesReducer,
+});
 
-export default createStore(reducer, applyMiddleware(thunk))
+export default createStore(reducer, applyMiddleware(thunk));

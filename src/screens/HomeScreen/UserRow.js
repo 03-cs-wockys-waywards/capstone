@@ -5,22 +5,15 @@ import { Avatar } from 'react-native-elements'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
 
-import { getRandomLightColor } from '../../helpers/getRandomLightColor'
+import { SmallPill } from '../../components/SmallPill'
+import { getColorsArray } from '../../helpers/getColorsArray'
 import styles from './styles'
 import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
-import { firebase } from '../../firebaseSpecs/config'
-
-export const getColorsArray = (num) => {
-  const colors = new Array(num)
-  for (let i = 0; i < colors.length; i++) {
-    colors[i] = getRandomLightColor()
-  }
-  return colors
-}
 
 export default function UserRow({ item, navigation }) {
   const likes = useSelector((state) => state.user.likes)
-  const [like, setLike] = useState(false)
+  const isLiked = likes.includes(item.id)
+  const [like, setLike] = useState(isLiked)
   const [colors, setColors] = useState([])
 
   const dispatch = useDispatch()
@@ -30,26 +23,31 @@ export default function UserRow({ item, navigation }) {
     setColors(colors)
   }, [])
 
-  const likesFilter = (id) => {
-    return likes.filter((likeId) => likeId !== id)
-  }
+  // const likesFilter = (id) => {
+  //   return likes.filter((likeId) => likeId !== id)
+  // }
 
   const handleLike = (id) => {
-    if (!like) {
+    if (!isLiked) {
       dispatch(_addLike(id))
       setLike(true)
     } else {
-      console.log('going into else statement')
       dispatch(_removeLike(id))
       setLike(false)
     }
   }
 
+  const renderInterests = (interests) => {
+    return interests.map((item, index) => (
+      <SmallPill key={index} backgroundColor={colors[index]} text={item} />
+    ))
+  }
+
   return (
     <TouchableOpacity
-      onPress={() =>
+      onPress={() => {
         navigation.navigate('Single User', { user: item, liked: like })
-      }
+      }}
     >
       <View style={styles.userRowContainer}>
         <Avatar size={95} rounded source={{ uri: item.profilePicture }} />
@@ -59,7 +57,7 @@ export default function UserRow({ item, navigation }) {
               {item.firstName} {item.lastName[0]}.
             </Text>
             <DoubleTap doubleTap={() => handleLike(item.id)} delay={200}>
-              {like ? (
+              {isLiked ? (
                 <MaterialCommunityIcons
                   name="heart"
                   size={20}
@@ -70,16 +68,9 @@ export default function UserRow({ item, navigation }) {
               )}
             </DoubleTap>
           </View>
-          <FlatList
-            style={styles.interestsContainer}
-            data={item.interests}
-            renderItem={({ item, index }) => (
-              <View style={styles.interest} backgroundColor={colors[index]}>
-                <Text style={styles.interestText}>{item}</Text>
-              </View>
-            )}
-            keyExtractor={(item, index) => (item + index).toString()}
-          />
+          <View style={styles.interestsContainer}>
+            {renderInterests(item.interests)}
+          </View>
         </View>
       </View>
     </TouchableOpacity>

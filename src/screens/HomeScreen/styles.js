@@ -41,17 +41,4 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  interest: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingVertical: 7,
-    paddingHorizontal: 14,
-    marginLeft: 7,
-    marginTop: 8,
-    borderRadius: 45,
-  },
-  interestText: {
-    fontSize: 11,
-    color: 'black',
-  },
 })

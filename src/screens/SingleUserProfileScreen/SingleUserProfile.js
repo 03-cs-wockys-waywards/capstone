@@ -9,24 +9,15 @@ import {
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
+
 import { Pill } from '../../components/Pill'
-import { getRandomLightColor } from '../../helpers/getRandomLightColor'
+import { getColorsArray } from '../../helpers/getColorsArray'
 import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
-import { editUserInfo } from '../../store/userReducer'
-
-export const getColorsArray = (num) => {
-  const colors = new Array(num)
-  for (let i = 0; i < colors.length; i++) {
-    colors[i] = getRandomLightColor()
-  }
-  return colors
-}
+import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
 
 export default function SingleUserProfile({ route }) {
-  const likes = useSelector((state) => state.user.likes)
-
   const { user, liked } = route.params
   const [like, setLike] = useState(liked)
   const [colors, setColors] = useState([])
@@ -38,16 +29,17 @@ export default function SingleUserProfile({ route }) {
     setColors(colors)
   }, [])
 
-  const likesFilter = (id) => {
-    return likes.filter((likeId) => likeId !== id)
-  }
+  // const likesFilter = (id) => {
+  //   return likes.filter((likeId) => likeId !== id)
+  // }
 
   const handleLike = (id) => {
-    setLike(!like)
-    if (!likes.includes(id) && !like) {
-      dispatch(editUserInfo({ likes: [...likes, id] }))
+    if (!like) {
+      dispatch(_addLike(id))
+      setLike(true)
     } else {
-      dispatch(editUserInfo({ likes: [...likesFilter(id)] }))
+      dispatch(_removeLike(id))
+      setLike(false)
     }
   }
 
