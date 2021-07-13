@@ -18,8 +18,6 @@ import styles from './styles'
 import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
 
 export default function SingleUserProfile({ route }) {
-  const likes = useSelector((state) => state.user.likes)
-
   const { user, liked } = route.params
   const [like, setLike] = useState(liked)
   const [colors, setColors] = useState([])
@@ -31,18 +29,10 @@ export default function SingleUserProfile({ route }) {
     setColors(colors)
   }, [])
 
-  const likesFilter = (id) => {
-    return likes.filter((likeId) => likeId !== id)
-  }
-
-  // const handleLike = (id) => {
-  //   setLike(!like)
-  //   if (!likes.includes(id) && !like) {
-  //     dispatch(editUserInfo({ likes: [...likes, id] }))
-  //   } else {
-  //     dispatch(editUserInfo({ likes: [...likesFilter(id)] }))
-  //   }
+  // const likesFilter = (id) => {
+  //   return likes.filter((likeId) => likeId !== id)
   // }
+
   const handleLike = (id) => {
     if (!like) {
       dispatch(_addLike(id))

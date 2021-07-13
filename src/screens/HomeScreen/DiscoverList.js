@@ -153,8 +153,7 @@ export class UsersList extends Component {
     const { searchText } = this.state
 
     const renderItem = ({ item }) => {
-      const isLiked = this.props.likes.includes(item.id)
-      return <UserRow item={item} navigation={navigation} isLiked={isLiked} />
+      return <UserRow item={item} navigation={navigation} />
     }
 
     //const [searchText, setSearchText] = useState('')
