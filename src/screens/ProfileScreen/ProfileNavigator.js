@@ -1,17 +1,19 @@
 import React from "react";
 import { TouchableOpacity, Text } from "react-native";
 import { firebase } from "../../firebaseSpecs/config";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "./ProfileScreen";
 import EditProfileScreen from "../EditProfileScreen/EditProfileScreen";
 import { LoginScreen } from "../../screens";
+import { clearData } from "../../store/userReducer"
 
 const ProfileStack = createStackNavigator();
 
 export default function ProfileNavigator({ navigation }) {
   const { firstName, lastName } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleEditSettings = (navigation) => (
     <Icon
@@ -29,6 +31,7 @@ export default function ProfileNavigator({ navigation }) {
       .signOut()
       .then(() => {
         console.log("log out successful");
+        dispatch(clearData());
       })
       .catch((error) => {
         console.error(error);
@@ -56,10 +59,6 @@ export default function ProfileNavigator({ navigation }) {
           title: "Edit Profile",
           headerRight: () => handleLogout(navigation),
         })}
-      />
-      <ProfileStack.Screen
-        name="Login"
-        component={LoginScreen}
       />
     </ProfileStack.Navigator>
   );
