@@ -7,6 +7,8 @@ import UserRow from './UserRow';
 import SearchBar from '../../components/SearchBar';
 import { firebase } from '../../firebaseSpecs/config';
 import { ButtonGroup } from 'react-native-elements';
+import DiscoverList from './DiscoverList';
+import MatchesList from './MatchesList';
 
 export class UsersList extends Component {
   constructor(props) {
@@ -46,6 +48,11 @@ export class UsersList extends Component {
             borderRadius: 50,
           }}
         />
+        {selectedIndex === 0 ? (
+          <DiscoverList navigation={navigation} />
+        ) : (
+          <MatchesList navigation={navigation} />
+        )}
       </SafeAreaView>
     );
   }
