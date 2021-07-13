@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
 import React from "react";
-import { Text } from "react-native";
+import { useSelector } from "react-redux";
 import { Icon } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "./ProfileScreen";
-import { renderName } from "../../helpers";
+import EditProfileScreen from "../EditProfileScreen/EditProfileScreen";
 
 const ProfileStack = createStackNavigator();
 
@@ -13,11 +12,11 @@ export default function ProfileNavigator({ navigation }) {
 
   const getSettingsIcon = (navigation) => (
     <Icon
-    type="material-community"
-    name="account-cog"
-    size={25}
-    onPress={() => navigation.navigate("EditProfile")}
-  />
+      type="material-community"
+      name="account-cog"
+      size={25}
+      onPress={() => navigation.navigate("EditProfile")}
+    />
   );
 
   return (
@@ -26,9 +25,15 @@ export default function ProfileNavigator({ navigation }) {
         name="Profile"
         component={ProfileScreen}
         options={() => ({
-            title: `${firstName} ${lastName[0]}.`,
-            // title: renderName(route),
-            headerRight: () => getSettingsIcon(navigation)
+          title: `${firstName} ${lastName[0]}.`,
+          headerRight: () => getSettingsIcon(navigation),
+        })}
+      />
+      <ProfileStack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={() => ({
+          title: "Edit Profile",
         })}
       />
     </ProfileStack.Navigator>
