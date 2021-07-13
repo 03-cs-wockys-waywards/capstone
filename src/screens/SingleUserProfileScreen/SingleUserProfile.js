@@ -9,20 +9,13 @@ import {
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
+
 import { Pill } from '../../components/Pill'
-import { getRandomLightColor } from '../../helpers/getRandomLightColor'
+import { getColorsArray } from '../../helpers/getColorsArray'
 import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
 import { editUserInfo } from '../../store/userReducer'
-
-export const getColorsArray = (num) => {
-  const colors = new Array(num)
-  for (let i = 0; i < colors.length; i++) {
-    colors[i] = getRandomLightColor()
-  }
-  return colors
-}
 
 export default function SingleUserProfile({ route }) {
   const likes = useSelector((state) => state.user.likes)
