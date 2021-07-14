@@ -1,86 +1,55 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  ImageBackground,
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import { firebase } from '../../firebaseSpecs/config';
+import { SafeAreaView, ScrollView, View, Text } from 'react-native';
 import ChatFeedRow from '../../components/ChatFeedRow';
+import styles from './styles';
 
 const dummyData = [
   {
+    avatar:
+      'https://images.pexels.com/photos/4001552/pexels-photo-4001552.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     firstName: 'Leslie',
+    lastName: 'Heather',
+    latestMessage: 'Nice to chat with you!',
   },
   {
+    avatar:
+      'https://images.pexels.com/photos/2286385/pexels-photo-2286385.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     firstName: 'Jenny',
+    lastName: 'Kim',
+    latestMessage: 'Do you have any plans this weekend?',
   },
   {
+    avatar:
+      'https://images.pexels.com/photos/6134742/pexels-photo-6134742.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
     firstName: 'Abu',
+    lastName: 'Moe',
+    latestMessage: "Hahaha that's funny",
   },
 ];
 
-const db = firebase.firestore();
-const messagesRef = db.collection('messages');
-
 export default function ChatFeedScreen() {
-  const currentUser = useSelector((state) => state.user);
-  const [user, setUser] = useState(null);
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    console.log('currentUser in ChatFeedScreen', currentUser);
-    const unsubscribe = messagesRef.onSnapshot((querySnapshot) => {
-      const messagesFirestore = querySnapshot
-        .docChanges()
-        .filter(({ type }) => type === 'added')
-        .map(({ doc }) => {
-          const message = doc.data();
-          return { ...message, createdAt: message.createdAt.toDate() };
-        })
-        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-      appendMessages(messagesFirestore);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const appendMessages = useCallback(
-    (messages) => {
-      setMessages((previousMessages) =>
-        GiftedChat.append(previousMessages, messages)
-      );
-    },
-    [messages]
-  );
-
-  useEffect(() => {
-    console.log('user in ChatFeedScreen', user);
-    // for GiftedChat
-    setUser({
-      _id: currentUser.id,
-      name: currentUser.firstName,
-      avatar: currentUser.profilePicture,
-    });
-  }, [currentUser]);
-
-  async function handleSend(messages) {
-    const writes = messages.map((m) => messagesRef.add(m));
-    await Promise.all(writes);
-  }
-
+  const handlePress = (firstName) => {
+    // return <Text>{firstName}</Text>;
+    console.log(firstName);
+  };
   return (
-    <SafeAreaView>
-      <View>
-        {/* {dummyData.map((dummy, index) => (
-          <ChatFeedRow key={index} firstName={dummy.firstName} />
-        ))} */}
-        <Text>Chat Feed</Text>
-        <GiftedChat messages={messages} user={user} onSend={handleSend} />
-      </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Chat Feed</Text>
+        </View>
+        {dummyData.map((dummy, index) => (
+          <ChatFeedRow
+            key={index}
+            avatar={dummy.avatar}
+            firstName={dummy.firstName}
+            lastName={dummy.lastName}
+            latestMessage={dummy.latestMessage}
+            handlePress={() => handlePress(dummy.firstName)}
+          />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   );
 }

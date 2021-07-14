@@ -1,16 +1,23 @@
 import React from 'react';
 import { ImageBackground, View, Text, TouchableOpacity } from 'react-native';
-import { Avatar, Divider, ListItem } from 'react-native-elements';
+import { Avatar, ListItem } from 'react-native-elements';
 
-export default function ChatFeedRow({ firstName, lastName, latestMessage }) {
+export default function ChatFeedRow({
+  avatar,
+  firstName,
+  lastName,
+  latestMessage,
+  handlePress,
+}) {
   return (
-    <ListItem>
-      <Avatar rounded source={{}} />
+    <ListItem bottomDivider onPress={handlePress}>
+      <Avatar source={{ uri: avatar }} rounded />
       <ListItem.Content>
-        <ListItem.Title>{firstName}</ListItem.Title>
-        {/* <ListItem.Subtitle></ListItem.Subtitle> */}
+        <ListItem.Title>
+          {firstName} {lastName[0]}.
+        </ListItem.Title>
+        <ListItem.Subtitle>{latestMessage}</ListItem.Subtitle>
       </ListItem.Content>
-      <Divider />
     </ListItem>
   );
 }
