@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SafeAreaView, FlatList, Text } from 'react-native';
+import { SafeAreaView, FlatList, Text, View } from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import UserRow from '../HomeScreen/UserRow';
+import interestsArray from '../SetUpProfileScreens/ProfileStepTwo/interestsArray';
 
 export class SearchScreen extends Component {
   constructor(props) {
@@ -11,6 +12,8 @@ export class SearchScreen extends Component {
       originalData: [],
       searchData: [],
       searchTerm: '',
+      interests: interestsArray,
+      suggestions: [],
     };
     this.updateSearchText = this.updateSearchText.bind(this);
     this.filterResults = this.filterResults.bind(this);
@@ -26,33 +29,60 @@ export class SearchScreen extends Component {
   }
 
   filterResults(text) {
-    const tempResults = [...this.state.originalData];
-    const searchResults = tempResults.filter((user) => {
-      // convert interest and search term to all uppercase to ignore case-sensitivity
-      const interests = user.interests.map((interest) =>
-        interest.toUpperCase()
-      );
-      const searchTerm = text.toUpperCase();
-      return interests.includes(searchTerm);
-    });
-    this.setState({ searchData: searchResults });
+    if (text.length === 0) {
+      this.setState({ suggestions: [] });
+    } else {
+      const regex = new RegExp(`^${text}`, 'i');
+      const suggestions = this.state.interests
+        .sort()
+        .filter((interest) => regex.test(interest));
+      this.setState(() => ({ suggestions }));
+      console.log('suggestions inside of filter', suggestions);
+
+      const tempResults = [...this.state.originalData];
+      const searchResults = tempResults.filter((user) => {
+        // convert interest and search term to all uppercase to ignore case-sensitivity
+        const interests = user.interests.map((interest) =>
+          interest.toUpperCase()
+        );
+        const searchTerm = text.toUpperCase();
+        return interests.includes(searchTerm);
+      });
+      this.setState({ searchData: searchResults });
+    }
   }
 
   render() {
     const { navigation } = this.props;
-    const { searchData, searchTerm } = this.state;
+    const { searchData, searchTerm, suggestions } = this.state;
 
     const renderItem = ({ item }) => (
       <UserRow item={item} navigation={navigation} />
     );
 
+    const renderSuggestions = () => {
+      if (suggestions.length === 0) {
+        return null;
+      }
+      console.log('suggestions', suggestions);
+      return (
+        <View>
+          {suggestions.map((item, index) => (
+            <Text key={index}>{item}</Text>
+          ))}
+        </View>
+      );
+    };
+
     const screenDescription = () => {
       if (searchTerm.length === 0 && searchData.length === 0) {
         return <Text>Start looking for users by interest!</Text>;
-      } else if (searchTerm.length !== 0) {
+      } else if (searchTerm.length !== 0 && suggestions.length === 0) {
         return (
           <Text>Oh no, no users have been found with {searchTerm} 🥺</Text>
         );
+      } else {
+        return null;
       }
     };
 
@@ -62,6 +92,10 @@ export class SearchScreen extends Component {
           searchText={searchTerm}
           updateSearchText={this.updateSearchText}
         />
+        <View>
+          <Text>Suggestions:</Text>
+          {renderSuggestions()}
+        </View>
         <FlatList
           data={searchData}
           keyExtractor={(item) => item.id.toString()}
