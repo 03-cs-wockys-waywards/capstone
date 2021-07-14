@@ -1,13 +1,13 @@
-import React from "react";
-import { Text } from "react-native";
-import { Icon } from "react-native-elements";
-import { createStackNavigator } from "@react-navigation/stack";
-import { rightIcons } from "../../components/HeaderRightIcons";
-import UsersList from "./UsersList";
-import SingleUserProfile from "../SingleUserProfileScreen/SingleUserProfile";
+import React from 'react';
+import { Text } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { createStackNavigator } from '@react-navigation/stack';
+import { rightIcons } from '../../components/HeaderRightIcons';
+import UsersList from './UsersList';
+import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
 
-import DiscoverList from "./DiscoverList";
-import MatchesList from "./MatchesList";
+import DiscoverList from './DiscoverList';
+import MatchesList from './MatchesList';
 
 const HomeStack = createStackNavigator();
 
@@ -28,7 +28,7 @@ const userChatIcon = (navigation) => (
     type="material-community"
     name="message-outline"
     size={25}
-    onPress={() => navigation.navigate("Chat")}
+    onPress={() => navigation.navigate('Chat')}
   />
 );
 
@@ -40,7 +40,7 @@ export default function Home({ navigation }) {
         component={UsersList}
         options={{
           headerLeft: () => logo(),
-          headerTitle: "",
+          headerTitle: '',
         }}
       />
       {/* <HomeStack.Screen name="MatchesList" component={MatchesList} /> */}
@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
         component={SingleUserProfile}
         options={({ route }) => ({
           title: renderName(route),
-          // headerRight: () => userChatIcon(navigation),
+          headerRight: () => userChatIcon(navigation),
         })}
       />
     </HomeStack.Navigator>

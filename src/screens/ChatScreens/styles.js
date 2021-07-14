@@ -5,13 +5,12 @@ export default StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
-    marginTop: '10%',
     paddingBottom: '15%',
   },
   headerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginVertical: 20,
     marginHorizontal: '10%',
   },
   headerText: {
