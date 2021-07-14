@@ -1,16 +1,26 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
     flexGrow: 1,
-    marginHorizontal: '10%',
-    // marginTop: '10%',
-    height: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageContainer: {
+    flexGrow: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '10%',
   },
   image: {
     width: 300,
     height: 300,
     backgroundColor: '#d3d3d3',
+    borderRadius: 300 / 2,
+    padding: 15,
+    marginBottom: 15,
   },
   button: {
     height: 48,
@@ -35,4 +45,4 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
   },
-});
+})
