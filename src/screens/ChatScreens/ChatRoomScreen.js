@@ -75,7 +75,7 @@ export default function ChatFeedScreen({ route }) {
           <Text style={styles.headerText}>{`${match.firstName} ${match.lastName[0]}.`}</Text>
         </View>
         {messages.map((message, index) => (
-          <ChatBubble key={index} message={message.text} user={"match"} />
+          <ChatBubble key={index} message={message.text} user={message.from === user.id ? "currentUser" : "match"} />
         ))}
       </ScrollView>
       <TextInput onChangeText={setText} value={text} placeholder="Message" />
