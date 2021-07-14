@@ -98,7 +98,6 @@ export default function ChatFeedScreen({ navigation }) {
     });
   };
 
-  // console.log('messages grouped by sender >>>>', getMessages());
   const messages = getMessages();
 
   return (
@@ -107,21 +106,6 @@ export default function ChatFeedScreen({ navigation }) {
         {/* <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Chat Feed</Text>
         </View> */}
-
-        {/* {_messages &&
-          _messages.map((message, index) => {
-            return (
-              <ChatFeedRow
-                key={index}
-                avatar={null}
-                firstName={"placeholder"}
-                lastName={"placehold"}
-                latestMessage={message.text}
-                handlePress={() => handlePress(match)}
-              />
-            );
-          })} */}
-
         {messages &&
           messages.map((message, index) => {
             const match = matchesStore[message.senderId];
@@ -138,17 +122,6 @@ export default function ChatFeedScreen({ navigation }) {
             ) : (
               <></>
             );
-
-            // return (
-            //   <ChatFeedRow
-            //     key={index}
-            //     avatar={null}
-            //     firstName={"placeholder"}
-            //     lastName={"placeholder"}
-            //     latestMessage={message.text}
-            //     handlePress={() => handlePress(match)}
-            //   />
-            // );
           })}
       </ScrollView>
     </SafeAreaView>
