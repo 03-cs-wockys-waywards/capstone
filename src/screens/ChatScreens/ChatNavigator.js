@@ -15,7 +15,13 @@ export default function ChatNavigator({ navigation }) {
           title: "Chat Feed"
         })}
       />
-      <ChatStack.Screen name="ChatRoomScreen" component={ChatRoomScreen} />
+      <ChatStack.Screen 
+        name="ChatRoomScreen" 
+        component={ChatRoomScreen}
+        options={() => ({
+          title: ""
+        })}
+      />
     </ChatStack.Navigator>
   );
 }

@@ -49,7 +49,7 @@ export default function ChatFeedScreen({ route }) {
 
   const [messagesToUser] = useCollectionData(query);
   const [messagesFromUser] = useCollectionData(_query);
-  // const messages = [ ...messagesToUser, messagesFromUser ]
+  const messages = [ ...messagesToUser, ...messagesFromUser ];
 
   const sendMessage = async () => {
     const { id, profilePicture } = user;
@@ -72,10 +72,10 @@ export default function ChatFeedScreen({ route }) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Chat with Match XXX</Text>
+          <Text style={styles.headerText}>{`${match.firstName} ${match.lastName[0]}.`}</Text>
         </View>
-        {dummyData.map((dummy, index) => (
-          <ChatBubble key={index} message={dummy.message} user={dummy.user} />
+        {messages.map((message, index) => (
+          <ChatBubble key={index} message={message.text} user={"match"} />
         ))}
       </ScrollView>
       <TextInput onChangeText={setText} value={text} placeholder="Message" />
