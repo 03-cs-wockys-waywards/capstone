@@ -8,3 +8,4 @@ export { default as Confirmation } from './SetUpProfileScreens/Confirmation/Conf
 export { default as HomeScreen } from './HomeScreen/Home';
 export { default as ProfileNavigator } from './ProfileScreen/ProfileNavigator';
 export { default as ChatNavigator } from './ChatScreens/ChatNavigator';
+export { default as SearchScreen } from './SearchScreen/SearchScreen';
