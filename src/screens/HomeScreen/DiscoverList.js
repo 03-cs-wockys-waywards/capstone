@@ -5,8 +5,6 @@ import { fetchUsersWithInterests } from '../../store/discoverUsersReducer'
 import UserRow from './UserRow'
 import { firebase } from '../../firebaseSpecs/config'
 
-//const keyExtractor = (item) => item.id.toString()
-
 export class DiscoverList extends Component {
   constructor(props) {
     super(props)
@@ -44,7 +42,9 @@ export class DiscoverList extends Component {
 
   render() {
     const { renderItem, keyExtractor } = this
-    const { discoverUsers } = this.props
+    const { user, users } = this.props
+    // filter out the current user from discover list
+    const discoverUsers = users.filter((person) => person.id !== user.id)
 
     return (
       <FlatList
@@ -59,7 +59,7 @@ export class DiscoverList extends Component {
 
 const mapState = (state) => ({
   user: state.user,
-  discoverUsers: state.discoverUsers,
+  users: state.discoverUsers,
 })
 
 const mapDispatch = (dispatch) => ({
