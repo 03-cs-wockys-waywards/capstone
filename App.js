@@ -34,6 +34,7 @@ export class App extends Component {
     this.state = {
       user: null,
       loading: true,
+      isLoggedIn: false,
     }
   }
 
@@ -49,19 +50,20 @@ export class App extends Component {
             this.setState({
               loading: false,
               user: userData,
+              isLoggedIn: true,
             })
           })
           .catch((error) => {
             this.setState({ loading: false })
           })
       } else {
-        this.setState({ loading: false })
+        this.setState({ loading: false, isLoggedIn: false })
       }
     })
   }
 
   render() {
-    const { loading, user } = this.state
+    const { loading, user, isLoggedIn } = this.state
 
     if (loading) {
       return <></>
@@ -70,7 +72,7 @@ export class App extends Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          {user ? (
+          {isLoggedIn ? (
             <Stack.Navigator
               initialRouteName="Main"
               headerMode="none"
