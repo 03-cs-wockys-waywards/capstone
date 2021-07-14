@@ -4,6 +4,7 @@ import "firebase/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { fetchPotentialMatches, setMatches } from "../../store/potentialMatchesReducer";
 import { SafeAreaView, ScrollView, View, Text } from "react-native";
 import ChatFeedRow from "../../components/ChatFeedRow";
 import ChatRoomScreen from "./ChatRoomScreen";
@@ -36,21 +37,23 @@ const dummyData = [
 let match;
 
 export default function ChatFeedScreen({ navigation }) {
-  const user = useSelector((state) => state.user);
-  const [store, setStore] = useState({});
+  const currentUser = useSelector((state) => state.user);
+  const potentialMatches = useSelector((state) => state.potentialMatches);
+  const matches = potentialMatches.filter((user) => currentUser.likes.includes(user.id));
+  // const matches = potentialMatches.filter((user) => currentUser.likes.includes(user.id));
+  // const [potentialMatches, setPotentialMatches] = useState([]);
+  // const [matches, setMatches] = useState([]);
+  const dispatch = useDispatch();
 
   const messagesRef = firebase.firestore().collection("messages");
-  const query = messagesRef
-    .where("to", "==", user.id)
-    .orderBy("from")
-    .orderBy("createdAt")
+  const query = messagesRef.where("to", "==", currentUser.id);
   const [_messages] = useCollectionData(query);
 
   useEffect(() => {
-    setStore(sortMessages());
+    dispatch(fetchPotentialMatches(currentUser.id));
   }, []);
 
-  const sortMessages = () => {
+  const getMessageStore = () => {
     const messageStore = {};
     if (_messages && _messages.length) {
       _messages.forEach((message) => {
@@ -63,11 +66,24 @@ export default function ChatFeedScreen({ navigation }) {
     return messageStore;
   };
 
+  const getMatchesStore = () => {
+    const matchesStore = {};
+    if (matches && matches.length) {
+      matches.forEach((match) => {
+        const { id } = match;
+        matchesStore[id] = match;
+      });
+    }
+    return matchesStore;
+  }
+
   // console.log(`messages to Rhetta >>>>`, _messages);
-  // console.log("messageStore >>>>", sortMessages());
-  console.log('----------------------------')
-  console.log("store on local state >>>>", store);
-  console.log('----------------------------')
+  // console.log("messageStore >>>>", getMessageStore());
+  // console.log('----------------------------');
+  // console.log('POTENTIAL matches from redux store >>>>>', potentialMatches);
+
+  console.log('----------------------------');
+  console.log('matches array >>>>>', matches)
 
 
   const handlePress = (match) => {
