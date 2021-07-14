@@ -24,8 +24,6 @@ export default function ProfileScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Header navigation={navigation} user={user} /> */}
-      <ChatFeed/>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profilePreviewContainer}>
           {user && <UserDetails user={user} />}
