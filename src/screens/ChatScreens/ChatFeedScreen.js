@@ -37,27 +37,38 @@ let match;
 
 export default function ChatFeedScreen({ navigation }) {
   const user = useSelector((state) => state.user);
+  const [store, setStore] = useState({});
 
   const messagesRef = firebase.firestore().collection("messages");
-  const query = messagesRef.where("to", "==", user.id);
-
+  const query = messagesRef
+    .where("to", "==", user.id)
+    .orderBy("from")
+    .orderBy("createdAt")
   const [_messages] = useCollectionData(query);
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    setStore(sortMessages());
+  }, []);
 
   const sortMessages = () => {
     const messageStore = {};
     if (_messages && _messages.length) {
       _messages.forEach((message) => {
         const { from } = message;
-        messageStore[from] ? messageStore[from].push(message) : messageStore[from] = [message];
+        messageStore[from]
+          ? messageStore[from].push(message)
+          : (messageStore[from] = [message]);
       });
-    } 
+    }
     return messageStore;
-  }
+  };
 
   // console.log(`messages to Rhetta >>>>`, _messages);
-  console.log('messageStore >>>>', sortMessages());
+  // console.log("messageStore >>>>", sortMessages());
+  console.log('----------------------------')
+  console.log("store on local state >>>>", store);
+  console.log('----------------------------')
+
 
   const handlePress = (match) => {
     navigation.navigate("ChatRoomScreen", {
@@ -71,16 +82,17 @@ export default function ChatFeedScreen({ navigation }) {
         {/* <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Chat Feed</Text>
         </View> */}
-        {_messages && _messages.map((message, index) => (
-          <ChatFeedRow
-            key={index}
-            avatar={null}
-            firstName={"placeholder"}
-            lastName={"placehold"}
-            latestMessage={message.text}
-            handlePress={() => handlePress(match)}
-          />
-        ))}
+        {_messages &&
+          _messages.map((message, index) => (
+            <ChatFeedRow
+              key={index}
+              avatar={null}
+              firstName={"placeholder"}
+              lastName={"placehold"}
+              latestMessage={message.text}
+              handlePress={() => handlePress(match)}
+            />
+          ))}
       </ScrollView>
     </SafeAreaView>
   );
