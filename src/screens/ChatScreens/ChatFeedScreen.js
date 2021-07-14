@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SafeAreaView, ScrollView, View, Text } from 'react-native';
 import ChatFeedRow from '../../components/ChatFeedRow';
+import ChatRoomScreen from './ChatRoomScreen';
 import styles from './styles';
 
 const dummyData = [
@@ -28,10 +29,10 @@ const dummyData = [
   },
 ];
 
-export default function ChatFeedScreen() {
-  const handlePress = (firstName) => {
-    // return <Text>{firstName}</Text>;
-    console.log(firstName);
+export default function ChatFeedScreen({ navigation }) {
+  // navigate to the ChatRoomScreen
+  const handlePress = () => {
+    navigation.navigate('ChatRoomScreen');
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +47,7 @@ export default function ChatFeedScreen() {
             firstName={dummy.firstName}
             lastName={dummy.lastName}
             latestMessage={dummy.latestMessage}
-            handlePress={() => handlePress(dummy.firstName)}
+            handlePress={handlePress}
           />
         ))}
       </ScrollView>
