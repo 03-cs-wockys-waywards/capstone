@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SafeAreaView, FlatList } from 'react-native';
+import { SafeAreaView, FlatList, Text } from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import UserRow from '../HomeScreen/UserRow';
 
@@ -46,6 +46,8 @@ export class SearchScreen extends Component {
       <UserRow item={item} navigation={navigation} />
     );
 
+    const screenDescription = <Text>Look for users by interest!</Text>;
+
     return (
       <SafeAreaView>
         <SearchBar
@@ -56,6 +58,7 @@ export class SearchScreen extends Component {
           data={searchData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
+          ListEmptyComponent={screenDescription}
         />
       </SafeAreaView>
     );
