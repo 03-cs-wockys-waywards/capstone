@@ -3,12 +3,17 @@ import { connect } from 'react-redux'
 import { SafeAreaView, FlatList } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/discoverUsersReducer'
 import styles from './styles'
-import UserRow from './UserRow'
+import { UserRow, MemoizedUserRow } from './UserRow'
 import { firebase } from '../../firebaseSpecs/config'
+
+//const keyExtractor = (item) => item.id.toString()
 
 export class DiscoverList extends Component {
   constructor(props) {
     super(props)
+
+    this.renderItem = this.renderItem.bind(this)
+    this.keyExtractor = this.keyExtractor.bind(this)
   }
 
   // get current user's doc & interests
@@ -30,19 +35,25 @@ export class DiscoverList extends Component {
       })
   }
 
-  render() {
-    const { discoverUsers, navigation } = this.props
+  renderItem({ item }) {
+    return <MemoizedUserRow item={item} navigation={this.props.navigation} />
+  }
 
-    const renderItem = ({ item }) => (
-      <UserRow item={item} navigation={navigation} />
-    )
+  keyExtractor(item) {
+    return item.id.toString()
+  }
+
+  render() {
+    const { renderItem, keyExtractor } = this
+    const { discoverUsers } = this.props
 
     return (
       <SafeAreaView style={styles.listContainer}>
         <FlatList
           data={discoverUsers}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={keyExtractor}
           renderItem={renderItem}
+          initialNumToRender={7}
         />
       </SafeAreaView>
     )
@@ -51,7 +62,6 @@ export class DiscoverList extends Component {
 
 const mapState = (state) => ({
   user: state.user,
-  likes: state.user.likes,
   discoverUsers: state.discoverUsers,
 })
 

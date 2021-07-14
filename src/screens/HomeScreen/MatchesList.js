@@ -1,47 +1,56 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { SafeAreaView, FlatList } from 'react-native';
-import { fetchPotentialMatches } from '../../store/potentialMatchesReducer';
-import styles from './styles';
-import UserRow from './UserRow';
-import { firebase } from '../../firebaseSpecs/config';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { SafeAreaView, FlatList } from 'react-native'
+import { fetchPotentialMatches } from '../../store/potentialMatchesReducer'
+import styles from './styles'
+import UserRow from './UserRow'
+import { firebase } from '../../firebaseSpecs/config'
 
 export class MatchesList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+
+    this.renderItem = this.renderItem.bind(this)
+    this.keyExtractor = this.keyExtractor.bind(this)
   }
 
   componentDidMount() {
     // get all users have our user in their likes array
-    const currentUserId = firebase.auth().currentUser.uid;
-    this.props.setPotentials(currentUserId);
+    const currentUserId = firebase.auth().currentUser.uid
+    this.props.setPotentials(currentUserId)
+  }
+
+  renderItem({ item }) {
+    return <UserRow item={item} navigation={this.props.navigation} />
+  }
+
+  keyExtractor(item) {
+    return item.id.toString()
   }
 
   render() {
-    const { user, potentialMatches, navigation } = this.props;
-    const currentUserLikes = user.likes;
-
-    const renderItem = ({ item }) => (
-      <UserRow item={item} navigation={navigation} />
-    );
+    const { renderItem, keyExtractor } = this
+    const { user, potentialMatches } = this.props
+    const currentUserLikes = user.likes
 
     // look through current user's likes array & find matches
     const matches = potentialMatches.filter((user) =>
       currentUserLikes.includes(user.id)
-    );
+    )
 
     if (matches.length > 0) {
       return (
         <SafeAreaView style={styles.listContainer}>
           <FlatList
             data={matches}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={keyExtractor}
             renderItem={renderItem}
+            initialNumToRender={7}
           />
         </SafeAreaView>
-      );
+      )
     }
-    return <></>;
+    return <></>
   }
 }
 
@@ -50,10 +59,10 @@ const mapState = (state) => ({
   user: state.user,
   // users that are potential matches
   potentialMatches: state.potentialMatches,
-});
+})
 
 const mapDispatch = (dispatch) => ({
   setPotentials: (id) => dispatch(fetchPotentialMatches(id)),
-});
+})
 
-export default connect(mapState, mapDispatch)(MatchesList);
+export default connect(mapState, mapDispatch)(MatchesList)
