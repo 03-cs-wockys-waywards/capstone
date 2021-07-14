@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, ScrollView, View, StyleSheet, TextInput, Text } from "react-native";
 import { firebase } from "../../firebaseSpecs/config";
 import "firebase/firestore";
