@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { Avatar } from 'react-native-elements'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import DoubleTap from 'react-native-double-tap'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { Avatar } from 'react-native-elements';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import DoubleTap from 'react-native-double-tap';
 
-import { SmallPill } from '../../components/SmallPill'
-import { getColorsArray } from '../../helpers/getColorsArray'
-import styles from './styles'
-import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
+import { SmallPill } from '../../components/SmallPill';
+import { getColorsArray } from '../../helpers/getColorsArray';
+import styles from './styles';
+import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer';
 
 export default function UserRow({ item, navigation }) {
-  const likes = useSelector((state) => state.user.likes)
-  const isLiked = likes.includes(item.id)
-  const [like, setLike] = useState(isLiked)
-  const [colors, setColors] = useState([])
+  const likes = useSelector((state) => state.user.likes);
+  const isLiked = likes.includes(item.id);
+  const [like, setLike] = useState(isLiked);
+  const [colors, setColors] = useState([]);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const colors = getColorsArray(5)
-    setColors(colors)
-  }, [])
+    const colors = getColorsArray(5);
+    setColors(colors);
+  }, []);
 
   // const likesFilter = (id) => {
   //   return likes.filter((likeId) => likeId !== id)
@@ -29,24 +29,24 @@ export default function UserRow({ item, navigation }) {
 
   const handleLike = (id) => {
     if (!isLiked) {
-      dispatch(_addLike(id))
-      setLike(true)
+      dispatch(_addLike(id));
+      setLike(true);
     } else {
-      dispatch(_removeLike(id))
-      setLike(false)
+      dispatch(_removeLike(id));
+      setLike(false);
     }
-  }
+  };
 
   const renderInterests = (interests) => {
     return interests.map((item, index) => (
       <SmallPill key={index} backgroundColor={colors[index]} text={item} />
-    ))
-  }
+    ));
+  };
 
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Single User', { user: item, liked: like })
+        navigation.navigate('Single User', { user: item, liked: like });
       }}
     >
       <View style={styles.userRowContainer}>
@@ -74,5 +74,5 @@ export default function UserRow({ item, navigation }) {
         </View>
       </View>
     </TouchableOpacity>
-  )
+  );
 }

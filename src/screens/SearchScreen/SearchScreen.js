@@ -46,7 +46,15 @@ export class SearchScreen extends Component {
       <UserRow item={item} navigation={navigation} />
     );
 
-    const screenDescription = <Text>Look for users by interest!</Text>;
+    const screenDescription = () => {
+      if (searchTerm.length === 0 && searchData.length === 0) {
+        return <Text>Start looking for users by interest!</Text>;
+      } else if (searchTerm.length !== 0) {
+        return (
+          <Text>Oh no, no users have been found with {searchTerm} 🥺</Text>
+        );
+      }
+    };
 
     return (
       <SafeAreaView>
@@ -58,7 +66,7 @@ export class SearchScreen extends Component {
           data={searchData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
-          ListEmptyComponent={screenDescription}
+          ListEmptyComponent={() => screenDescription()}
         />
       </SafeAreaView>
     );
