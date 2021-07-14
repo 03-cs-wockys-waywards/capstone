@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { SafeAreaView, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/discoverUsersReducer'
-import styles from './styles'
-import { UserRow, MemoizedUserRow } from './UserRow'
+import UserRow from './UserRow'
 import { firebase } from '../../firebaseSpecs/config'
 
 //const keyExtractor = (item) => item.id.toString()
@@ -36,7 +35,7 @@ export class DiscoverList extends Component {
   }
 
   renderItem({ item }) {
-    return <MemoizedUserRow item={item} navigation={this.props.navigation} />
+    return <UserRow item={item} navigation={this.props.navigation} />
   }
 
   keyExtractor(item) {
@@ -48,14 +47,12 @@ export class DiscoverList extends Component {
     const { discoverUsers } = this.props
 
     return (
-      <SafeAreaView style={styles.listContainer}>
-        <FlatList
-          data={discoverUsers}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          initialNumToRender={7}
-        />
-      </SafeAreaView>
+      <FlatList
+        data={discoverUsers}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        initialNumToRender={7}
+      />
     )
   }
 }

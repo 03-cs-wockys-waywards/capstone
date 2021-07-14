@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { SafeAreaView, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import { fetchPotentialMatches } from '../../store/potentialMatchesReducer'
-import styles from './styles'
 import UserRow from './UserRow'
 import { firebase } from '../../firebaseSpecs/config'
 
@@ -40,14 +39,12 @@ export class MatchesList extends Component {
 
     if (matches.length > 0) {
       return (
-        <SafeAreaView style={styles.listContainer}>
-          <FlatList
-            data={matches}
-            keyExtractor={keyExtractor}
-            renderItem={renderItem}
-            initialNumToRender={7}
-          />
-        </SafeAreaView>
+        <FlatList
+          data={matches}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          initialNumToRender={7}
+        />
       )
     }
     return <></>
