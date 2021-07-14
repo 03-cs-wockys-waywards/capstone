@@ -25,11 +25,10 @@ export default function ChatFeedScreen({ navigation }) {
   const query = messagesRef.where("to", "==", currentUser.id);
   const [_messages] = useCollectionData(query);
 
-  
   useEffect(() => {
     dispatch(fetchPotentialMatches(currentUser.id));
   }, []);
-  
+
   /* 
   - used for grouping messages by sender. 
   - returns an object that stores sender ids as keys and an array of messages from that sender as values: 
@@ -38,19 +37,19 @@ export default function ChatFeedScreen({ navigation }) {
     senderId2: [ { message1 }, { message2 }, ... ],
   }
   */
- const getMessageStore = () => {
-   const messageStore = {};
-   if (_messages && _messages.length) {
-     _messages.forEach((message) => {
-       const { from } = message;
-       messageStore[from]
-       ? messageStore[from].push(message)
-       : (messageStore[from] = [message]);
+  const getMessageStore = () => {
+    const messageStore = {};
+    if (_messages && _messages.length) {
+      _messages.forEach((message) => {
+        const { from } = message;
+        messageStore[from]
+          ? messageStore[from].push(message)
+          : (messageStore[from] = [message]);
       });
     }
     return messageStore;
   };
-  
+
   /*
   - used for retrieving user objects by their ids.
   - returns an object that stores ids as keys and user objects as values: 
@@ -59,31 +58,39 @@ export default function ChatFeedScreen({ navigation }) {
     userId2: { user object }, 
   }
   */
- const getMatchesStore = () => {
-   const matchesStore = {};
-   if (matches && matches.length) {
-     matches.forEach((match) => {
-       const { id } = match;
-       matchesStore[id] = match;
+  const getMatchesStore = () => {
+    const matchesStore = {};
+    if (matches && matches.length) {
+      matches.forEach((match) => {
+        const { id } = match;
+        matchesStore[id] = match;
       });
     }
     return matchesStore;
   };
-  
+
   const messageStore = getMessageStore();
   const matchesStore = getMatchesStore();
-  
+
+  /*
+  - used for retrieving array of messages to map over in render method.
+  - returns an array of objects storing unique sender ids as keys and message text as values: 
+  [
+    { senderId: str, text: str },
+    { senderId: str, text: str }, 
+  ]
+  */
   const getMessages = () => {
     const senderIds = Object.keys(messageStore);
     const messages = senderIds.map((id) => {
       const { text } = messageStore[id][0];
       return {
         senderId: id,
-        text
-      }
+        text,
+      };
     });
     return messages;
-  }
+  };
 
   const handlePress = (match) => {
     navigation.navigate("ChatRoomScreen", {
@@ -91,7 +98,8 @@ export default function ChatFeedScreen({ navigation }) {
     });
   };
 
-  console.log('messages grouped by sender >>>>', getMessages());
+  // console.log('messages grouped by sender >>>>', getMessages());
+  const messages = getMessages();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -99,7 +107,8 @@ export default function ChatFeedScreen({ navigation }) {
         {/* <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Chat Feed</Text>
         </View> */}
-        {_messages &&
+
+        {/* {_messages &&
           _messages.map((message, index) => {
             return (
               <ChatFeedRow
@@ -111,6 +120,35 @@ export default function ChatFeedScreen({ navigation }) {
                 handlePress={() => handlePress(match)}
               />
             );
+          })} */}
+
+        {messages &&
+          messages.map((message, index) => {
+            const match = matchesStore[message.senderId];
+            console.log("match in render", match);
+            return match ? (
+              <ChatFeedRow
+                key={index}
+                avatar={null}
+                firstName={match.firstName}
+                lastName={match.lastName}
+                latestMessage={message.text}
+                handlePress={() => handlePress(match)}
+              />
+            ) : (
+              <></>
+            );
+
+            // return (
+            //   <ChatFeedRow
+            //     key={index}
+            //     avatar={null}
+            //     firstName={"placeholder"}
+            //     lastName={"placeholder"}
+            //     latestMessage={message.text}
+            //     handlePress={() => handlePress(match)}
+            //   />
+            // );
           })}
       </ScrollView>
     </SafeAreaView>
