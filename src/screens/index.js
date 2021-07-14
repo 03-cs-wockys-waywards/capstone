@@ -8,4 +8,4 @@ export { default as EditProfile } from './EditProfileScreen/EditProfileScreen';
 export { default as Confirmation } from './SetUpProfileScreens/Confirmation/ConfirmationScreen';
 export { default as HomeScreen } from './HomeScreen/Home';
 export { default as ProfileNavigator } from './ProfileScreen/ProfileNavigator';
-export { default as ChatFeedScreen } from '../screens/ChatScreens/ChatFeedScreen';
+export { default as ChatNavigator } from './ChatScreens/ChatNavigator';
