@@ -41,7 +41,6 @@ export class App extends Component {
     const usersRef = firebase.firestore().collection('users')
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('user in if block componentDidMount >>>>>', user)
         usersRef
           .doc(user.uid)
           .get()
@@ -67,7 +66,7 @@ export class App extends Component {
     if (loading) {
       return <></>
     }
-    console.log('user in render >>>>>', user)
+    
     return (
       <Provider store={store}>
         <NavigationContainer>

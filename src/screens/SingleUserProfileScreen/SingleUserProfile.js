@@ -6,6 +6,7 @@ import {
   ScrollView,
   View,
   Text,
+  TouchableOpacity,
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
@@ -16,6 +17,7 @@ import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
 import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
+import ChatRoom from "../ChatScreens/ChatRoom";
 
 export default function SingleUserProfile({ route }) {
   const { user, liked } = route.params
@@ -65,6 +67,7 @@ export default function SingleUserProfile({ route }) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profilePreviewContainer}>
+          <ChatRoom match={user} />
           <ImageBackground
             source={{ uri: user.profilePicture }}
             defaultSource={defaultProfilePicture}
