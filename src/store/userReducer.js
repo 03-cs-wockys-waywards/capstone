@@ -3,6 +3,7 @@ import { firebase } from '../firebaseSpecs/config';
 const EDIT_USER_INFO = 'EDIT_USER_INFO';
 const ADD_LIKE = 'ADD_LIKE';
 const REMOVE_LIKE = 'REMOVE_LIKE';
+const CLEAR_DATA = 'CLEAR_DATA';
 
 export const editUserInfo = (userInfo) => ({
   type: EDIT_USER_INFO,
@@ -17,6 +18,10 @@ const addLike = (id) => ({
 const removeLike = (id) => ({
   type: REMOVE_LIKE,
   id,
+});
+
+export const clearData = () => ({
+  type: CLEAR_DATA
 });
 
 export const fetchUser = () => {
@@ -75,8 +80,9 @@ export default function (state = initialState, action) {
     case ADD_LIKE:
       return { ...state, likes: [...state.likes, action.id] };
     case REMOVE_LIKE:
-      const newLikes = state.likes.filter((uid) => uid !== action.id);
-      return { ...state, likes: newLikes };
+      return { ...state, likes: state.likes.filter((uid) => uid !== action.id) };
+    case CLEAR_DATA:
+      return null;
     default:
       return state;
   }
