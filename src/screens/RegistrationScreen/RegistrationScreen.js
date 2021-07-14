@@ -28,22 +28,7 @@ export default function RegistrationScreen({ navigation }) {
     if (password !== confirmPassword) {
       alert("Passwords don't match.")
     } else {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((response) => {
-          const uid = response.user.uid
-          const data = {
-            userId: uid,
-            email,
-          }
-
-          dispatch(editUserInfo(data))
-          navigation.navigate('ProfileStepOne')
-        })
-        .catch((error) => {
-          alert(error)
-        })
+      navigation.navigate('ProfileStepOne', { email, password })
     }
   }
 

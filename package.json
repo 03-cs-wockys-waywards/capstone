@@ -23,6 +23,7 @@
     "firebase-admin": "^9.10.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-firebase-hooks": "^3.0.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-double-tap": "^1.0.1",
     "react-native-dropdown-picker": "^5.1.21",
