@@ -8,17 +8,13 @@ import UpdatePronouns from "./UpdatePronouns";
 import UpdateInterests from "./UpdateInterests/UpdateInterests";
 import Header from "./Header";
 
-export default function EditProfile({ navigation }) {
+export default function EditProfile() {
   const _user = useSelector((state) => state.user);
   const [user, setUser] = useState(_user);
 
-  console.log("------------------")
-  console.log('user data from redux store >>>>>', _user)
-  console.log("------------------")
-
   return (
     <SafeAreaView>
-      <Header user={user} />
+      {/* <Header user={user} /> */}
       <ScrollView>
         <View style={styles.container}>
           <UpdateImage

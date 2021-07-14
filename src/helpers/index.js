@@ -26,3 +26,8 @@ export const getColorsArray = (num) => {
   }
   return colors;
 }
+
+// for top navigation -- renders user's name using route params
+export const renderName = (route) => {
+  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
+};

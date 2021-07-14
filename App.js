@@ -69,7 +69,7 @@ export class App extends Component {
     if (loading) {
       return <></>
     }
-
+    
     return (
       <Provider store={store}>
         <NavigationContainer>
