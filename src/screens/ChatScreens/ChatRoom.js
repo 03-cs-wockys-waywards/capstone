@@ -1,21 +1,26 @@
 import React, { useRef, useState } from "react";
-import { SafeAreaView, ScrollView, View, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, View, StyleSheet, TextInput, Text } from "react-native";
 import { firebase } from "../../firebaseSpecs/config";
 import "firebase/firestore";
 import "firebase/auth";
 import { useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function ChatRoom({ match }) {
   // const { receiver } = route.params;
   const user = useSelector((state) => state.user);
+  const [text, setText] = useState("");
+
   const messagesRef = firebase.firestore().collection("messages");
   // const query = messagesRef.orderBy("createdAt").limit(25);
-  const query = messagesRef.where("to", "==", user.id).where("from", "==", match.id);
-  const _query = messagesRef.where("to", "==", match.id).where("from", "==", user.id);
-
-
+  const query = messagesRef
+    .where("to", "==", user.id)
+    .where("from", "==", match.id);
+  const _query = messagesRef
+    .where("to", "==", match.id)
+    .where("from", "==", user.id);
 
   // messages sent to logged in use
   const [messagesToUser] = useCollectionData(query);
@@ -28,24 +33,35 @@ export default function ChatRoom({ match }) {
     const { id, profilePicture } = user;
 
     await messagesRef.add({
-      text: formValue,
+      text,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       profilePicture,
       from: id,
-      // to: receiver.id,
+      to: match.id,
     });
 
-    setFormValue("");
+    setText("");
   };
 
   // console.log("messagesToUser >>>>", messagesToUser);
   // console.log("messagesFromUser >>>>>", messagesFromUser);
 
-  console.log("messages to Rhetta from Abu >>>>", messagesToUser);
-  console.log("message to Abu from Rhetta >>>>>", messagesFromUser);
+  console.log(`messages to Rhetta from ${match.firstName} >>>>`, messagesToUser);
+  console.log(`message to ${match.firstName} from Rhetta >>>>>`, messagesFromUser);
 
   return (
-    <></>
+    <>
+      <SafeAreaView>
+        <TextInput
+          onChangeText={setText}
+          value={text}
+          placeholder="Message"
+        />
+        <TouchableOpacity onPress={() => sendMessage()}>
+          <Text>Send</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </>
     // <>
     //   <main>
     //     {messages &&
