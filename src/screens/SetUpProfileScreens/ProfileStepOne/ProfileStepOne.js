@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   SafeAreaView,
   ScrollView,
@@ -6,39 +6,42 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-} from 'react-native';
-import { Icon } from 'react-native-elements';
-import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
-import Checkbox from '../../../components/Checkbox';
-import styles from './styles';
-import { useSelector, useDispatch } from 'react-redux';
-import { editUserInfo } from '../../../store/userReducer';
+} from 'react-native'
+import { Icon } from 'react-native-elements'
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
+import Checkbox from '../../../components/Checkbox'
+import styles from './styles'
+import { useSelector, useDispatch } from 'react-redux'
+import { editUserInfo } from '../../../store/userReducer'
 
-export default function ProfileStepOne({ navigation }) {
-  const reduxFirstName = useSelector((state) => state.user.firstName);
-  const reduxLastName = useSelector((state) => state.user.lastName);
-  const reduxPronouns = useSelector((state) => state.user.pronouns);
-  const [firstName, setFirstName] = useState(reduxFirstName || '');
-  const [lastName, setLastName] = useState(reduxLastName || '');
-  const [pronouns, setPronouns] = useState(reduxPronouns || []);
+export default function ProfileStepOne({ navigation, route }) {
+  const { email, password } = route.params
 
-  const dispatch = useDispatch();
+  const reduxFirstName = useSelector((state) => state.user.firstName)
+  const reduxLastName = useSelector((state) => state.user.lastName)
+  const reduxPronouns = useSelector((state) => state.user.pronouns)
+  const [firstName, setFirstName] = useState(reduxFirstName || '')
+  const [lastName, setLastName] = useState(reduxLastName || '')
+  const [pronouns, setPronouns] = useState(reduxPronouns || [])
+
+  const dispatch = useDispatch()
 
   const handlePress = () => {
     // validating whether all inputs are completed
     if (!firstName || !lastName || pronouns.length === 0) {
-      alert('Please fill out all required fields');
+      alert('Please fill out all required fields')
     } else {
       dispatch(
         editUserInfo({
+          email,
           firstName,
           lastName,
           pronouns,
         })
-      );
-      navigation.navigate('ProfileStepTwo');
+      )
+      navigation.navigate('ProfileStepTwo', { password })
     }
-  };
+  }
 
   return (
     <SafeAreaView>
@@ -101,5 +104,5 @@ export default function ProfileStepOne({ navigation }) {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }

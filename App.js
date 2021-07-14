@@ -41,6 +41,7 @@ export class App extends Component {
   componentDidMount() {
     const usersRef = firebase.firestore().collection('users')
     firebase.auth().onAuthStateChanged((user) => {
+      //console.log('USER in COMPONENT DID MOUNT in APP: ', user)
       if (user) {
         usersRef
           .doc(user.uid)
@@ -95,11 +96,11 @@ export class App extends Component {
                 component={LandingScreen}
                 options={{ headerShown: false }}
               />
+              <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen
                 name="Registration"
                 component={RegistrationScreen}
               />
-              <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
               <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
               <Stack.Screen
@@ -107,7 +108,6 @@ export class App extends Component {
                 component={ProfileStepThree}
               />
               <Stack.Screen name="Confirmation" component={Confirmation} />
-              <Stack.Screen name="EditProfile" component={EditProfile} />
             </Stack.Navigator>
           )}
           <MyStatusBar backgroundColor="white" barStyle="dark-content" />
