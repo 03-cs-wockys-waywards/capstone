@@ -67,7 +67,7 @@ export default function SingleUserProfile({ route }) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profilePreviewContainer}>
-          {/* <ChatRoom match={user} /> */}
+          <ChatRoom match={user} />
           <ImageBackground
             source={{ uri: user.profilePicture }}
             defaultSource={defaultProfilePicture}
