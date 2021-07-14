@@ -79,11 +79,12 @@ export default function ChatFeedScreen({ navigation }) {
 
   // console.log(`messages to Rhetta >>>>`, _messages);
   // console.log("messageStore >>>>", getMessageStore());
-  // console.log('----------------------------');
-  // console.log('POTENTIAL matches from redux store >>>>>', potentialMatches);
-
   console.log('----------------------------');
-  console.log('matches array >>>>>', matches)
+  console.log('matchesStore >>>>>', getMatchesStore())
+
+
+  // console.log('----------------------------');
+  // console.log('matches array >>>>>', matches)
 
 
   const handlePress = (match) => {
