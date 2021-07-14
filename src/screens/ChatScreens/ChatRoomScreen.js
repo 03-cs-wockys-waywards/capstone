@@ -4,7 +4,14 @@ import "firebase/firestore";
 import "firebase/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useSelector } from "react-redux";
-import { SafeAreaView, ScrollView, View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import ChatBubble from "../../components/ChatBubble";
 import styles from "./styles";
 
@@ -58,14 +65,8 @@ export default function ChatFeedScreen({ route }) {
     setText("");
   };
 
-  console.log(
-    `messages to Rhetta from ${match.firstName} >>>>`,
-    messagesToUser
-  );
-  console.log(
-    `message to ${match.firstName} from Rhetta >>>>>`,
-    messagesFromUser
-  );
+  console.log(`messages to Rhetta from ${match.firstName} >>>>`, messagesToUser);
+  console.log(`message to ${match.firstName} from Rhetta >>>>>`, messagesFromUser);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,14 +78,10 @@ export default function ChatFeedScreen({ route }) {
           <ChatBubble key={index} message={dummy.message} user={dummy.user} />
         ))}
       </ScrollView>
-      <TextInput
-          onChangeText={setText}
-          value={text}
-          placeholder="Message"
-        />
-        <TouchableOpacity onPress={() => sendMessage()}>
-          <Text>Send</Text>
-        </TouchableOpacity>
+      <TextInput onChangeText={setText} value={text} placeholder="Message" />
+      <TouchableOpacity onPress={() => sendMessage()}>
+        <Text>Send</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
