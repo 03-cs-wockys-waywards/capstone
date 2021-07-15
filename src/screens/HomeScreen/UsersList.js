@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, ImageBackground } from 'react-native'
+import { SafeAreaView, Text, ImageBackground, View } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import DiscoverList from './DiscoverList'
 import MatchesList from './MatchesList'
@@ -28,33 +28,35 @@ export default class UsersList extends Component {
     const buttons = [{ element: buttonOne }, { element: buttonTwo }]
 
     return (
-      <SafeAreaView style={styles.listContainer}>
+      <SafeAreaView style={styles.container}>
+        <ButtonGroup
+          onPress={this.updateIndex}
+          selectedIndex={selectedIndex}
+          buttons={buttons}
+          buttonContainerStyle={{ color: 'transparent' }}
+          containerStyle={{
+            borderRadius: 50,
+            height: 50,
+            marginHorizontal: 30,
+            marginVertical: '3%',
+            borderColor: '#EAB803',
+            borderWidth: 0.5,
+            backgroundColor: '#fff',
+          }}
+          innerBorderStyle={{ color: 'transparent' }}
+          selectedButtonStyle={{
+            backgroundColor: '#C2D831',
+            borderRadius: 50,
+          }}
+        />
         <ImageBackground source={image} style={styles.image}>
-          <ButtonGroup
-            onPress={this.updateIndex}
-            selectedIndex={selectedIndex}
-            buttons={buttons}
-            buttonContainerStyle={{ color: 'transparent' }}
-            containerStyle={{
-              borderRadius: 50,
-              height: 50,
-              marginHorizontal: 30,
-              marginVertical: '3%',
-              borderColor: '#aaa',
-              borderWidth: 0,
-              backgroundColor: '#fff',
-            }}
-            innerBorderStyle={{ color: 'transparent' }}
-            selectedButtonStyle={{
-              backgroundColor: '#F4D4E1',
-              borderRadius: 50,
-            }}
-          />
-          {selectedIndex === 0 ? (
-            <DiscoverList navigation={navigation} />
-          ) : (
-            <MatchesList navigation={navigation} />
-          )}
+          <View style={styles.flatListContainer}>
+            {selectedIndex === 0 ? (
+              <DiscoverList navigation={navigation} />
+            ) : (
+              <MatchesList navigation={navigation} />
+            )}
+          </View>
         </ImageBackground>
       </SafeAreaView>
     )

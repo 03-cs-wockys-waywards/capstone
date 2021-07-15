@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: '25%',
+    marginTop: '40%',
   },
   sparkle: {
     fontSize: 100,

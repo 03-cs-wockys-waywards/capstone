@@ -35,7 +35,6 @@ export const lightColors = [
   '#D8D4F4',
   '#D4DDF4',
   '#D4E9F4',
-  '#D4F4F4',
 ]
 
 /* Extended Array

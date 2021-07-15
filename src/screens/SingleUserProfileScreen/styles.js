@@ -1,8 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#C2D831',
   },
   scrollContainer: {
     marginTop: '10%',
@@ -91,4 +92,4 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     marginVertical: '5%',
   },
-});
+})

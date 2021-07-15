@@ -6,7 +6,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import DoubleTap from 'react-native-double-tap'
 
 import { SmallPill } from '../../components/SmallPill'
-import { getColorsArray } from '../../helpers/getColorsArray'
+import { getLightColorsArray } from '../../helpers/getColorsArray'
+import { lightColors } from '../../helpers/colors.js'
 import styles from './styles'
 import { _addLike, _removeLike } from '../../store/userReducer'
 
@@ -19,7 +20,7 @@ export default function UserRow({ item, navigation }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const colors = getColorsArray(5)
+    const colors = getLightColorsArray(lightColors, 5)
     setColors(colors)
   }, [])
 

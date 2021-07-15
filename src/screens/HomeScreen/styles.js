@@ -1,11 +1,15 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-  listContainer: {
+  container: {
     flex: 1,
     flexDirection: 'column',
     alignContent: 'center',
-    backgroundColor: '#f2f2f3',
+    backgroundColor: 'white',
+  },
+  flatListContainer: {
+    marginTop: '3%',
+    marginBottom: '20%',
   },
   userRowContainer: {
     flex: 1,
