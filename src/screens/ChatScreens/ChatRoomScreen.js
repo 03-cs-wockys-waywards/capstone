@@ -25,7 +25,9 @@ export default function ChatFeedScreen({ route }) {
   const { toUser, fromUser } = useSelector((state) => state.messages);
   const messages = [ ...toUser, ...fromUser ];
   const dispatch = useDispatch();
+  // const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
+  // setMessages([ ...toUser, ...fromUser ]);
 
   const messagesRef = firebase.firestore().collection("messages");
 
