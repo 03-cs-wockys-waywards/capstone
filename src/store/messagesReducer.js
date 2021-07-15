@@ -8,8 +8,9 @@ const setMessages = (messages) => ({
   messages,
 });
 
-export const fetchMessages = (userId, matchId) => {
-  console.log("---------- IN THUNK ---------");
+// gets messages between current user and a given matched user
+export const fetchMessagesToUser = (userId, matchId) => {
+  // console.log("---------- IN THUNK ---------");
   return async (dispatch) => {
     const messagesRef = firebase.firestore().collection("messages");
     await messagesRef
@@ -18,12 +19,36 @@ export const fetchMessages = (userId, matchId) => {
       .get()
       .then((snapshot) => {
         if (snapshot) {
-          let messages = snapshot.docs.map((doc) => {
+          const messages = snapshot.docs.map((doc) => {
             const data = doc.data();
             const { id } = doc;
             return { id, ...data };
           });
-          console.log('messages in thunk >>>>>', messages);
+          // console.log('messages in thunk >>>>>', messages);
+          dispatch(setMessages(messages));
+        } else {
+          console.log("could not find messages");
+        }
+      });
+  };
+};
+
+export const fetchMessagesFromUser = (userId, matchId) => {
+  // console.log("---------- IN THUNK ---------");
+  return async (dispatch) => {
+    const messagesRef = firebase.firestore().collection("messages");
+    await messagesRef
+      .where("to", "==", matchId)
+      .where("from", "==", userId)
+      .get()
+      .then((snapshot) => {
+        if (snapshot) {
+          const messages = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            const { id } = doc;
+            return { id, ...data };
+          });
+          // console.log('messages in thunk >>>>>', messages);
           dispatch(setMessages(messages));
         } else {
           console.log("could not find messages");
@@ -35,7 +60,7 @@ export const fetchMessages = (userId, matchId) => {
 export default function (state = [], action) {
   switch (action.type) {
     case SET_MESSAGES:
-      return action.messages;
+      return [ ...state, ...action.messages ];
     default:
       return state;
   }

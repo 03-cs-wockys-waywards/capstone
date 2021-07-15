@@ -4,7 +4,7 @@ import "firebase/firestore";
 import "firebase/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMessages } from "../../store/messagesReducer";
+import { fetchMessagesToUser, fetchMessagesFromUser } from "../../store/messagesReducer";
 import {
   SafeAreaView,
   ScrollView,
@@ -52,7 +52,8 @@ export default function ChatFeedScreen({ route }) {
   //   .where("from", "==", user.id);
   
   useEffect(() => {
-    dispatch(fetchMessages(user.id, match.id));
+    dispatch(fetchMessagesToUser(user.id, match.id));
+    dispatch(fetchMessagesFromUser(user.id, match.id));
     console.log('in useEffect')
   }, []);
 
