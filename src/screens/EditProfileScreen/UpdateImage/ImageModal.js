@@ -7,11 +7,17 @@ import {
   Modal,
   Pressable,
 } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { editUserInfo } from '../../../store/userReducer'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
+import { firebase } from '../../../firebaseSpecs/config'
 
-export default function ImageModal({ user, setUser }) {
+export default function ImageModal({ user, setUser, setUserPic }) {
   const [modalVisible, setModalVisible] = useState(false)
+  const [newPic, setImage] = useState(null)
+
+  const dispatch = useDispatch()
 
   const useCamera = async () => {
     const { status } = await Camera.requestPermissionsAsync()
@@ -22,8 +28,10 @@ export default function ImageModal({ user, setUser }) {
         aspect: [1, 1],
         quality: 1,
       })
+
       if (!image.cancelled) {
-        setUser({ ...user, profilePicture: image.uri })
+        //setUser({ ...user, profilePicture: image.uri })
+        uploadPicture(image.uri)
       }
     }
     setModalVisible(false)
@@ -40,10 +48,50 @@ export default function ImageModal({ user, setUser }) {
         quality: 1,
       })
       if (!image.cancelled) {
-        setUser({ ...user, profilePicture: image.uri })
+        //setUser({ ...user, profilePicture: image.uri })
+        uploadPicture(image.uri)
       }
     }
     setModalVisible(false)
+  }
+
+  const uploadPicture = async (image) => {
+    const uri = image
+    const childPath = `profile/${user.id}`
+    const response = await fetch(uri)
+    const blob = await response.blob()
+
+    const task = firebase.storage().ref().child(childPath).put(blob)
+
+    const taskProgress = (snapshot) => {
+      console.log(`Transferred: ${snapshot.bytesTransferred}`)
+    }
+
+    const taskError = (snapshot) => {
+      console.log('There was an error: ', snapshot)
+    }
+
+    const taskUpdateRedux = () => {
+      task.snapshot.ref.getDownloadURL().then((snapshot) => {
+        dispatch(editUserInfo({ profilePicture: snapshot }))
+        console.log('Redux update completed')
+      })
+    }
+
+    const taskUpdateFirebase = async (snapshot) => {
+      const userRef = firebase.firestore().collection('users').doc(user.id)
+
+      await userRef.update({ profilePicture: snapshot })
+      console.log('Firebase update completed')
+    }
+
+    task.on(
+      'state-changed',
+      taskProgress,
+      taskError,
+      taskUpdateRedux,
+      taskUpdateFirebase
+    )
   }
 
   return (

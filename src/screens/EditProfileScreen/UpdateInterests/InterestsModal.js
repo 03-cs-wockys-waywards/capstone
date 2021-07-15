@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 import {
   SafeAreaView,
   View,
@@ -7,89 +7,93 @@ import {
   Modal,
   FlatList,
   StyleSheet,
-} from "react-native";
-// import { styles } from "../UpdateImage/ImageModal";
-import allInterests from "../../SetUpProfileScreens/ProfileStepTwo/interestsArray";
-import { Pill } from "../../../components/Pill";
-import { getColorsArray } from "../../../helpers/getColorsArray";
+} from 'react-native'
+//import styles from './style'
+import allInterests from '../../SetUpProfileScreens/ProfileStepTwo/interestsArray'
+import { Pill } from '../../../components/Pill'
+import { getColorsArray } from '../../../helpers/getColorsArray'
 
 export default function InterestsModal({ user, setUser }) {
-  const [interests, setInterests] = useState(user.interests);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [colors, setColors] = useState([]);
+  const [interests, setInterests] = useState(user.interests)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [colors, setColors] = useState([])
 
   useEffect(() => {
-    const colors = getColorsArray(allInterests.length);
-    setColors(colors);
-  }, []);
+    const colors = getColorsArray(allInterests.length)
+    setColors(colors)
+  }, [])
 
   const handlePress = (item) => {
     if (interests.includes(item)) {
-      setInterests(interests.filter((interest) => interest !== item));
+      setInterests(interests.filter((interest) => interest !== item))
     } else if (interests.length < 5) {
-      setInterests([...interests, item]);
+      setInterests([...interests, item])
     }
-  };
+  }
 
   return (
-    <SafeAreaView>
+    <>
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <Text style={styles.title}>Update Your Interests</Text>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonOpen]}
-            onPress={() => {
-              if (interests.length) {
-                setUser({ ...user, interests: interests });
-                setModalVisible(false);
-              }
-            }}
-          >
-            <Text>✅</Text>
-          </TouchableOpacity>
-          <FlatList
-            style={{ flexDirection: "row", flexWrap: "wrap" }}
-            data={allInterests}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity onPress={() => handlePress(item)}>
-                <Pill
-                  text={item}
-                  backgroundColor={
-                    interests.includes(item) ? "#6e3b6e" : colors[index]
-                  }
-                />
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      </Modal>
-      <View>
+        <Text style={styles.title}>Update Your Interests</Text>
         <TouchableOpacity
           style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}
+          onPress={() => {
+            if (interests.length) {
+              setUser({ ...user, interests: interests })
+              setModalVisible(false)
+            }
+          }}
         >
-          <Text style={styles.textStyle}>+ / -</Text>
+          <Text>✅</Text>
         </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
+        <FlatList
+          style={{ flexDirection: 'row', flexWrap: 'wrap' }}
+          data={allInterests}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity onPress={() => handlePress(item)}>
+              <Pill
+                text={item}
+                backgroundColor={
+                  interests.includes(item) ? '#6e3b6e' : colors[index]
+                }
+              />
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </Modal>
+
+      <TouchableOpacity
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.textStyle}>+ / -</Text>
+      </TouchableOpacity>
+    </>
+  )
 }
 
 export const styles = StyleSheet.create({
+  interestsContainer: {
+    flexGrow: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 60,
+  },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 40,
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -105,26 +109,26 @@ export const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center",
+    textAlign: 'center',
   },
   title: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     marginTop: 30,
     marginBottom: 15,
     marginLeft: 10,
     marginRight: 10,
   },
-});
+})
