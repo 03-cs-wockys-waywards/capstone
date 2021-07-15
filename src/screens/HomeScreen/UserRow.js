@@ -57,10 +57,14 @@ export default function UserRow({ item, navigation }) {
                 <MaterialCommunityIcons
                   name="heart"
                   size={20}
-                  color="#96171B"
+                  color="#E8073F"
                 />
               ) : (
-                <MaterialCommunityIcons name="heart-plus-outline" size={20} />
+                <MaterialCommunityIcons
+                  name="heart-plus-outline"
+                  size={20}
+                  color="#E8073F"
+                />
               )}
             </DoubleTap>
           </View>

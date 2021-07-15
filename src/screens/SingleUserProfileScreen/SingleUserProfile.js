@@ -79,12 +79,13 @@ export default function SingleUserProfile({ route }) {
                     <MaterialCommunityIcons
                       name="heart"
                       size={25}
-                      color="#96171B"
+                      color="#E8073F"
                     />
                   ) : (
                     <MaterialCommunityIcons
                       name="heart-plus-outline"
                       size={25}
+                      color="#E8073F"
                     />
                   )}
                 </DoubleTap>

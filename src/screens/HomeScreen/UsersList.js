@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import { SafeAreaView, Text } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
-import DiscoverList from './DiscoverList';
-import MatchesList from './MatchesList';
-import styles from './styles';
+import React, { Component } from 'react'
+import { SafeAreaView, Text } from 'react-native'
+import { ButtonGroup } from 'react-native-elements'
+import DiscoverList from './DiscoverList'
+import MatchesList from './MatchesList'
+import styles from './styles'
 
 export default class UsersList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       selectedIndex: 0,
-    };
-    this.updateIndex = this.updateIndex.bind(this);
+    }
+    this.updateIndex = this.updateIndex.bind(this)
   }
 
   updateIndex(selectedIndex) {
-    this.setState({ selectedIndex });
+    this.setState({ selectedIndex })
   }
 
   render() {
-    const { navigation } = this.props;
-    const { selectedIndex } = this.state;
+    const { navigation } = this.props
+    const { selectedIndex } = this.state
 
-    const buttonOne = () => <Text>Discover</Text>;
-    const buttonTwo = () => <Text>Matches</Text>;
-    const buttons = [{ element: buttonOne }, { element: buttonTwo }];
+    const buttonOne = () => <Text>Discover</Text>
+    const buttonTwo = () => <Text>Matches</Text>
+    const buttons = [{ element: buttonOne }, { element: buttonTwo }]
 
     return (
       <SafeAreaView style={styles.listContainer}>
@@ -32,14 +32,18 @@ export default class UsersList extends Component {
           onPress={this.updateIndex}
           selectedIndex={selectedIndex}
           buttons={buttons}
+          buttonContainerStyle={{ color: 'transparent' }}
           containerStyle={{
             borderRadius: 50,
             height: 50,
             marginHorizontal: 30,
+            marginVertical: '3%',
+            borderColor: '#c2d831',
+            backgroundColor: '#fff',
           }}
           innerBorderStyle={{ color: 'transparent' }}
           selectedButtonStyle={{
-            backgroundColor: '#bbdaf9',
+            backgroundColor: '#c2d831',
             borderRadius: 50,
           }}
         />
@@ -49,6 +53,6 @@ export default class UsersList extends Component {
           <MatchesList navigation={navigation} />
         )}
       </SafeAreaView>
-    );
+    )
   }
 }

@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   listContainer: {
     flex: 1,
     flexDirection: 'column',
     alignContent: 'center',
-    backgroundColor: '#e4dbff',
+    backgroundColor: '#f2f2f3',
   },
   userRowContainer: {
     flex: 1,
@@ -17,6 +17,8 @@ export default StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 6,
+    borderWidth: 0.5,
+    borderColor: '#aaa',
   },
   infoContainer: {
     flex: 1,
@@ -41,4 +43,4 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-});
+})

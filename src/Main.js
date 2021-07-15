@@ -1,35 +1,34 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {
   HomeScreen,
-  SearchScreen,
   ProfileNavigator,
   ChatNavigator,
   SearchNavigator,
-} from './screens';
-import { editUserInfo } from './store/userReducer';
+} from './screens'
+import { editUserInfo } from './store/userReducer'
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator()
 
 export default function MainScreen(props) {
-  const user = props.route.params.user;
-  const dispatch = useDispatch();
+  const user = props.route.params.user
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(editUserInfo(user));
-  }, []);
+    dispatch(editUserInfo(user))
+  }, [])
 
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      activeColor="#d7f81e"
-      inactiveColor="#e4dbff"
+      activeColor="#C2D831"
+      inactiveColor="#132077"
       labeled={false}
       labelStyle={{ fontSize: 12 }}
       barStyle={{
-        backgroundColor: '#106563',
+        backgroundColor: '#fff',
         alignItems: 'center',
       }}
     >
@@ -74,5 +73,5 @@ export default function MainScreen(props) {
         }}
       />
     </Tab.Navigator>
-  );
+  )
 }
