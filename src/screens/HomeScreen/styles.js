@@ -17,8 +17,6 @@ export default StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 6,
-    borderWidth: 0.5,
-    borderColor: '#aaa',
   },
   infoContainer: {
     flex: 1,
@@ -42,5 +40,11 @@ export default StyleSheet.create({
   interestsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  image: {
+    flexGrow: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
   },
 })

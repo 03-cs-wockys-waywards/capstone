@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import { SafeAreaView, Text, ImageBackground } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import DiscoverList from './DiscoverList'
 import MatchesList from './MatchesList'
 import styles from './styles'
+import image from '../../../assets/gradient.png'
 
 export default class UsersList extends Component {
   constructor(props) {
@@ -28,30 +29,33 @@ export default class UsersList extends Component {
 
     return (
       <SafeAreaView style={styles.listContainer}>
-        <ButtonGroup
-          onPress={this.updateIndex}
-          selectedIndex={selectedIndex}
-          buttons={buttons}
-          buttonContainerStyle={{ color: 'transparent' }}
-          containerStyle={{
-            borderRadius: 50,
-            height: 50,
-            marginHorizontal: 30,
-            marginVertical: '3%',
-            borderColor: '#c2d831',
-            backgroundColor: '#fff',
-          }}
-          innerBorderStyle={{ color: 'transparent' }}
-          selectedButtonStyle={{
-            backgroundColor: '#c2d831',
-            borderRadius: 50,
-          }}
-        />
-        {selectedIndex === 0 ? (
-          <DiscoverList navigation={navigation} />
-        ) : (
-          <MatchesList navigation={navigation} />
-        )}
+        <ImageBackground source={image} style={styles.image}>
+          <ButtonGroup
+            onPress={this.updateIndex}
+            selectedIndex={selectedIndex}
+            buttons={buttons}
+            buttonContainerStyle={{ color: 'transparent' }}
+            containerStyle={{
+              borderRadius: 50,
+              height: 50,
+              marginHorizontal: 30,
+              marginVertical: '3%',
+              borderColor: '#aaa',
+              borderWidth: 0,
+              backgroundColor: '#fff',
+            }}
+            innerBorderStyle={{ color: 'transparent' }}
+            selectedButtonStyle={{
+              backgroundColor: '#F4D4E1',
+              borderRadius: 50,
+            }}
+          />
+          {selectedIndex === 0 ? (
+            <DiscoverList navigation={navigation} />
+          ) : (
+            <MatchesList navigation={navigation} />
+          )}
+        </ImageBackground>
       </SafeAreaView>
     )
   }

@@ -63,4 +63,10 @@ export default StyleSheet.create({
     fontSize: 17,
     letterSpacing: 0.2,
   },
+  image: {
+    flexGrow: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
+  },
 })

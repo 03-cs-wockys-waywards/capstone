@@ -23,8 +23,8 @@ export default function MainScreen(props) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      activeColor="#C2D831"
-      inactiveColor="#132077"
+      activeColor="#E8073F"
+      inactiveColor="#1261B1"
       labeled={false}
       labelStyle={{ fontSize: 12 }}
       barStyle={{
