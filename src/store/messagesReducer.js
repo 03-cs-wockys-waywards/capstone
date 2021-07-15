@@ -1,11 +1,16 @@
 import { firebase } from "../firebaseSpecs/config";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 
-const SET_MESSAGES = "SET_MESSAGES";
+const SET_MESSAGES_TO_USER = "SET_MESSAGES_TO_USER";
+const SET_MESSAGES_FROM_USER = "SET_MESSAGES_FROM_USER";
 
-const setMessages = (messages) => ({
-  type: SET_MESSAGES,
+const setMessagesToUser = (messages) => ({
+  type: SET_MESSAGES_TO_USER,
   messages,
+});
+
+const setMessagesFromUser = (messages) => ({
+  type: SET_MESSAGES_FROM_USER,
+  messages
 });
 
 // gets messages between current user and a given matched user
@@ -25,7 +30,7 @@ export const fetchMessagesToUser = (userId, matchId) => {
             return { id, ...data };
           });
           // console.log('messages in thunk >>>>>', messages);
-          dispatch(setMessages(messages));
+          dispatch(setMessagesToUser(messages));
         } else {
           console.log("could not find messages");
         }
@@ -49,7 +54,7 @@ export const fetchMessagesFromUser = (userId, matchId) => {
             return { id, ...data };
           });
           // console.log('messages in thunk >>>>>', messages);
-          dispatch(setMessages(messages));
+          dispatch(setMessagesFromUser(messages));
         } else {
           console.log("could not find messages");
         }
@@ -57,10 +62,17 @@ export const fetchMessagesFromUser = (userId, matchId) => {
   };
 };
 
-export default function (state = [], action) {
+const initialState = {
+  toUser: [],
+  fromUser: []
+};
+
+export default function (state = initialState, action) {
   switch (action.type) {
-    case SET_MESSAGES:
-      return [ ...state, ...action.messages ];
+    case SET_MESSAGES_TO_USER:
+      return { ...state, toUser: action.messages };
+    case SET_MESSAGES_FROM_USER:
+      return { ...state, fromUser: action.messages };
     default:
       return state;
   }
