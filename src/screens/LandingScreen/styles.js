@@ -21,6 +21,8 @@ export default StyleSheet.create({
     fontWeight: '400',
     textAlign: 'center',
     marginBottom: 75,
+    fontFamily: 'Lato_300Light_Italic',
+    letterSpacing: 0.6,
   },
   linksContainer: {
     flex: 1,
@@ -28,5 +30,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     margin: 20,
+  },
+  buttonText: {
+    fontSize: 17,
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.3,
   },
 })

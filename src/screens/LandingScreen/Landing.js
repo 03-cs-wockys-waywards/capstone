@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 
 import styles from './styles'
@@ -15,14 +15,14 @@ export default function Landing({ navigation }) {
           style={styles.button}
           onPress={() => navigation.navigate('Registration')}
         >
-          <Text>Signup</Text>
+          <Text style={styles.buttonText}>Signup</Text>
         </TouchableOpacity>
-        <Text>|</Text>
+        <Text tyle={styles.buttonText}>|</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('Login')}
         >
-          <Text>Login</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
     </View>
