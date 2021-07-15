@@ -3,9 +3,8 @@ import { StyleSheet, StatusBar } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
+    marginTop: StatusBar.currentHeight || 0,
     marginHorizontal: '5%',
-    // paddingTop: '10%',
   },
   headerContainer: {
     alignItems: 'center',
@@ -25,6 +24,15 @@ export default StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
   },
+  flatList: {
+    marginBottom: '32%',
+  },
+  flatListContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
   item: {
     padding: 20,
     marginVertical: 8,
@@ -43,6 +51,6 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '15%',
+    bottom: '9%',
   },
 });
