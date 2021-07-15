@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -6,13 +6,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-} from 'react-native'
-import { Pill } from '../../components/Pill'
-import { displaySemanticPronouns, getRandomLightColor } from '../../helpers'
-import styles from './styles'
+} from 'react-native';
+import { Pill } from '../../components/Pill';
+import { displaySemanticPronouns, getRandomLightColor } from '../../helpers';
+import styles from './styles';
 
 export default function UserDetails({ user }) {
-  const { firstName, lastName, profilePicture, pronouns, interests } = user
+  const { firstName, lastName, profilePicture, pronouns, interests } = user;
 
   // const renderPronouns = (pronouns) => {
   //   return pronouns
@@ -22,17 +22,17 @@ export default function UserDetails({ user }) {
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
-      const backgroundColor = getRandomLightColor()
+      const backgroundColor = getRandomLightColor();
       return (
         <Pill key={index} text={interest} backgroundColor={backgroundColor} />
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
     <ImageBackground
       // image source must be in {uri: linkToPhoto } format!
-      source={{ uri: profilePicture }}
+      source={{ uri: profilePicture ? profilePicture : null }}
       style={styles.image}
       imageStyle={styles.imageStyle}
       resizeMode="cover"
@@ -46,5 +46,5 @@ export default function UserDetails({ user }) {
         </View>
       </View>
     </ImageBackground>
-  )
+  );
 }
