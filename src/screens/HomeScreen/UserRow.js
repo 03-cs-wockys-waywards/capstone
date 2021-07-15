@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
@@ -8,7 +8,7 @@ import DoubleTap from 'react-native-double-tap'
 import { SmallPill } from '../../components/SmallPill'
 import { getColorsArray } from '../../helpers/getColorsArray'
 import styles from './styles'
-import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
+import { _addLike, _removeLike } from '../../store/userReducer'
 
 export default function UserRow({ item, navigation }) {
   const likes = useSelector((state) => state.user.likes)
@@ -27,6 +27,10 @@ export default function UserRow({ item, navigation }) {
   //   return likes.filter((likeId) => likeId !== id)
   // }
 
+  const handlePress = () => {
+    navigation.navigate('Single User', { user: item, liked: like })
+  }
+
   const handleLike = (id) => {
     if (!isLiked) {
       dispatch(_addLike(id))
@@ -44,11 +48,7 @@ export default function UserRow({ item, navigation }) {
   }
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('Single User', { user: item, liked: like })
-      }}
-    >
+    <TouchableOpacity onPress={handlePress}>
       <View style={styles.userRowContainer}>
         <Avatar size={95} rounded source={{ uri: item.profilePicture }} />
         <View style={styles.infoContainer}>
