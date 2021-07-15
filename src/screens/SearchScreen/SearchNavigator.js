@@ -10,14 +10,19 @@ const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
 };
 
-const userChatIcon = (navigation) => (
-  <Icon
-    type="material-community"
-    name="message-outline"
-    size={25}
-    onPress={() => navigation.navigate('Chat')}
-  />
-);
+const userChatIcon = (route, navigation) => {
+  const { user: match } = route.params;
+  return (
+    <Icon
+      type="material-community"
+      name="message-outline"
+      size={25}
+      onPress={() => navigation.navigate('Chat', {
+        match
+      })}
+    />
+  )
+};
 
 export default function ProfileNavigator({ navigation }) {
   return (
@@ -34,7 +39,7 @@ export default function ProfileNavigator({ navigation }) {
         component={SingleUserProfile}
         options={({ route }) => ({
           title: renderName(route),
-          headerRight: () => userChatIcon(navigation),
+          headerRight: () => userChatIcon(route, navigation),
         })}
       />
     </SearchStack.Navigator>
