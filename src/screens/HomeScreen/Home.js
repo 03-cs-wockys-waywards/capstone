@@ -1,9 +1,10 @@
-import React from 'react';
-import { Text } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { createStackNavigator } from '@react-navigation/stack';
-import UsersList from './UsersList';
-import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
+import React from "react";
+import { Text } from "react-native";
+import { Icon } from "react-native-elements";
+import { createStackNavigator } from "@react-navigation/stack";
+import UsersList from "./UsersList";
+import SingleUserProfile from "../SingleUserProfileScreen/SingleUserProfile";
+import ChatRoomScreen from "../ChatScreens/ChatRoomScreen";
 
 const HomeStack = createStackNavigator();
 
@@ -21,11 +22,13 @@ const userChatIcon = (route, navigation) => {
       type="material-community"
       name="message-outline"
       size={25}
-      onPress={() => navigation.navigate('Chat', {
-        match
-      })}
+      onPress={() =>
+        navigation.navigate("Chat Room", {
+          match,
+        })
+      }
     />
-  )
+  );
 };
 
 export default function Home({ navigation }) {
@@ -36,7 +39,7 @@ export default function Home({ navigation }) {
         component={UsersList}
         options={{
           headerLeft: () => logo(),
-          headerTitle: '',
+          headerTitle: "",
         }}
       />
       <HomeStack.Screen
@@ -45,6 +48,13 @@ export default function Home({ navigation }) {
         options={({ route }) => ({
           title: renderName(route),
           headerRight: () => userChatIcon(route, navigation),
+        })}
+      />
+      <HomeStack.Screen
+        name="Chat Room"
+        component={ChatRoomScreen}
+        options={() => ({
+          title: '',
         })}
       />
     </HomeStack.Navigator>

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Icon } from 'react-native-elements';
-import { createStackNavigator } from '@react-navigation/stack';
-import SearchScreen from './SearchScreen';
-import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
+import React from "react";
+import { Icon } from "react-native-elements";
+import { createStackNavigator } from "@react-navigation/stack";
+import SearchScreen from "./SearchScreen";
+import SingleUserProfile from "../SingleUserProfileScreen/SingleUserProfile";
 
 const SearchStack = createStackNavigator();
 
@@ -17,11 +17,13 @@ const userChatIcon = (route, navigation) => {
       type="material-community"
       name="message-outline"
       size={25}
-      onPress={() => navigation.navigate('Chat', {
-        match
-      })}
+      onPress={() =>
+        navigation.navigate("Chat", {
+          match,
+        })
+      }
     />
-  )
+  );
 };
 
 export default function ProfileNavigator({ navigation }) {

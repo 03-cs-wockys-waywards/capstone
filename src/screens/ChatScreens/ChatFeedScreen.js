@@ -93,7 +93,7 @@ export default function ChatFeedScreen({ navigation }) {
   };
 
   const handlePress = (match) => {
-    navigation.navigate('ChatRoomScreen', {
+    navigation.navigate('ChatRoom', {
       match,
     });
   };
