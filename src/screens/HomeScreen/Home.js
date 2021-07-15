@@ -34,8 +34,6 @@ export default function Home({ navigation }) {
           headerTitle: '',
         }}
       />
-      {/* <HomeStack.Screen name="MatchesList" component={MatchesList} /> */}
-      {/* <HomeStack.Screen name="Calendar" component={EmptyScreen} /> */}
       <HomeStack.Screen
         name="Single User"
         component={SingleUserProfile}

@@ -4,7 +4,6 @@ import { firebase } from "../../firebaseSpecs/config";
 import "firebase/firestore";
 import "firebase/auth";
 import { useSelector } from "react-redux";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
