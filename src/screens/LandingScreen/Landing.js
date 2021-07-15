@@ -1,6 +1,11 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, ImageBackground } from 'react-native'
-import { BackgroundImage } from 'react-native-elements/dist/config'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  SafeAreaView,
+} from 'react-native'
 
 import styles from './styles'
 
@@ -8,8 +13,8 @@ const image = require('../../../assets/gradient.png')
 
 export default function Landing({ navigation }) {
   return (
-    <BackgroundImage source={image} style={styles.image}>
-      <View style={styles.container}>
+    <ImageBackground source={image} style={styles.image}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.title}>✨</Text>
         <Text style={styles.title}>tingle</Text>
         <Text style={styles.subtitle}>mingle til you tingle</Text>
@@ -29,7 +34,7 @@ export default function Landing({ navigation }) {
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </BackgroundImage>
+      </SafeAreaView>
+    </ImageBackground>
   )
 }

@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flexGrow: 1,
     flexDirection: 'column',
     marginHorizontal: '20%',
-    marginTop: '50%',
+    marginTop: '60%',
     alignContent: 'center',
     justifyContent: 'center',
   },
