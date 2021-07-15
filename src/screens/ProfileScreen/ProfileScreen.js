@@ -13,10 +13,8 @@ import { editUserInfo } from "../../store/userReducer";
 import { Pill } from "../../components/Pill";
 import { getRandomLightColor } from "../../helpers/getRandomLightColor";
 import { displaySemanticPronouns } from "../../helpers/displaySemanticPronouns";
-import Header from "./Header";
 import UserDetails from "./UserDetails";
 import styles from "./styles";
-import ChatFeed from "../ChatScreens/ChatFeed";
 
 
 export default function ProfileScreen({ navigation }) {

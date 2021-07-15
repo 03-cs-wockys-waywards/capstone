@@ -8,14 +8,20 @@ const ChatStack = createStackNavigator();
 export default function ChatNavigator({ navigation }) {
   return (
     <ChatStack.Navigator>
-      <ChatStack.Screen 
-        name="ChatFeedScreen" 
+      <ChatStack.Screen
+        name="ChatFeedScreen"
         component={ChatFeedScreen}
         options={() => ({
-          title: "Chat Feed"
+          title: 'Chat Feed',
         })}
       />
-      <ChatStack.Screen name="ChatRoomScreen" component={ChatRoomScreen} />
+      <ChatStack.Screen
+        name="ChatRoomScreen"
+        component={ChatRoomScreen}
+        options={() => ({
+          title: '',
+        })}
+      />
     </ChatStack.Navigator>
   );
 }
