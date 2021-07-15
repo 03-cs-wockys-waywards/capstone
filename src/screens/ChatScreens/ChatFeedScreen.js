@@ -1,17 +1,17 @@
-import { firebase } from "../../firebaseSpecs/config";
-import "firebase/firestore";
-import "firebase/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { firebase } from '../../firebaseSpecs/config';
+import 'firebase/firestore';
+import 'firebase/auth';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchPotentialMatches,
   setMatches,
-} from "../../store/potentialMatchesReducer";
-import { SafeAreaView, ScrollView, View, Text } from "react-native";
-import ChatFeedRow from "../../components/ChatFeedRow";
-import ChatRoomScreen from "./ChatRoomScreen";
-import styles from "./styles";
+} from '../../store/potentialMatchesReducer';
+import { SafeAreaView, ScrollView, View, Text } from 'react-native';
+import ChatFeedRow from '../../components/ChatFeedRow';
+import ChatRoomScreen from './ChatRoomScreen';
+import styles from './styles';
 
 export default function ChatFeedScreen({ navigation }) {
   const currentUser = useSelector((state) => state.user);
@@ -21,18 +21,18 @@ export default function ChatFeedScreen({ navigation }) {
   );
   const dispatch = useDispatch();
 
-  const messagesRef = firebase.firestore().collection("messages");
-  const query = messagesRef.where("to", "==", currentUser.id);
+  const messagesRef = firebase.firestore().collection('messages');
+  const query = messagesRef.where('to', '==', currentUser.id);
   const [_messages] = useCollectionData(query);
 
   useEffect(() => {
     dispatch(fetchPotentialMatches(currentUser.id));
   }, []);
 
-  /* 
-  - used for grouping messages by sender. 
-  - returns an object that stores sender ids as keys and an array of messages from that sender as values: 
-  { 
+  /*
+  - used for grouping messages by sender.
+  - returns an object that stores sender ids as keys and an array of messages from that sender as values:
+  {
     senderId1: [ { message1 }, { message2 }, ... ],
     senderId2: [ { message1 }, { message2 }, ... ],
   }
@@ -52,10 +52,10 @@ export default function ChatFeedScreen({ navigation }) {
 
   /*
   - used for retrieving user objects by their ids.
-  - returns an object that stores ids as keys and user objects as values: 
+  - returns an object that stores ids as keys and user objects as values:
   {
     userId1: { user object },
-    userId2: { user object }, 
+    userId2: { user object },
   }
   */
   const getMatchesStore = () => {
@@ -74,10 +74,10 @@ export default function ChatFeedScreen({ navigation }) {
 
   /*
   - used for retrieving array of messages to map over in render method.
-  - returns an array of objects storing unique sender ids as keys and message text as values: 
+  - returns an array of objects storing unique sender ids as keys and message text as values:
   [
     { senderId: str, text: str },
-    { senderId: str, text: str }, 
+    { senderId: str, text: str },
   ]
   */
   const getMessages = () => {
@@ -93,7 +93,7 @@ export default function ChatFeedScreen({ navigation }) {
   };
 
   const handlePress = (match) => {
-    navigation.navigate("ChatRoomScreen", {
+    navigation.navigate('ChatRoomScreen', {
       match,
     });
   };
@@ -109,6 +109,7 @@ export default function ChatFeedScreen({ navigation }) {
         {messages &&
           messages.map((message, index) => {
             const match = matchesStore[message.senderId];
+            console.log('match in render', match);
             return match ? (
               <ChatFeedRow
                 key={index}

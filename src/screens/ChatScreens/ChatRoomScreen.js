@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { firebase } from "../../firebaseSpecs/config";
-import "firebase/firestore";
-import "firebase/auth";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { firebase } from '../../firebaseSpecs/config';
+import 'firebase/firestore';
+import 'firebase/auth';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchMessagesToUser,
   fetchMessagesFromUser,
-} from "../../store/messagesReducer";
+} from '../../store/messagesReducer';
 import {
   SafeAreaView,
   ScrollView,
@@ -14,21 +14,21 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-} from "react-native";
-import ChatBubble from "../../components/ChatBubble";
-import styles from "./styles";
+} from 'react-native';
+import ChatBubble from '../../components/ChatBubble';
+import styles from './styles';
 
 export default function ChatFeedScreen({ route }) {
   // console.log("----------------  IN CHAT ROOM  ----------------");
   const { match } = route.params;
   const user = useSelector((state) => state.user);
   const { toUser, fromUser } = useSelector((state) => state.messages);
-  const messages = [ ...toUser, ...fromUser ];
+  const messages = [...toUser, ...fromUser];
   const dispatch = useDispatch();
-  const [text, setText] = useState("");
-  
-  const messagesRef = firebase.firestore().collection("messages");
-  
+  const [text, setText] = useState('');
+
+  const messagesRef = firebase.firestore().collection('messages');
+
   useEffect(() => {
     dispatch(fetchMessagesToUser(user.id, match.id));
     dispatch(fetchMessagesFromUser(user.id, match.id));
@@ -47,7 +47,7 @@ export default function ChatFeedScreen({ route }) {
       to: match.id,
     });
 
-    setText("");
+    setText('');
   };
 
   return (
@@ -58,13 +58,14 @@ export default function ChatFeedScreen({ route }) {
             style={styles.headerText}
           >{`${match.firstName} ${match.lastName[0]}.`}</Text>
         </View>
-        {messages && messages.map((message, index) => (
-          <ChatBubble
-            key={index}
-            message={message.text}
-            user={message.from === user.id ? "currentUser" : "match"}
-          />
-        ))}
+        {messages &&
+          messages.map((message, index) => (
+            <ChatBubble
+              key={index}
+              message={message.text}
+              user={message.from === user.id ? 'currentUser' : 'match'}
+            />
+          ))}
       </ScrollView>
       <TextInput onChangeText={setText} value={text} placeholder="Message" />
       <TouchableOpacity onPress={() => sendMessage()}>
