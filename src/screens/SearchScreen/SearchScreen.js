@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   FlatList,
   Text,
-  View,
   TouchableOpacity,
 } from 'react-native';
 import SearchBar from '../../components/SearchBar';
