@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  ScrollView,
   SafeAreaView,
   FlatList,
   Text,
@@ -10,6 +11,7 @@ import {
 import SearchBar from '../../components/SearchBar';
 import UserRow from '../HomeScreen/UserRow';
 import interestsArray from '../SetUpProfileScreens/ProfileStepTwo/interestsArray';
+import styles from './styles';
 
 export class SearchScreen extends Component {
   constructor(props) {
@@ -71,7 +73,7 @@ export class SearchScreen extends Component {
       return null;
     }
     return (
-      <View>
+      <>
         {suggestions.map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -79,20 +81,29 @@ export class SearchScreen extends Component {
               this.filterResults(item);
               this.selectSuggestion(item);
             }}
+            style={styles.suggestionsContainer}
           >
-            <Text>{item}</Text>
+            <Text style={styles.suggestionText}>{item}</Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </>
     );
   }
 
   screenDescription() {
     const { searchData, searchTerm, suggestions } = this.state;
     if (searchTerm.length === 0 && searchData.length === 0) {
-      return <Text>Start looking for users by interest!</Text>;
+      return (
+        <Text style={styles.descriptionText}>
+          Search your Discover List by interest!
+        </Text>
+      );
     } else if (searchTerm.length !== 0 && suggestions.length === 0) {
-      return <Text>Oh no, no users have been found with {searchTerm} 🥺</Text>;
+      return (
+        <Text style={styles.descriptionText}>
+          No users found with {searchTerm} 🥺
+        </Text>
+      );
     }
     return null;
   }
@@ -106,15 +117,12 @@ export class SearchScreen extends Component {
     };
 
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <SearchBar
           searchText={searchTerm}
           updateSearchText={this.updateSearchText}
         />
-        <View>
-          <Text>Suggestions:</Text>
-          {this.renderSuggestions()}
-        </View>
+        <ScrollView>{this.renderSuggestions()}</ScrollView>
         <FlatList
           data={searchData}
           keyExtractor={(item) => item.id.toString()}

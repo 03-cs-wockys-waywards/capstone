@@ -19,13 +19,17 @@ export default function Search({ updateSearchText, searchText }) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: 'white',
-    borderBottomColor: 'white',
-    borderTopColor: 'white',
+    // backgroundColor: 'white',
+    backgroundColor: '#d9e4e1',
+    // borderBottomColor: 'white',
+    // borderTopColor: 'white',
+    borderBottomColor: '#d9e4e1',
+    borderTopColor: '#d9e4e1',
   },
   inputContainer: {
     borderRadius: 50,
     backgroundColor: '#FAFBFC',
     marginHorizontal: 10,
+    marginVertical: 10,
   },
 });
