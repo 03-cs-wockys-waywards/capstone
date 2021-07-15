@@ -62,7 +62,7 @@ export default function SingleUserProfile({ route }) {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profilePreviewContainer}>
           <ImageBackground
-            source={{ uri: user.profilePicture }}
+            source={{ uri: user.profilePicture ? user.profilePicture : null }}
             defaultSource={defaultProfilePicture}
             style={styles.image}
             imageStyle={styles.imageStyle}

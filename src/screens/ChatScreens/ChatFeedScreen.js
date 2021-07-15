@@ -22,7 +22,11 @@ export default function ChatFeedScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const messagesRef = firebase.firestore().collection('messages');
-  const query = messagesRef.where('to', '==', currentUser.id);
+  // only run the where query when the currentUser.id exists
+  // to avoid breaking the logout logic
+  const query = currentUser.id
+    ? messagesRef.where('to', '==', currentUser.id)
+    : null;
   const [_messages] = useCollectionData(query);
 
   useEffect(() => {
