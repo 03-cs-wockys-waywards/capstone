@@ -19,24 +19,22 @@ import ChatBubble from "../../components/ChatBubble";
 import styles from "./styles";
 
 export default function ChatFeedScreen({ route }) {
-  console.log("----------------  IN CHAT ROOM  ----------------");
+  // console.log("----------------  IN CHAT ROOM  ----------------");
   const { match } = route.params;
   const user = useSelector((state) => state.user);
   const { toUser, fromUser } = useSelector((state) => state.messages);
   const messages = [ ...toUser, ...fromUser ];
   const dispatch = useDispatch();
-  // const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
-  // setMessages([ ...toUser, ...fromUser ]);
-
+  
   const messagesRef = firebase.firestore().collection("messages");
-
+  
   useEffect(() => {
     dispatch(fetchMessagesToUser(user.id, match.id));
     dispatch(fetchMessagesFromUser(user.id, match.id));
   }, []);
 
-  console.log("messages >>>>>", messages);
+  // console.log("messages >>>>>", messages);
 
   const sendMessage = async () => {
     const { id, profilePicture } = user;
