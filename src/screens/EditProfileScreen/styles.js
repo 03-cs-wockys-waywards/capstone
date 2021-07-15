@@ -1,27 +1,79 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
     flexGrow: 1,
-    marginHorizontal: '10%',
-    // marginTop: '10%',
-    height: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 60,
+  },
+  imageContainer: {
+    flexGrow: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '10%',
+  },
+  namesContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 60,
+    marginVertical: 5,
+  },
+  label: {
+    flexGrow: 1,
+    fontSize: 16,
+    letterSpacing: 0.125,
+    fontWeight: '500',
+    lineHeight: 19,
+    marginTop: 10,
+    marginBottom: 15,
+    paddingTop: 3,
+  },
+  input: {
+    fontSize: 16,
+    fontWeight: '300',
+    letterSpacing: 0.35,
+    borderBottomWidth: 1,
+    borderBottomColor: '#BDBDBD',
+    width: '65%',
+    height: 30,
+    marginBottom: 6,
+    paddingLeft: 10,
+  },
+  pronounContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 60,
+    marginVertical: 5,
+  },
+  dropdown: {},
+  dropMenu: {
+    width: '67%',
+    alignSelf: 'flex-end',
   },
   image: {
     width: 300,
     height: 300,
     backgroundColor: '#d3d3d3',
+    borderRadius: 300 / 2,
+    padding: 15,
+    marginBottom: 15,
   },
   button: {
     height: 48,
     borderRadius: 45,
     backgroundColor: '#136360',
     width: 250,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
+    marginBottom: '10%',
   },
   buttonText: {
     color: 'white',
@@ -35,4 +87,4 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
   },
-});
+})
