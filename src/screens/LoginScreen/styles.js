@@ -27,9 +27,11 @@ export default StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
+    fontFamily: 'Lato_400Regular',
+    fontSize: 15,
   },
   button: {
-    backgroundColor: '#788eec',
+    backgroundColor: '#1261B1',
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
@@ -40,8 +42,9 @@ export default StyleSheet.create({
   },
   buttonTitle: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontFamily: 'Lato_700Bold',
+    letterSpacing: 0.2,
   },
   footerView: {
     flex: 1,
@@ -49,12 +52,15 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   footerText: {
-    fontSize: 16,
+    fontSize: 17,
     color: '#2e2e2d',
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.2,
   },
   footerLink: {
-    color: '#788eec',
-    fontWeight: 'bold',
-    fontSize: 16,
+    color: '#1261B1',
+    fontFamily: 'Lato_900Black',
+    fontSize: 17,
+    letterSpacing: 0.2,
   },
 })
