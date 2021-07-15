@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SafeAreaView, FlatList, Text, View } from 'react-native';
+import {
+  SafeAreaView,
+  FlatList,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import UserRow from '../HomeScreen/UserRow';
 import interestsArray from '../SetUpProfileScreens/ProfileStepTwo/interestsArray';
@@ -32,12 +38,12 @@ export class SearchScreen extends Component {
     if (text.length === 0) {
       this.setState({ suggestions: [] });
     } else {
+      // filter through interests to display autocomplete suggestions to users
       const regex = new RegExp(`^${text}`, 'i');
       const suggestions = this.state.interests
         .sort()
         .filter((interest) => regex.test(interest));
       this.setState(() => ({ suggestions }));
-      console.log('suggestions inside of filter', suggestions);
 
       const tempResults = [...this.state.originalData];
       const searchResults = tempResults.filter((user) => {
@@ -64,14 +70,28 @@ export class SearchScreen extends Component {
       if (suggestions.length === 0) {
         return null;
       }
-      console.log('suggestions', suggestions);
       return (
         <View>
           {suggestions.map((item, index) => (
-            <Text key={index}>{item}</Text>
+            <TouchableOpacity
+              key={index}
+              onPress={() => {
+                this.filterResults(item);
+                selectSuggestion(item);
+              }}
+            >
+              <Text>{item}</Text>
+            </TouchableOpacity>
           ))}
         </View>
       );
+    };
+
+    const selectSuggestion = (value) => {
+      this.setState(() => ({
+        searchTerm: value,
+        suggestions: [],
+      }));
     };
 
     const screenDescription = () => {
