@@ -27,10 +27,6 @@ export default function UserRow({ item, navigation }) {
     navigation.navigate('Single User', { user: item, liked: like })
   }
 
-  const handlePress = () => {
-    navigation.navigate('Single User', { user: item, liked: like })
-  }
-
   const handleLike = (id) => {
     if (!isLiked) {
       dispatch(_addLike(id))

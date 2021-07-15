@@ -5,20 +5,18 @@ import {
   TouchableOpacity,
   ImageBackground,
   SafeAreaView,
+  Image,
 } from 'react-native'
-
+import image from '../../../assets/gradient.png'
+import landingLogo from '../../../assets/images/landing-logo.png'
 import styles from './styles'
-
-const image = require('../../../assets/gradient.png')
 
 export default function Landing({ navigation }) {
   return (
     <ImageBackground source={image} style={styles.image}>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>✨</Text>
-        <Text style={styles.title}>tingle</Text>
+        <Image source={landingLogo} style={styles.logo} />
         <Text style={styles.subtitle}>mingle til you tingle</Text>
-
         <View style={styles.linksContainer}>
           <TouchableOpacity
             style={styles.button}

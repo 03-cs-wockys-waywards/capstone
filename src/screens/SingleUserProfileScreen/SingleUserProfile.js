@@ -13,7 +13,7 @@ import DoubleTap from 'react-native-double-tap'
 import { Pill } from '../../components/Pill'
 import { getColorsArray } from '../../helpers/getColorsArray'
 import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
-import defaultProfilePicture from '../../images/default-profile-picture.jpg'
+import defaultProfilePicture from '../../../assets/images/default-profile-picture.jpg'
 import styles from './styles'
 import { _addLike, _removeLike } from '../../store/userReducer'
 
