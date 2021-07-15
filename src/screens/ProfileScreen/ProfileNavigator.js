@@ -1,12 +1,11 @@
 import React from "react";
 import { TouchableOpacity, Text } from "react-native";
 import { firebase } from "../../firebaseSpecs/config";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Icon } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "./ProfileScreen";
 import EditProfileScreen from "../EditProfileScreen/EditProfileScreen";
-import { clearData } from "../../store/userReducer";
 
 const ProfileStack = createStackNavigator();
 
