@@ -1,14 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
-import UsersList from './UsersList';
+import SearchScreen from './SearchScreen';
 import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
 
-const HomeStack = createStackNavigator();
-
-// replace with our actual logo
-const logo = () => <Text>Logo Placeholder</Text>;
+const SearchStack = createStackNavigator();
 
 const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
@@ -23,18 +19,17 @@ const userChatIcon = (navigation) => (
   />
 );
 
-export default function Home({ navigation }) {
+export default function ProfileNavigator({ navigation }) {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
-        name="UsersList"
-        component={UsersList}
+    <SearchStack.Navigator>
+      <SearchStack.Screen
+        name="Search"
+        component={SearchScreen}
         options={{
-          headerLeft: () => logo(),
-          headerTitle: '',
+          headerShown: false,
         }}
       />
-      <HomeStack.Screen
+      <SearchStack.Screen
         name="Single User"
         component={SingleUserProfile}
         options={({ route }) => ({
@@ -42,6 +37,6 @@ export default function Home({ navigation }) {
           headerRight: () => userChatIcon(navigation),
         })}
       />
-    </HomeStack.Navigator>
+    </SearchStack.Navigator>
   );
 }

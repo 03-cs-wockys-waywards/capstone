@@ -1,67 +1,61 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   ImageBackground,
   SafeAreaView,
   ScrollView,
   View,
   Text,
-  TouchableOpacity,
-} from 'react-native'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import DoubleTap from 'react-native-double-tap'
+} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import DoubleTap from 'react-native-double-tap';
 
-import { Pill } from '../../components/Pill'
-import { getColorsArray } from '../../helpers/getColorsArray'
-import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
-import defaultProfilePicture from '../../images/default-profile-picture.jpg'
-import styles from './styles'
-import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
-import ChatRoom from '../ChatScreens/ChatRoom'
+import { Pill } from '../../components/Pill';
+import { getColorsArray } from '../../helpers/getColorsArray';
+import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns';
+import defaultProfilePicture from '../../images/default-profile-picture.jpg';
+import styles from './styles';
+import { _addLike, _removeLike } from '../../store/userReducer';
 
 export default function SingleUserProfile({ route }) {
-  const { user, liked } = route.params
-  const [like, setLike] = useState(liked)
-  const [colors, setColors] = useState([])
+  const { user, liked } = route.params;
+  const [like, setLike] = useState(liked);
+  const [colors, setColors] = useState([]);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const colors = getColorsArray(5)
-    setColors(colors)
-  }, [])
-
-  // const likesFilter = (id) => {
-  //   return likes.filter((likeId) => likeId !== id)
-  // }
+    const colors = getColorsArray(5);
+    setColors(colors);
+  }, []);
 
   const handleLike = (id) => {
     if (!like) {
-      dispatch(_addLike(id))
-      setLike(true)
+      dispatch(_addLike(id));
+      setLike(true);
     } else {
-      dispatch(_removeLike(id))
-      setLike(false)
+      dispatch(_removeLike(id));
+      setLike(false);
     }
-  }
+  };
 
   const renderName = (firstName, lastName) => {
-    return `${firstName} ${lastName[0]}.`
-  }
+    return `${firstName} ${lastName[0]}.`;
+  };
 
   const renderPronouns = (pronouns) => {
     return pronouns
       .map((pronoun) => displaySemanticPronouns(pronoun))
-      .join(', ')
-  }
+      .join(', ');
+  };
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
       return (
         <Pill key={index} text={interest} backgroundColor={colors[index]} />
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -107,5 +101,5 @@ export default function SingleUserProfile({ route }) {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
