@@ -109,7 +109,6 @@ export default function ChatFeedScreen({ navigation }) {
         {messages &&
           messages.map((message, index) => {
             const match = matchesStore[message.senderId];
-            console.log('match in render', match);
             return match ? (
               <ChatFeedRow
                 key={index}
