@@ -1,9 +1,10 @@
-import React from 'react';
-import { Text } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { createStackNavigator } from '@react-navigation/stack';
-import UsersList from './UsersList';
-import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
+import React from "react";
+import { Text } from "react-native";
+import { Icon } from "react-native-elements";
+import { createStackNavigator } from "@react-navigation/stack";
+import UsersList from "./UsersList";
+import SingleUserProfile from "../SingleUserProfileScreen/SingleUserProfile";
+import ChatRoomScreen from "../ChatScreens/ChatRoomScreen";
 
 const HomeStack = createStackNavigator();
 
@@ -14,14 +15,21 @@ const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
 };
 
-const userChatIcon = (navigation) => (
-  <Icon
-    type="material-community"
-    name="message-outline"
-    size={25}
-    onPress={() => navigation.navigate('Chat')}
-  />
-);
+const userChatIcon = (route, navigation) => {
+  const { user: match } = route.params;
+  return (
+    <Icon
+      type="material-community"
+      name="message-outline"
+      size={25}
+      onPress={() =>
+        navigation.navigate("Chat Room", {
+          match,
+        })
+      }
+    />
+  );
+};
 
 export default function Home({ navigation }) {
   return (
@@ -31,7 +39,7 @@ export default function Home({ navigation }) {
         component={UsersList}
         options={{
           headerLeft: () => logo(),
-          headerTitle: '',
+          headerTitle: "",
         }}
       />
       <HomeStack.Screen
@@ -39,7 +47,14 @@ export default function Home({ navigation }) {
         component={SingleUserProfile}
         options={({ route }) => ({
           title: renderName(route),
-          headerRight: () => userChatIcon(navigation),
+          headerRight: () => userChatIcon(route, navigation),
+        })}
+      />
+      <HomeStack.Screen
+        name="Chat Room"
+        component={ChatRoomScreen}
+        options={() => ({
+          title: '',
         })}
       />
     </HomeStack.Navigator>

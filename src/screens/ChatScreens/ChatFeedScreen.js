@@ -93,7 +93,7 @@ export default function ChatFeedScreen({ navigation }) {
   };
 
   const handlePress = (match) => {
-    navigation.navigate('ChatRoomScreen', {
+    navigation.navigate('ChatRoom', {
       match,
     });
   };
@@ -109,7 +109,6 @@ export default function ChatFeedScreen({ navigation }) {
         {messages &&
           messages.map((message, index) => {
             const match = matchesStore[message.senderId];
-            console.log('match in render', match);
             return match ? (
               <ChatFeedRow
                 key={index}
