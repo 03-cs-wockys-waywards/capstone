@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  Modal,
   Image,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -14,7 +15,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { firebase } from '../../../firebaseSpecs/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUserInfo } from '../../../store/userReducer';
-import Spinner from 'react-native-loading-spinner-overlay';
 import styles from './styles';
 
 export default function AddProfilePic({ navigation, route }) {
@@ -26,8 +26,7 @@ export default function AddProfilePic({ navigation, route }) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(profilePicture || null);
-  const [loading, setLoading] = useState(true);
-  const [spinner, setSpinner] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -84,11 +83,28 @@ export default function AddProfilePic({ navigation, route }) {
       .put(blob)
       .then(() => {
         setLoading(false);
+        // setTimeout(() => {}, 1500)
+        // setTimeout(() => {
+        //   setLoading(false);
+        // }, 1500);
       });
   };
 
   const navigateToNext = () => {
     navigation.navigate('Confirmation', { password });
+  };
+
+  const displayLoadingScreen = () => {
+    console.log('loading inside displayLoadingScreen func', loading);
+    return (
+      <Modal transparent={true} animationType={'none'} visible={loading}>
+        <View style={styles.modalBackground}>
+          <View style={styles.activityIndicatorWrapper}>
+            <ActivityIndicator animating={loading} />
+          </View>
+        </View>
+      </Modal>
+    );
   };
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
@@ -128,14 +144,14 @@ export default function AddProfilePic({ navigation, route }) {
         <FilledCircle />
         <FilledCircle />
         <EmptyCircle />
+        {/* {loading && displayLoadingScreen()} */}
         <TouchableOpacity
           onPress={() => {
+            setLoading(true);
             uploadPicture();
             if (loading) {
-              <Spinner visible={spinner} textContent={'Uploading Photo....'} />;
-              // alert('Please wait until the photo has been uploaded...');
+              alert('Please wait until the photo has been uploaded...');
             } else {
-              setSpinner(!spinner);
               navigateToNext();
             }
           }}
