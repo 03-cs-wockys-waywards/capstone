@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   ImageBackground,
   SafeAreaView,
   ScrollView,
   View,
   Text,
-  TouchableOpacity,
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
@@ -14,10 +13,9 @@ import DoubleTap from 'react-native-double-tap'
 import { Pill } from '../../components/Pill'
 import { getColorsArray } from '../../helpers/getColorsArray'
 import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
-import defaultProfilePicture from '../../../assets/images/default-profile-picture.jpg'
+import defaultProfilePicture from '../../images/default-profile-picture.jpg'
 import styles from './styles'
-import { editUserInfo, _addLike, _removeLike } from '../../store/userReducer'
-import ChatRoom from '../ChatScreens/ChatRoom'
+import { _addLike, _removeLike } from '../../store/userReducer'
 
 export default function SingleUserProfile({ route }) {
   const { user, liked } = route.params
@@ -30,10 +28,6 @@ export default function SingleUserProfile({ route }) {
     const colors = getColorsArray(5)
     setColors(colors)
   }, [])
-
-  // const likesFilter = (id) => {
-  //   return likes.filter((likeId) => likeId !== id)
-  // }
 
   const handleLike = (id) => {
     if (!like) {

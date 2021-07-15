@@ -70,11 +70,10 @@ export default StyleSheet.create({
     borderRadius: 45,
     backgroundColor: '#136360',
     width: 250,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
+    marginBottom: '10%',
   },
   buttonText: {
     color: 'white',

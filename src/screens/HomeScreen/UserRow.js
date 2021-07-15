@@ -23,9 +23,9 @@ export default function UserRow({ item, navigation }) {
     setColors(colors)
   }, [])
 
-  // const likesFilter = (id) => {
-  //   return likes.filter((likeId) => likeId !== id)
-  // }
+  const handlePress = () => {
+    navigation.navigate('Single User', { user: item, liked: like })
+  }
 
   const handlePress = () => {
     navigation.navigate('Single User', { user: item, liked: like })
