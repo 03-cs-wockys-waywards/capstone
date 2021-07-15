@@ -5,10 +5,16 @@ import ChatRoomScreen from './ChatRoomScreen';
 
 const ChatStack = createStackNavigator();
 
-export default function ProfileNavigator({ navigation }) {
+export default function ChatNavigator({ navigation }) {
   return (
     <ChatStack.Navigator>
-      <ChatStack.Screen name="ChatFeedScreen" component={ChatFeedScreen} />
+      <ChatStack.Screen 
+        name="ChatFeedScreen" 
+        component={ChatFeedScreen}
+        options={() => ({
+          title: "Chat Feed"
+        })}
+      />
       <ChatStack.Screen name="ChatRoomScreen" component={ChatRoomScreen} />
     </ChatStack.Navigator>
   );
