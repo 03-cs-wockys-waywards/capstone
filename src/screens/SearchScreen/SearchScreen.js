@@ -58,52 +58,51 @@ export class SearchScreen extends Component {
     }
   }
 
+  selectSuggestion(value) {
+    this.setState(() => ({
+      searchTerm: value,
+      suggestions: [],
+    }));
+  }
+
+  renderSuggestions() {
+    const { suggestions } = this.state;
+    if (suggestions.length === 0) {
+      return null;
+    }
+    return (
+      <View>
+        {suggestions.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              this.filterResults(item);
+              this.selectSuggestion(item);
+            }}
+          >
+            <Text>{item}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
+  }
+
+  screenDescription() {
+    const { searchData, searchTerm, suggestions } = this.state;
+    if (searchTerm.length === 0 && searchData.length === 0) {
+      return <Text>Start looking for users by interest!</Text>;
+    } else if (searchTerm.length !== 0 && suggestions.length === 0) {
+      return <Text>Oh no, no users have been found with {searchTerm} 🥺</Text>;
+    }
+    return null;
+  }
+
   render() {
     const { navigation } = this.props;
-    const { searchData, searchTerm, suggestions } = this.state;
+    const { searchData, searchTerm } = this.state;
 
-    const renderItem = ({ item }) => (
-      <UserRow item={item} navigation={navigation} />
-    );
-
-    const renderSuggestions = () => {
-      if (suggestions.length === 0) {
-        return null;
-      }
-      return (
-        <View>
-          {suggestions.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {
-                this.filterResults(item);
-                selectSuggestion(item);
-              }}
-            >
-              <Text>{item}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      );
-    };
-
-    const selectSuggestion = (value) => {
-      this.setState(() => ({
-        searchTerm: value,
-        suggestions: [],
-      }));
-    };
-
-    const screenDescription = () => {
-      if (searchTerm.length === 0 && searchData.length === 0) {
-        return <Text>Start looking for users by interest!</Text>;
-      } else if (searchTerm.length !== 0 && suggestions.length === 0) {
-        return (
-          <Text>Oh no, no users have been found with {searchTerm} 🥺</Text>
-        );
-      } else {
-        return null;
-      }
+    const renderItem = ({ item }) => {
+      return <UserRow item={item} navigation={navigation} />;
     };
 
     return (
@@ -114,13 +113,13 @@ export class SearchScreen extends Component {
         />
         <View>
           <Text>Suggestions:</Text>
-          {renderSuggestions()}
+          {this.renderSuggestions()}
         </View>
         <FlatList
           data={searchData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
-          ListEmptyComponent={() => screenDescription()}
+          ListEmptyComponent={() => this.screenDescription()}
         />
       </SafeAreaView>
     );
