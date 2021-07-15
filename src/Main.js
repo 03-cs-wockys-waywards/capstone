@@ -7,6 +7,7 @@ import {
   SearchScreen,
   ProfileNavigator,
   ChatNavigator,
+  SearchNavigator,
 } from './screens';
 import { editUserInfo } from './store/userReducer';
 
@@ -43,7 +44,7 @@ export default function MainScreen(props) {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="magnify" color={color} size={28} />
