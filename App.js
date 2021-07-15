@@ -163,7 +163,7 @@ export class App extends Component {
               <Stack.Screen name="Confirmation" component={Confirmation} />
             </Stack.Navigator>
           )}
-          <MyStatusBar backgroundColor="white" barStyle="dark-content" />
+          {/* <MyStatusBar backgroundColor="white" barStyle="dark-content" /> */}
         </NavigationContainer>
       </Provider>
     )
