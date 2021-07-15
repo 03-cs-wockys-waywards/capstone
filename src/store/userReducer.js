@@ -21,7 +21,7 @@ const removeLike = (id) => ({
 });
 
 export const clearData = () => ({
-  type: CLEAR_DATA
+  type: CLEAR_DATA,
 });
 
 export const fetchUser = () => {
@@ -80,9 +80,12 @@ export default function (state = initialState, action) {
     case ADD_LIKE:
       return { ...state, likes: [...state.likes, action.id] };
     case REMOVE_LIKE:
-      return { ...state, likes: state.likes.filter((uid) => uid !== action.id) };
+      return {
+        ...state,
+        likes: state.likes.filter((uid) => uid !== action.id),
+      };
     case CLEAR_DATA:
-      return null;
+      return { ...initialState };
     default:
       return state;
   }
