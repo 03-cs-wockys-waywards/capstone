@@ -99,17 +99,14 @@ export default function ImageModal({ user, setUser, setUserPic }) {
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalView}>
           <Pressable
-            style={[styles.button, styles.buttonClose]}
+            style={styles.button}
             onPress={() => {
               useCamera()
             }}
           >
             <Text style={styles.textStyle}>Take Picture</Text>
           </Pressable>
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => useLibrary()}
-          >
+          <Pressable style={styles.button} onPress={() => useLibrary()}>
             <Text style={styles.textStyle}>Choose From Library</Text>
           </Pressable>
           <Pressable
@@ -144,12 +141,9 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
+    shadowColor: 'black',
+    shadowOffset: { height: 2, width: 2 },
+    shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
   },
@@ -159,18 +153,20 @@ export const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 30,
     elevation: 2,
+    backgroundColor: '#2788EA',
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: '#132077',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#E8073F',
   },
   textStyle: {
     fontSize: 16,
     color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Lato_700Bold',
+    letterSpacing: 0.5,
   },
   modalText: {
     marginBottom: 15,

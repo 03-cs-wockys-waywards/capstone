@@ -1,11 +1,15 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-  listContainer: {
+  container: {
     flex: 1,
     flexDirection: 'column',
     alignContent: 'center',
-    backgroundColor: '#e4dbff',
+    backgroundColor: 'white',
+  },
+  flatListContainer: {
+    marginTop: '3%',
+    marginBottom: '20%',
   },
   userRowContainer: {
     flex: 1,
@@ -40,6 +44,12 @@ export default StyleSheet.create({
   interestsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  image: {
+    flexGrow: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
   },
   emptyContainer: {
     flex: 1,

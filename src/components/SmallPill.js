@@ -9,6 +9,14 @@ export const SmallPill = ({ text, backgroundColor }) => {
   )
 }
 
+export const MediumPill = ({ text, backgroundColor }) => {
+  return (
+    <View style={styles.medInterest} backgroundColor={backgroundColor}>
+      <Text style={styles.medInterestText}>{text}</Text>
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
   interest: {
     flexDirection: 'row',
@@ -20,6 +28,18 @@ const styles = StyleSheet.create({
   },
   interestText: {
     fontSize: 11,
-    color: 'black',
+    color: '#070C2C',
+  },
+  medInterest: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 45,
+    marginRight: 5,
+    marginBottom: 5,
+  },
+  medInterestText: {
+    fontSize: 14,
+    color: '#070C2C',
   },
 })

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 // import styles from "../styles";
 import { Pill } from '../../../components/Pill'
-import { getColorsArray } from '../../../helpers/getColorsArray'
+import { getLightColorsArray } from '../../../helpers/getColorsArray'
+import { lightColors } from '../../../helpers/colors.js'
 import InterestsModal from './InterestsModal'
 
 export default function UpdateInterests({ user, setUser }) {
@@ -10,7 +11,7 @@ export default function UpdateInterests({ user, setUser }) {
   const [colors, setColors] = useState([])
 
   useEffect(() => {
-    const colors = getColorsArray(5)
+    const colors = getLightColorsArray(lightColors, 5)
     setColors(colors)
   }, [])
 

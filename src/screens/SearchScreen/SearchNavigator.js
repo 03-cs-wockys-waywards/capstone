@@ -4,11 +4,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SearchScreen from "./SearchScreen";
 import SingleUserProfile from "../SingleUserProfileScreen/SingleUserProfile";
 
-const SearchStack = createStackNavigator();
+const SearchStack = createStackNavigator()
 
 const renderName = (route) => {
-  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
-};
+  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`
+}
 
 const userChatIcon = (route, navigation) => {
   const { user: match } = route.params;
@@ -22,6 +22,7 @@ const userChatIcon = (route, navigation) => {
           match,
         })
       }
+      containerStyle={{ paddingRight: 20 }}
     />
   );
 };
@@ -45,5 +46,5 @@ export default function ProfileNavigator({ navigation }) {
         })}
       />
     </SearchStack.Navigator>
-  );
+  )
 }

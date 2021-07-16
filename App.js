@@ -11,19 +11,65 @@ import {
   ProfileStepTwo,
   ProfileStepThree,
   Confirmation,
-  ProfileScreen,
-  EditProfile,
 } from './src/screens'
 import MainScreen from './src/Main'
 import { screenOptions, MyStatusBar } from './src/components/StatusBar'
 import { decode, encode } from 'base-64'
 import store from './src/store'
 
+import * as Font from 'expo-font'
+import AppLoading from 'expo-app-loading'
+import {
+  Lato_100Thin,
+  Lato_100Thin_Italic,
+  Lato_300Light,
+  Lato_300Light_Italic,
+  Lato_400Regular,
+  Lato_400Regular_Italic,
+  Lato_700Bold,
+  Lato_700Bold_Italic,
+  Lato_900Black,
+  Lato_900Black_Italic,
+} from '@expo-google-fonts/lato'
+import {
+  RobotoSlab_100Thin,
+  RobotoSlab_200ExtraLight,
+  RobotoSlab_300Light,
+  RobotoSlab_400Regular,
+  RobotoSlab_500Medium,
+  RobotoSlab_600SemiBold,
+  RobotoSlab_700Bold,
+  RobotoSlab_800ExtraBold,
+  RobotoSlab_900Black,
+} from '@expo-google-fonts/roboto-slab'
+
 if (!global.btoa) {
   global.btoa = encode
 }
 if (!global.atob) {
   global.atob = decode
+}
+
+const customFonts = {
+  Lato_100Thin,
+  Lato_100Thin_Italic,
+  Lato_300Light,
+  Lato_300Light_Italic,
+  Lato_400Regular,
+  Lato_400Regular_Italic,
+  Lato_700Bold,
+  Lato_700Bold_Italic,
+  Lato_900Black,
+  Lato_900Black_Italic,
+  RobotoSlab_100Thin,
+  RobotoSlab_200ExtraLight,
+  RobotoSlab_300Light,
+  RobotoSlab_400Regular,
+  RobotoSlab_500Medium,
+  RobotoSlab_600SemiBold,
+  RobotoSlab_700Bold,
+  RobotoSlab_800ExtraBold,
+  RobotoSlab_900Black,
 }
 
 const Stack = createStackNavigator()
@@ -38,7 +84,14 @@ export class App extends Component {
     }
   }
 
+  async loadFontsAsync() {
+    await Font.loadAsync(customFonts)
+    this.setState({ fontsLoaded: true })
+  }
+
   componentDidMount() {
+    this.loadFontsAsync()
+
     const usersRef = firebase.firestore().collection('users')
     firebase.auth().onAuthStateChanged((user) => {
       //console.log('USER in COMPONENT DID MOUNT in APP: ', user)
@@ -64,12 +117,12 @@ export class App extends Component {
   }
 
   render() {
-    const { loading, user, isLoggedIn } = this.state
+    const { loading, user, isLoggedIn, fontsLoaded } = this.state
 
-    if (loading) {
+    if (loading && !fontsLoaded) {
       return <></>
     }
-    
+
     return (
       <Provider store={store}>
         <NavigationContainer>
@@ -110,7 +163,7 @@ export class App extends Component {
               <Stack.Screen name="Confirmation" component={Confirmation} />
             </Stack.Navigator>
           )}
-          <MyStatusBar backgroundColor="white" barStyle="dark-content" />
+          {/* <MyStatusBar backgroundColor="white" barStyle="dark-content" /> */}
         </NavigationContainer>
       </Provider>
     )

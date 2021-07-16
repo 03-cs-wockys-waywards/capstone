@@ -38,8 +38,8 @@ export default function EditProfile({ navigation }) {
   }
 
   return (
-    <SafeAreaView>
-      <ScrollView styles={styles.container}>
+    <SafeAreaView style={styles.topView}>
+      <ScrollView>
         <UpdateImage user={user} setUser={setUser} />
         <UpdateName user={user} setUser={setUser} />
         <UpdatePronouns user={user} setUser={setUser} />
