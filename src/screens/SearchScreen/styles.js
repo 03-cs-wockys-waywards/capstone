@@ -1,14 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#d9e4e1',
+    backgroundColor: '#E5F4D4',
   },
   suggestionsContainer: {
     paddingVertical: 12,
     paddingLeft: 30,
-    backgroundColor: '#d9e4e1',
+    backgroundColor: '#E5F4D4',
   },
   descriptionText: {
     fontSize: 18,
@@ -22,4 +22,4 @@ export default StyleSheet.create({
     fontSize: 18,
     color: '#223147',
   },
-});
+})

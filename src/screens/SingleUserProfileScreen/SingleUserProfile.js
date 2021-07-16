@@ -11,7 +11,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import DoubleTap from 'react-native-double-tap'
 
 import { Pill } from '../../components/Pill'
-import { getColorsArray } from '../../helpers/getColorsArray'
+import { getLightColorsArray } from '../../helpers/getColorsArray'
+import { lightColors } from '../../helpers/colors.js'
 import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../../assets/images/default-profile-picture.jpg'
 import styles from './styles'
@@ -25,7 +26,7 @@ export default function SingleUserProfile({ route }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const colors = getColorsArray(5)
+    const colors = getLightColorsArray(lightColors, 5)
     setColors(colors)
   }, [])
 
@@ -59,48 +60,48 @@ export default function SingleUserProfile({ route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.profilePreviewContainer}>
-          <ImageBackground
-            source={{ uri: user.profilePicture }}
-            defaultSource={defaultProfilePicture}
-            style={styles.image}
-            imageStyle={styles.imageStyle}
-          >
-            <View style={styles.profileInfoContainer}>
-              <View
-                style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}
-              >
-                <Text style={styles.nameText}>
-                  {renderName(user.firstName, user.lastName)}
-                </Text>
-                <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
-                  {like ? (
-                    <MaterialCommunityIcons
-                      name="heart"
-                      size={25}
-                      color="#E8073F"
-                    />
-                  ) : (
-                    <MaterialCommunityIcons
-                      name="heart-plus-outline"
-                      size={25}
-                      color="#E8073F"
-                    />
-                  )}
-                </DoubleTap>
-              </View>
-              <Text style={styles.pronounText}>
-                {renderPronouns(user.pronouns)}
+      {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
+      <View style={styles.profilePreviewContainer}>
+        <ImageBackground
+          source={{ uri: user.profilePicture }}
+          defaultSource={defaultProfilePicture}
+          style={styles.image}
+          imageStyle={styles.imageStyle}
+        >
+          <View style={styles.profileInfoContainer}>
+            <View
+              style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}
+            >
+              <Text style={styles.nameText}>
+                {renderName(user.firstName, user.lastName)}
               </Text>
-              <Text style={styles.subheadingText}>Interests</Text>
-              <View style={styles.interestsContainer}>
-                {renderInterests(user.interests)}
-              </View>
+              <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
+                {like ? (
+                  <MaterialCommunityIcons
+                    name="heart"
+                    size={25}
+                    color="#E8073F"
+                  />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="heart-plus-outline"
+                    size={25}
+                    color="#E8073F"
+                  />
+                )}
+              </DoubleTap>
             </View>
-          </ImageBackground>
-        </View>
-      </ScrollView>
+            <Text style={styles.pronounText}>
+              {renderPronouns(user.pronouns)}
+            </Text>
+            <Text style={styles.subheadingText}>Interests</Text>
+            <View style={styles.interestsContainer}>
+              {renderInterests(user.interests)}
+            </View>
+          </View>
+        </ImageBackground>
+      </View>
+      {/* </ScrollView> */}
     </SafeAreaView>
   )
 }

@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+  topView: {
+    flex: 1,
+    backgroundColor: '#f2f2f3',
+  },
   container: {
     flexGrow: 1,
     flexDirection: 'column',
@@ -9,11 +13,12 @@ export default StyleSheet.create({
     marginHorizontal: 60,
   },
   imageContainer: {
-    flexGrow: 1,
-    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '10%',
+    shadowColor: 'black',
+    shadowOffset: { height: 2, width: 2 },
+    shadowOpacity: 0.3,
   },
   namesContainer: {
     display: 'flex',
@@ -38,7 +43,7 @@ export default StyleSheet.create({
     fontWeight: '300',
     letterSpacing: 0.35,
     borderBottomWidth: 1,
-    borderBottomColor: '#BDBDBD',
+    borderBottomColor: '#132077',
     width: '65%',
     height: 30,
     marginBottom: 6,
@@ -68,17 +73,22 @@ export default StyleSheet.create({
   button: {
     height: 48,
     borderRadius: 45,
-    backgroundColor: '#136360',
+    backgroundColor: '#132077',
     width: 250,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: '10%',
+    shadowColor: 'black',
+    shadowOffset: { height: 2, width: 2 },
+    shadowOpacity: 0.3,
   },
   buttonText: {
-    color: 'white',
     fontSize: 16,
-    fontWeight: '500',
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Lato_700Bold',
+    letterSpacing: 0.5,
   },
   interestsContainer: {
     flexWrap: 'wrap',

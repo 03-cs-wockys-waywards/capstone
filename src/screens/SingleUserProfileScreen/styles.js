@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#C2D831',
+    backgroundColor: '#DBEBFB',
+    justifyContent: 'center',
   },
   scrollContainer: {
     marginTop: '10%',
@@ -29,15 +30,18 @@ export default StyleSheet.create({
   },
   nameText: {
     fontSize: 22,
-    fontWeight: '600',
+    fontWeight: '700',
     lineHeight: 36,
     paddingLeft: 15,
+    marginRight: 10,
   },
   pronounText: {
     fontSize: 18,
     color: '#7a7a7a',
     lineHeight: 30,
     paddingLeft: 15,
+    marginBottom: 8,
+    marginTop: -6,
   },
   labelText: {
     fontSize: 16,
@@ -46,7 +50,10 @@ export default StyleSheet.create({
     marginBottom: 15,
   },
   profilePreviewContainer: {
-    margin: 15,
+    margin: 25,
+    shadowColor: 'black',
+    shadowOffset: { height: 5, width: 3 },
+    shadowOpacity: 0.3,
   },
   image: {
     alignItems: 'center',
@@ -55,15 +62,16 @@ export default StyleSheet.create({
     width: '100%',
     height: 600,
     backgroundColor: '#d3d3d3',
+    shadowRadius: 3,
   },
   imageStyle: {
     borderRadius: 15,
   },
   profileInfoContainer: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 20,
     backgroundColor: '#fff',
-    width: '95%',
+    width: '90%',
     borderRadius: 15,
     paddingVertical: '2%',
   },
