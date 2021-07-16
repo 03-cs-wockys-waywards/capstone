@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   ImageBackground,
   SafeAreaView,
@@ -7,82 +7,83 @@ import {
   View,
   Text,
   TouchableOpacity,
-} from 'react-native'
-import { editUserInfo } from '../../../store/userReducer'
-import { Pill } from '../../../components/Pill'
-import { firebase } from '../../../firebaseSpecs/config'
-import { getRandomLightColor } from '../../../helpers/getRandomLightColor'
-import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns'
-import styles from './styles'
+} from 'react-native';
+import { editUserInfo } from '../../../store/userReducer';
+import { Pill } from '../../../components/Pill';
+import { firebase } from '../../../firebaseSpecs/config';
+import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
+import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns';
+import { handleErrors } from '../../../helpers';
+import styles from './styles';
 
 export default function ConfirmationScreen({ navigation, route }) {
-  const { password } = route.params
+  const { password } = route.params;
 
-  const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
-  const [picURL, setPicURL] = useState('')
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const [picURL, setPicURL] = useState('');
 
   const registerUser = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(user.email, password)
       .then((response) => {
-        const uid = response.user.uid
+        const uid = response.user.uid;
         const data = {
           id: uid,
           ...user,
-        }
-        const usersRef = firebase.firestore().collection('users')
+        };
+        const usersRef = firebase.firestore().collection('users');
         usersRef
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate('Home', { user: data })
+            navigation.navigate('Home', { user: data });
           })
           .catch((error) => {
-            alert(error)
-          })
+            handleErrors(error.code);
+          });
       })
       .catch((error) => {
-        alert(error)
-      })
-  }
+        alert(error);
+      });
+  };
 
   const renderName = (firstName, lastName) => {
-    return `${firstName} ${lastName[0]}.`
-  }
+    return `${firstName} ${lastName[0]}.`;
+  };
 
   const renderPronouns = (pronouns) => {
     return pronouns
       .map((pronoun) => displaySemanticPronouns(pronoun))
-      .join(', ')
-  }
+      .join(', ');
+  };
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
-      const backgroundColor = getRandomLightColor()
+      const backgroundColor = getRandomLightColor();
       return (
         <Pill key={index} text={interest} backgroundColor={backgroundColor} />
-      )
-    })
-  }
+      );
+    });
+  };
 
   const loadProfilePicture = () => {
     const profilePicRef = firebase
       .storage()
       .ref()
-      .child(`profile/${user.email}`)
+      .child(`profile/${user.email}`);
 
     profilePicRef.getDownloadURL().then((url) => {
-      setPicURL(url)
+      setPicURL(url);
       // Save user profile photo in redux
-      dispatch(editUserInfo({ profilePicture: url }))
-    })
-  }
+      dispatch(editUserInfo({ profilePicture: url }));
+    });
+  };
 
   useEffect(() => {
-    loadProfilePicture()
-  }, [])
+    loadProfilePicture();
+  }, []);
 
   const renderProfilePicture = () => {
     if (picURL) {
@@ -107,9 +108,9 @@ export default function ConfirmationScreen({ navigation, route }) {
             </View>
           </View>
         </ImageBackground>
-      )
+      );
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,5 +131,5 @@ export default function ConfirmationScreen({ navigation, route }) {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }

@@ -34,7 +34,7 @@ export const renderName = (route) => {
 
 // error handler
 export const handleErrors = (errorCode) => {
-  // error codes associated with .createUserWithEmailAndPassword method
+  // error codes associated with login/registration
   if (errorCode === 'auth/invalid-email') {
     alert('Please enter a valid email address.');
   } else if (errorCode === 'auth/email-already-in-use') {
