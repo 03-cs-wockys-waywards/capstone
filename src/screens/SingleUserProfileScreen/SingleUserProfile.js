@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import {
-  ImageBackground,
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-} from 'react-native'
+import { ImageBackground, SafeAreaView, View, Text } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import DoubleTap from 'react-native-double-tap'
 
@@ -60,7 +54,6 @@ export default function SingleUserProfile({ route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
       <View style={styles.profilePreviewContainer}>
         <ImageBackground
           source={{ uri: user.profilePicture }}
@@ -101,7 +94,6 @@ export default function SingleUserProfile({ route }) {
           </View>
         </ImageBackground>
       </View>
-      {/* </ScrollView> */}
     </SafeAreaView>
   )
 }
