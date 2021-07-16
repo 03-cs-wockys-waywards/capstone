@@ -13,122 +13,53 @@ import ChatFeedRow from "../../components/ChatFeedRow";
 import ChatRoomScreen from "./ChatRoomScreen";
 import styles from "./styles";
 
-export default function ChatFeedScreen({ navigation }) {
-  const currentUser = useSelector((state) => state.user);
-  // const potentialMatches = useSelector((state) => state.potentialMatches);
-  // const matches = potentialMatches.filter((user) => currentUser.likes.includes(user.id));
-  // const dispatch = useDispatch();
+export default class ChatFeedScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      matches: [],
+      chatRooms: []
+    }
+  }
 
-  const messagesRef = firebase.firestore().collection("messages");
+  componentDidMount() {
+    const messagesRef = firebase.firestore().collection("messages");
+    const getChatRooms = currentUser.id
+      ? messagesRef.where(`users.${currentUser.id}`, "==", true)
+      : null;
+    const [chatRooms] = useCollectionData(getChatRooms);
+    this.setState({ ...this.state, chatRooms });
+    // NEED: array of matchIds
+    // HAVE: users: { user1Id: true, user2Id: true }
+  }
+  
 
-  // const query = currentUser.id
-  //   ? messagesRef.where("users", "array-contains", currentUser.id)
-  //   : null;
-  // const [threads] = useCollectionData(query);
+
+
 
   // QUERY FOR CHAT FEED
-  const query = currentUser.id
-    ? messagesRef.where(`users.${currentUser.id}`, "==", true)
-    : null;
-  const [threads] = useCollectionData(query);
-  // console.log("FEED >>>>>>", threads);
 
   // QUERY FOR CHAT ROOM
   const ChatRoomQuery = currentUser.id
     ? messagesRef.where(`users.${currentUser.id}`, "==", true).where("users.E1GPo5ZjsJWSvxwVjhpaEsXEHUj2", "==", true)
     : null;
   const [chatRoomThread] = useCollectionData(ChatRoomQuery);
-  console.log("CHAT ROOM >>>>>>", chatRoomThread);
+  // console.log("CHAT ROOM >>>>>>", chatRoomThread);
 
-  // useEffect(() => {
-  //   dispatch(fetchPotentialMatches(currentUser.id));
-  // }, []);
+  // console.log('CHAT ROOM THREAD >>>>>>', chatRoomThread)
+  const matchesIds = chatRoomThread.map((chatRoom) => {
+    const { users } = chatRoom;
+    return Object.keys(users).filter((user) => {
+      console.log("MATCH IN FILTER >>>>", user)
+      console.log("CURRENT USER IN FILTER >>>>>", currentUser);
+      return user.id !== currentUser.id
+    
+    });
+  });
 
-  /*
-  - used for grouping messages by sender.
-  - returns an object that stores sender ids as keys and an array of messages from that sender as values:
-  {
-    senderId1: [ { message1 }, { message2 }, ... ],
-    senderId2: [ { message1 }, { message2 }, ... ],
-  }
-  */
-  // const getMessageStore = () => {
-  //   const messageStore = {};
-  //   if (_messages && _messages.length) {
-  //     _messages.forEach((message) => {
-  //       const { from } = message;
-  //       messageStore[from]
-  //         ? messageStore[from].push(message)
-  //         : (messageStore[from] = [message]);
-  //     });
-  //   }
-  //   return messageStore;
-  // };
 
-  /*
-  - used for retrieving user objects by their ids.
-  - returns an object that stores ids as keys and user objects as values:
-  {
-    userId1: { user object },
-    userId2: { user object },
-  }
-  */
-  // const getMatchesStore = () => {
-  //   const matchesStore = {};
-  //   if (matches && matches.length) {
-  //     matches.forEach((match) => {
-  //       const { id } = match;
-  //       matchesStore[id] = match;
-  //     });
-  //   }
-  //   return matchesStore;
-  // };
-
-  // const messageStore = getMessageStore();
-  // const matchesStore = getMatchesStore();
-
-  /*
-  - used for retrieving array of messages to map over in render method.
-  - returns an array of objects storing unique sender ids as keys and message text as values:
-  [
-    { senderId: str, text: str },
-    { senderId: str, text: str },
-  ]
-  */
-  // const getMessages = () => {
-  //   const senderIds = Object.keys(messageStore);
-  //   const messages = senderIds.map((id) => {
-  //     const { text } = messageStore[id][0];
-  //     return {
-  //       senderId: id,
-  //       text,
-  //     };
-  //   });
-  //   return messages;
-  // };
-
-  // const getDiscoverStore = () => {
-  //   const discoverStore = {};
-  //   if (potentialMatches && potentialMatches.length) {
-  //     potentialMatches.forEach((match) => {
-  //       const { id } = match;
-  //       discoverStore[id] = match;
-  //     });
-  //   }
-  //   return discoverStore;
-  // };
-
-  // const discoverStore = getDiscoverStore();
-  // console.log("discoverStore >>>>>>", discoverStore)
-
-  // const handlePress = (thread, match) => {
-  //   navigation.navigate("ChatRoom", {
-  //     thread,
-  //     match,
-  //   });
-  // };
-
-  // const messages = getMessages();
+  
+  
 
   return (
     <SafeAreaView style={styles.container}>
