@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Modal,
   Image,
+  Button,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
@@ -27,6 +28,8 @@ export default function AddProfilePic({ navigation, route }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(profilePicture || null);
   const [loading, setLoading] = useState(false);
+  const [defaultPhotoBool, setDefaultPhotoBool] = useState(false);
+  const [imageOption, setImageOption] = useState('');
 
   const dispatch = useDispatch();
 
@@ -52,6 +55,7 @@ export default function AddProfilePic({ navigation, route }) {
     if (!result.cancelled) {
       dispatch(editUserInfo({ profilePicture: result.uri }));
       setImage(result.uri);
+      setImageOption('camera');
     }
   };
 
@@ -67,7 +71,15 @@ export default function AddProfilePic({ navigation, route }) {
     if (!result.cancelled) {
       dispatch(editUserInfo({ profilePicture: result.uri }));
       setImage(result.uri);
+      setImageOption('gallery');
     }
+  };
+
+  const useDefaultPhoto = () => {
+    setLoading(false);
+    setDefaultPhotoBool(true);
+    setImageOption('default');
+    dispatch(editUserInfo({ profilePicture: '' }));
   };
 
   const uploadPicture = async () => {
@@ -91,7 +103,7 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   const navigateToNext = () => {
-    navigation.navigate('Confirmation', { password });
+    navigation.navigate('Confirmation', { password, defaultPhotoBool });
   };
 
   const displayLoadingScreen = () => {
@@ -108,11 +120,33 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
-    return <View />;
+    return (
+      <SafeAreaView style={styles.noAccessMessageContainer}>
+        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, please give Tingle access
+          to your camera and photos in your device settings.
+        </Text>
+        <View style={styles.buttonContainer}>
+          <Button title="Enable Access" style={styles.enableAccessText} />
+        </View>
+      </SafeAreaView>
+    );
   }
 
   if (hasCameraPermission === false || hasGalleryPermission === false) {
-    return <Text>No access</Text>;
+    return (
+      <SafeAreaView style={styles.noAccessMessageContainer}>
+        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, please give Tingle access
+          to your camera and photos in your device settings.
+        </Text>
+        <View style={styles.buttonContainer}>
+          <Button title="Enable Access" style={styles.enableAccessText} />
+        </View>
+      </SafeAreaView>
+    );
   }
 
   return (
@@ -136,6 +170,10 @@ export default function AddProfilePic({ navigation, route }) {
         <Text style={styles.buttonText}>Choose from Gallery</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.button} onPress={() => useDefaultPhoto()}>
+        <Text style={styles.buttonText}>Use Default Photo</Text>
+      </TouchableOpacity>
+
       <View style={styles.progressContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('ProfileStepTwo')}>
           <Icon type="font-awesome" name="chevron-left" color="#000" />
@@ -148,8 +186,13 @@ export default function AddProfilePic({ navigation, route }) {
         <TouchableOpacity
           onPress={() => {
             setLoading(true);
-            uploadPicture();
-            if (loading) {
+            if (imageOption === '') {
+              alert(
+                'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
+              );
+            } else if (!defaultPhotoBool) {
+              uploadPicture();
+            } else if (loading) {
               alert('Please wait until the photo has been uploaded...');
             } else {
               navigateToNext();

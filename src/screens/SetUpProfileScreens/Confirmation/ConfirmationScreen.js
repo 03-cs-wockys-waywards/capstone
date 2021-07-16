@@ -13,12 +13,12 @@ import { Pill } from '../../../components/Pill';
 import { firebase } from '../../../firebaseSpecs/config';
 import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
 import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns';
+import defaultProfilePicture from '../../../images/default-profile-picture.jpg';
 import { handleErrors } from '../../../helpers';
 import styles from './styles';
 
 export default function ConfirmationScreen({ navigation, route }) {
-  const { password } = route.params;
-
+  const { password, defaultPhotoBool } = route.params;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [picURL, setPicURL] = useState('');
@@ -70,16 +70,18 @@ export default function ConfirmationScreen({ navigation, route }) {
   };
 
   const loadProfilePicture = () => {
-    const profilePicRef = firebase
-      .storage()
-      .ref()
-      .child(`profile/${user.email}`);
+    if (!defaultPhotoBool) {
+      const profilePicRef = firebase
+        .storage()
+        .ref()
+        .child(`profile/${user.email}`);
 
-    profilePicRef.getDownloadURL().then((url) => {
-      setPicURL(url);
-      // Save user profile photo in redux
-      dispatch(editUserInfo({ profilePicture: url }));
-    });
+      profilePicRef.getDownloadURL().then((url) => {
+        setPicURL(url);
+        // Save user profile photo in redux
+        dispatch(editUserInfo({ profilePicture: url }));
+      });
+    }
   };
 
   useEffect(() => {
@@ -87,10 +89,33 @@ export default function ConfirmationScreen({ navigation, route }) {
   }, []);
 
   const renderProfilePicture = () => {
-    if (picURL) {
+    // if the user selected to use a default photo
+    if (defaultPhotoBool) {
       return (
         <ImageBackground
           // image source must be in {uri: linkToPhoto } format!
+          source={defaultProfilePicture}
+          style={styles.image}
+          imageStyle={styles.imageStyle}
+          resizeMode="cover"
+        >
+          <View style={styles.profileInfoContainer}>
+            <Text style={styles.nameText}>
+              {renderName(user.firstName, user.lastName)}
+            </Text>
+            <Text style={styles.pronounText}>
+              {renderPronouns(user.pronouns)}
+            </Text>
+            <Text style={styles.subheadingText}>Interests</Text>
+            <View style={styles.interestsContainer}>
+              {renderInterests(user.interests)}
+            </View>
+          </View>
+        </ImageBackground>
+      );
+    } else if (picURL) {
+      return (
+        <ImageBackground
           source={{ uri: picURL }}
           style={styles.image}
           imageStyle={styles.imageStyle}
