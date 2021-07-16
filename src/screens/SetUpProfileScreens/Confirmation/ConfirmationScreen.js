@@ -14,11 +14,11 @@ import { firebase } from '../../../firebaseSpecs/config';
 import { getRandomLightColor } from '../../../helpers/getRandomLightColor';
 import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns';
 import defaultProfilePicture from '../../../images/default-profile-picture.jpg';
+import { handleErrors } from '../../../helpers';
 import styles from './styles';
 
 export default function ConfirmationScreen({ navigation, route }) {
   const { password, defaultPhotoBool } = route.params;
-
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [picURL, setPicURL] = useState('');
@@ -41,7 +41,8 @@ export default function ConfirmationScreen({ navigation, route }) {
             navigation.navigate('Home', { user: data });
           })
           .catch((error) => {
-            alert(error);
+            // catch errors before the users actually register
+            handleErrors(error.code);
           });
       })
       .catch((error) => {
