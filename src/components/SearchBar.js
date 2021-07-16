@@ -1,6 +1,6 @@
-import React from 'react';
-import { SearchBar } from 'react-native-elements';
-import { StyleSheet } from 'react-native';
+import React from 'react'
+import { SearchBar } from 'react-native-elements'
+import { StyleSheet } from 'react-native'
 
 export default function Search({ updateSearchText, searchText }) {
   return (
@@ -13,15 +13,15 @@ export default function Search({ updateSearchText, searchText }) {
       containerStyle={styles.container}
       inputContainerStyle={styles.inputContainer}
     />
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#d9e4e1',
-    borderBottomColor: '#d9e4e1',
-    borderTopColor: '#d9e4e1',
+    backgroundColor: '#E5F4D4',
+    borderBottomColor: '#E5F4D4',
+    borderTopColor: '#E5F4D4',
   },
   inputContainer: {
     borderRadius: 50,
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 10,
   },
-});
+})

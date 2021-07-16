@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Avatar } from 'react-native-elements';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import DoubleTap from 'react-native-double-tap';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { Avatar, Icon } from 'react-native-elements'
+import DoubleTap from 'react-native-double-tap'
 
-import { SmallPill } from '../../components/SmallPill';
-import { getColorsArray } from '../../helpers/getColorsArray';
-import styles from './styles';
-import { _addLike, _removeLike } from '../../store/userReducer';
+import { SmallPill } from '../../components/SmallPill'
+import { getLightColorsArray } from '../../helpers/getColorsArray'
+import { lightColors } from '../../helpers/colors.js'
+import styles from './styles'
+import { _addLike, _removeLike } from '../../store/userReducer'
 
 export default function UserRow({ item, navigation }) {
-  const likes = useSelector((state) => state.user.likes);
-  const isLiked = likes.includes(item.id);
-  const [like, setLike] = useState(isLiked);
-  const [colors, setColors] = useState([]);
+  const likes = useSelector((state) => state.user.likes)
+  const isLiked = likes.includes(item.id)
+  const [like, setLike] = useState(isLiked)
+  const [colors, setColors] = useState([])
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const colors = getColorsArray(5);
-    setColors(colors);
-  }, []);
+    const colors = getLightColorsArray(lightColors, 5)
+    setColors(colors)
+  }, [])
 
   const handlePress = () => {
-    navigation.navigate('Single User', { user: item, liked: like });
-  };
+    navigation.navigate('Single User', { user: item, liked: like })
+  }
 
   const handleLike = (id) => {
     if (!isLiked) {
-      dispatch(_addLike(id));
-      setLike(true);
+      dispatch(_addLike(id))
+      setLike(true)
     } else {
-      dispatch(_removeLike(id));
-      setLike(false);
+      dispatch(_removeLike(id))
+      setLike(false)
     }
-  };
+  }
 
   const renderInterests = (interests) => {
     return interests.map((item, index) => (
       <SmallPill key={index} backgroundColor={colors[index]} text={item} />
-    ));
-  };
+    ))
+  }
 
   return (
     <TouchableOpacity onPress={handlePress}>
@@ -54,13 +54,19 @@ export default function UserRow({ item, navigation }) {
             </Text>
             <DoubleTap doubleTap={() => handleLike(item.id)} delay={200}>
               {isLiked ? (
-                <MaterialCommunityIcons
+                <Icon
+                  type="material-community"
                   name="heart"
                   size={20}
-                  color="#96171B"
+                  color="#E8073F"
                 />
               ) : (
-                <MaterialCommunityIcons name="heart-plus-outline" size={20} />
+                <Icon
+                  type="material-community"
+                  name="heart-plus-outline"
+                  size={20}
+                  color="#E8073F"
+                />
               )}
             </DoubleTap>
           </View>
@@ -70,5 +76,5 @@ export default function UserRow({ item, navigation }) {
         </View>
       </View>
     </TouchableOpacity>
-  );
+  )
 }

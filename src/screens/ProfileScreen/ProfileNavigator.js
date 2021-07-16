@@ -8,7 +8,7 @@ import ProfileScreen from './ProfileScreen';
 import EditProfileScreen from '../EditProfileScreen/EditProfileScreen';
 import { clearData } from '../../store/userReducer';
 
-const ProfileStack = createStackNavigator();
+const ProfileStack = createStackNavigator()
 
 export default function ProfileNavigator({ navigation }) {
   const { firstName, lastName } = useSelector((state) => state.user);
@@ -18,10 +18,12 @@ export default function ProfileNavigator({ navigation }) {
     <Icon
       type="material-community"
       name="account-cog"
+      color="#1261B1"
       size={25}
       onPress={() => navigation.navigate('EditProfile')}
+      containerStyle={{ paddingRight: 20 }}
     />
-  );
+  )
 
   const handleLogout = () => (
     <TouchableOpacity
@@ -34,13 +36,13 @@ export default function ProfileNavigator({ navigation }) {
             dispatch(clearData());
           })
           .catch((error) => {
-            console.error(error);
-          });
+            console.error(error)
+          })
       }}
     >
-      <Text>Log Out</Text>
+      <Text style={{ marginRight: 20 }}>Log Out</Text>
     </TouchableOpacity>
-  );
+  )
 
   return (
     <ProfileStack.Navigator>
@@ -61,5 +63,5 @@ export default function ProfileNavigator({ navigation }) {
         })}
       />
     </ProfileStack.Navigator>
-  );
+  )
 }

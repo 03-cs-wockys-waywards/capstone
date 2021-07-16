@@ -10,8 +10,9 @@ import {
 } from 'react-native'
 //import styles from './style'
 import allInterests from '../../SetUpProfileScreens/ProfileStepTwo/interestsArray'
-import { Pill } from '../../../components/Pill'
-import { getColorsArray } from '../../../helpers/getColorsArray'
+import { MediumPill } from '../../../components/SmallPill'
+import { getLightColorsArray } from '../../../helpers/getColorsArray'
+import { lightColors } from '../../../helpers/colors.js'
 
 export default function InterestsModal({ user, setUser }) {
   const [interests, setInterests] = useState(user.interests)
@@ -19,7 +20,7 @@ export default function InterestsModal({ user, setUser }) {
   const [colors, setColors] = useState([])
 
   useEffect(() => {
-    const colors = getColorsArray(allInterests.length)
+    const colors = getLightColorsArray(lightColors, allInterests.length)
     setColors(colors)
   }, [])
 
@@ -31,34 +32,40 @@ export default function InterestsModal({ user, setUser }) {
     }
   }
 
+  const handleAddInterests = () => {
+    if (interests.length) {
+      setUser({ ...user, interests: interests })
+      setModalVisible(false)
+    }
+  }
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <TouchableOpacity onPress={() => handlePress(item)}>
+        <MediumPill
+          key={index}
+          text={item}
+          backgroundColor={interests.includes(item) ? '#EAB803' : colors[index]}
+        />
+      </TouchableOpacity>
+    )
+  }
+
   return (
     <>
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
-        <Text style={styles.title}>Update Your Interests</Text>
         <TouchableOpacity
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => {
-            if (interests.length) {
-              setUser({ ...user, interests: interests })
-              setModalVisible(false)
-            }
-          }}
+          style={[styles.button, styles.buttonClose]}
+          onPress={() => handleAddInterests()}
         >
-          <Text>✅</Text>
+          <Text style={styles.textStyle}>Update my interests</Text>
         </TouchableOpacity>
         <FlatList
-          style={{ flexDirection: 'row', flexWrap: 'wrap' }}
+          numColumns={3}
+          horizontal={false}
+          columnWrapperStyle={styles.row}
           data={allInterests}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity onPress={() => handlePress(item)}>
-              <Pill
-                text={item}
-                backgroundColor={
-                  interests.includes(item) ? '#6e3b6e' : colors[index]
-                }
-              />
-            </TouchableOpacity>
-          )}
+          renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
       </Modal>
@@ -109,26 +116,29 @@ export const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: '#132077',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#2788EA',
+    marginBottom: 20,
+    marginTop: '20%',
   },
   textStyle: {
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'Lato_700Bold',
     textAlign: 'center',
+    fontSize: 16,
+    letterSpacing: 0.5,
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginTop: 30,
-    marginBottom: 15,
-    marginLeft: 10,
-    marginRight: 10,
+  row: {
+    flex: 1,
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    alignContent: 'flex-start',
+    marginHorizontal: 15,
   },
 })
