@@ -25,9 +25,29 @@ export const getColorsArray = (num) => {
     colors[i] = getRandomLightColor();
   }
   return colors;
-}
+};
 
 // for top navigation -- renders user's name using route params
 export const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
+};
+
+// error handler
+export const handleErrors = (errorCode) => {
+  // error codes associated with login/registration
+  if (errorCode === 'auth/invalid-email') {
+    alert('Please enter a valid email address.');
+  } else if (errorCode === 'auth/email-already-in-use') {
+    alert(
+      'This email already exists with an account. Please type in a different email address.'
+    );
+  } else if (errorCode === 'auth/operation-not-allowed') {
+    alert('This account is disabled. Please contact us to enable the account.');
+  } else if (errorCode === 'auth/weak-password') {
+    alert('The password is too weak. Please use 6 or more characters.');
+  } else if (errorCode === 'auth/user-not-found') {
+    alert('No account exists with this email address.');
+  } else if (errorCode === 'auth/wrong-password') {
+    alert('Please enter a correct password.');
+  }
 };
