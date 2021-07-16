@@ -1,26 +1,28 @@
-import React from "react";
-import { TouchableOpacity, Text } from "react-native";
-import { firebase } from "../../firebaseSpecs/config";
-import { useSelector, useDispatch } from "react-redux";
-import { Icon } from "react-native-elements";
-import { createStackNavigator } from "@react-navigation/stack";
-import ProfileScreen from "./ProfileScreen";
-import EditProfileScreen from "../EditProfileScreen/EditProfileScreen";
-import { clearData } from "../../store/userReducer";
+import React from 'react'
+import { TouchableOpacity, Text } from 'react-native'
+import { firebase } from '../../firebaseSpecs/config'
+import { useSelector, useDispatch } from 'react-redux'
+import { Icon } from 'react-native-elements'
+import { createStackNavigator } from '@react-navigation/stack'
+import ProfileScreen from './ProfileScreen'
+import EditProfileScreen from '../EditProfileScreen/EditProfileScreen'
+import { clearData } from '../../store/userReducer'
 
-const ProfileStack = createStackNavigator();
+const ProfileStack = createStackNavigator()
 
 export default function ProfileNavigator({ navigation }) {
-  const { firstName, lastName } = useSelector((state) => state.user);
+  const { firstName, lastName } = useSelector((state) => state.user)
 
   const handleEditSettings = (navigation) => (
     <Icon
       type="material-community"
       name="account-cog"
+      color="#1261B1"
       size={25}
-      onPress={() => navigation.navigate("EditProfile")}
+      onPress={() => navigation.navigate('EditProfile')}
+      containerStyle={{ paddingRight: 20 }}
     />
-  );
+  )
 
   const handleLogout = () => (
     <TouchableOpacity
@@ -29,16 +31,16 @@ export default function ProfileNavigator({ navigation }) {
           .auth()
           .signOut()
           .then(() => {
-            console.log("log out successful");
+            console.log('log out successful')
           })
           .catch((error) => {
-            console.error(error);
-          });
+            console.error(error)
+          })
       }}
     >
       <Text>Log Out</Text>
     </TouchableOpacity>
-  );
+  )
 
   return (
     <ProfileStack.Navigator>
@@ -54,10 +56,10 @@ export default function ProfileNavigator({ navigation }) {
         name="EditProfile"
         component={EditProfileScreen}
         options={() => ({
-          title: "Edit Profile",
+          title: 'Edit Profile',
           headerRight: () => handleLogout(navigation),
         })}
       />
     </ProfileStack.Navigator>
-  );
+  )
 }

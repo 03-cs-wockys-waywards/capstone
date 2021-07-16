@@ -19,8 +19,10 @@ const userChatIcon = (navigation) => (
   <Icon
     type="material-community"
     name="message-outline"
+    color="#1261B1"
     size={25}
     onPress={() => navigation.navigate('Chat')}
+    containerStyle={{ paddingRight: 20 }}
   />
 )
 
