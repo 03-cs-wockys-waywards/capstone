@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Image,
   Text,
   TextInput,
   TouchableOpacity,
@@ -9,16 +8,11 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-import { firebase } from '../../firebaseSpecs/config';
-import { useDispatch } from 'react-redux';
-import { editUserInfo } from '../../store/userReducer';
 
 export default function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const dispatch = useDispatch();
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login');

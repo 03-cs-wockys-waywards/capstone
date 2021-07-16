@@ -41,6 +41,7 @@ export default function ConfirmationScreen({ navigation, route }) {
             navigation.navigate('Home', { user: data });
           })
           .catch((error) => {
+            // catch errors before the users actually register
             handleErrors(error.code);
           });
       })
