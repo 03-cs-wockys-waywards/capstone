@@ -6,6 +6,13 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  noAccessMessageContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: '15%',
+  },
   headerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -23,6 +30,17 @@ export default StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
   },
+  noAccessMessageTitleText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    lineHeight: 50,
+    textAlign: 'center',
+  },
+  noAccessMessageText: {
+    fontSize: 18,
+    lineHeight: 30,
+    textAlign: 'center',
+  },
   button: {
     height: 48,
     borderRadius: 45,
@@ -38,6 +56,9 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '500',
+  },
+  buttonContainer: {
+    marginTop: 30,
   },
   image: {
     width: 300,

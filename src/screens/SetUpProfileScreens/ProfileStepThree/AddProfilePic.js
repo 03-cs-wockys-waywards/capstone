@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Modal,
   Image,
+  Button,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
@@ -75,8 +76,8 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   const useDefaultPhoto = () => {
-    setDefaultPhotoBool(true);
     setLoading(false);
+    setDefaultPhotoBool(true);
     setImageOption('default');
     dispatch(editUserInfo({ profilePicture: '' }));
   };
@@ -119,11 +120,33 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
-    return <View />;
+    return (
+      <SafeAreaView style={styles.noAccessMessageContainer}>
+        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, please give Tingle access
+          to your camera and photos in your device settings.
+        </Text>
+        <View style={styles.buttonContainer}>
+          <Button title="Enable Access" style={styles.enableAccessText} />
+        </View>
+      </SafeAreaView>
+    );
   }
 
   if (hasCameraPermission === false || hasGalleryPermission === false) {
-    return <Text>No access</Text>;
+    return (
+      <SafeAreaView style={styles.noAccessMessageContainer}>
+        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, please give Tingle access
+          to your camera and photos in your device settings.
+        </Text>
+        <View style={styles.buttonContainer}>
+          <Button title="Enable Access" style={styles.enableAccessText} />
+        </View>
+      </SafeAreaView>
+    );
   }
 
   return (
