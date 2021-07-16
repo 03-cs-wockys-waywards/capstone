@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Icon } from 'react-native-elements'
 import {
   HomeScreen,
   ProfileNavigator,
@@ -37,7 +37,12 @@ export default function MainScreen(props) {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={28} />
+            <Icon
+              type="material-community"
+              name="home"
+              color={color}
+              size={28}
+            />
           ),
         }}
       />
@@ -46,7 +51,12 @@ export default function MainScreen(props) {
         component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="magnify" color={color} size={28} />
+            <Icon
+              type="material-community"
+              name="magnify"
+              color={color}
+              size={28}
+            />
           ),
         }}
       />
@@ -55,7 +65,8 @@ export default function MainScreen(props) {
         component={ChatNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
+            <Icon
+              type="material-community"
               name="forum-outline"
               color={color}
               size={28}
@@ -68,7 +79,12 @@ export default function MainScreen(props) {
         component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={28} />
+            <Icon
+              type="material-community"
+              name="account"
+              color={color}
+              size={28}
+            />
           ),
         }}
       />

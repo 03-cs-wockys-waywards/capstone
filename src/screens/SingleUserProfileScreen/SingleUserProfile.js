@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { ImageBackground, SafeAreaView, View, Text } from 'react-native'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Icon } from 'react-native-elements'
 import DoubleTap from 'react-native-double-tap'
 
 import { Pill } from '../../components/Pill'
@@ -70,13 +70,15 @@ export default function SingleUserProfile({ route }) {
               </Text>
               <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
                 {like ? (
-                  <MaterialCommunityIcons
+                  <Icon
+                    type="material-community"
                     name="heart"
                     size={25}
                     color="#E8073F"
                   />
                 ) : (
-                  <MaterialCommunityIcons
+                  <Icon
+                    type="material-community"
                     name="heart-plus-outline"
                     size={25}
                     color="#E8073F"

@@ -38,7 +38,7 @@ export default function UserDetails({ user }) {
       <View style={styles.profileInfoContainer}>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
           <Text style={styles.nameText}>
-            {firstName} {lastName[0]}
+            {firstName} {lastName[0]}.
           </Text>
         </View>
         <Text style={styles.pronounText}>{renderPronouns(pronouns)}</Text>

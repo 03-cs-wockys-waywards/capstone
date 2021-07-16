@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { Avatar } from 'react-native-elements'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Avatar, Icon } from 'react-native-elements'
 import DoubleTap from 'react-native-double-tap'
 
 import { SmallPill } from '../../components/SmallPill'
@@ -55,13 +54,15 @@ export default function UserRow({ item, navigation }) {
             </Text>
             <DoubleTap doubleTap={() => handleLike(item.id)} delay={200}>
               {isLiked ? (
-                <MaterialCommunityIcons
+                <Icon
+                  type="material-community"
                   name="heart"
                   size={20}
                   color="#E8073F"
                 />
               ) : (
-                <MaterialCommunityIcons
+                <Icon
+                  type="material-community"
                   name="heart-plus-outline"
                   size={20}
                   color="#E8073F"
