@@ -1,43 +1,48 @@
-import { firebase } from '../../firebaseSpecs/config';
-import 'firebase/firestore';
-import 'firebase/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { firebase } from "../../firebaseSpecs/config";
+import "firebase/firestore";
+import "firebase/auth";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   fetchPotentialMatches,
   setMatches,
-} from '../../store/potentialMatchesReducer';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
-import ChatFeedRow from '../../components/ChatFeedRow';
-import ChatRoomScreen from './ChatRoomScreen';
-import styles from './styles';
+} from "../../store/potentialMatchesReducer";
+import { SafeAreaView, ScrollView, View, Text } from "react-native";
+import ChatFeedRow from "../../components/ChatFeedRow";
+import ChatRoomScreen from "./ChatRoomScreen";
+import styles from "./styles";
 
 export default function ChatFeedScreen({ navigation }) {
   const currentUser = useSelector((state) => state.user);
-  const potentialMatches = useSelector((state) => state.potentialMatches);
-  const matches = potentialMatches.filter((user) =>
-    currentUser.likes.includes(user.id)
-  );
-  const dispatch = useDispatch();
+  // const potentialMatches = useSelector((state) => state.potentialMatches);
+  // const matches = potentialMatches.filter((user) => currentUser.likes.includes(user.id));
+  // const dispatch = useDispatch();
 
-  const messagesRef = firebase.firestore().collection('messages');
+  const messagesRef = firebase.firestore().collection("messages");
 
-  // only run the where query when the currentUser.id exists
-  // to avoid breaking the logout logic
   // const query = currentUser.id
-  //   ? messagesRef.where('to', '==', currentUser.id)
+  //   ? messagesRef.where("users", "array-contains", currentUser.id)
   //   : null;
-  // const [_messages] = useCollectionData(query);
+  // const [threads] = useCollectionData(query);
 
+  // QUERY FOR CHAT FEED
   const query = currentUser.id
-  ? messagesRef.where('users', 'array-contains', currentUser.id)
-  : null;
-const [_messages] = useCollectionData(query);
+    ? messagesRef.where(`users.${currentUser.id}`, "==", true)
+    : null;
+  const [threads] = useCollectionData(query);
+  // console.log("FEED >>>>>>", threads);
 
-  useEffect(() => {
-    dispatch(fetchPotentialMatches(currentUser.id));
-  }, []);
+  // QUERY FOR CHAT ROOM
+  const ChatRoomQuery = currentUser.id
+    ? messagesRef.where(`users.${currentUser.id}`, "==", true).where("users.E1GPo5ZjsJWSvxwVjhpaEsXEHUj2", "==", true)
+    : null;
+  const [chatRoomThread] = useCollectionData(ChatRoomQuery);
+  console.log("CHAT ROOM >>>>>>", chatRoomThread);
+
+  // useEffect(() => {
+  //   dispatch(fetchPotentialMatches(currentUser.id));
+  // }, []);
 
   /*
   - used for grouping messages by sender.
@@ -102,15 +107,28 @@ const [_messages] = useCollectionData(query);
   //   return messages;
   // };
 
-  const handlePress = (match) => {
-    navigation.navigate('ChatRoom', {
-      match,
-    });
-  };
+  // const getDiscoverStore = () => {
+  //   const discoverStore = {};
+  //   if (potentialMatches && potentialMatches.length) {
+  //     potentialMatches.forEach((match) => {
+  //       const { id } = match;
+  //       discoverStore[id] = match;
+  //     });
+  //   }
+  //   return discoverStore;
+  // };
+
+  // const discoverStore = getDiscoverStore();
+  // console.log("discoverStore >>>>>>", discoverStore)
+
+  // const handlePress = (thread, match) => {
+  //   navigation.navigate("ChatRoom", {
+  //     thread,
+  //     match,
+  //   });
+  // };
 
   // const messages = getMessages();
-
-  console.log(_messages)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,6 +148,34 @@ const [_messages] = useCollectionData(query);
             ) : (
               <></>
             );
+          })} */}
+        {/* <Text>{threads[0].latestMessage.text}</Text> */}
+        {/* {threads && threads.map((thread, index) => {
+            const matchId = thread.users.filter((user) => user.id !== currentUser.id)[0];
+            const match = discoverStore[matchId];
+            console.log('matchId >>>>>>', matchId)
+            console.log('match >>>>>', match)
+            return (
+              <Text key={index}>TEST</Text>
+            );
+        })} */}
+
+        {/* {threads.map((thread, index) => {
+            const matchId = thread.users.filter((user) => user.id !== currentUser.id)[0];
+            const match = matchesStore[matchId];
+            const { latestMessage } = thread;
+            return match ? (
+              <ChatFeedRow
+                key={index}
+                avatar={null}
+                firstName={match.firstName}
+                lastName={match.lastName}
+                latestMessage={latestMessage.text}
+                handlePress={() => handlePress(thread, match)}
+              />
+            ) : ( 
+            <></>
+             )
           })} */}
       </ScrollView>
     </SafeAreaView>
