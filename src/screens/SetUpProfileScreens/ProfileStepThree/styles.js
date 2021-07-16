@@ -50,7 +50,7 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '15%',
+    bottom: '9%',
   },
   modalBackground: {
     flex: 1,

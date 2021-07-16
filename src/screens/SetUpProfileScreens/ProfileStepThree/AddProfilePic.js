@@ -27,6 +27,7 @@ export default function AddProfilePic({ navigation, route }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(profilePicture || null);
   const [loading, setLoading] = useState(false);
+  const [defaultPhotoBool, setDefaultPhotoBool] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -70,6 +71,13 @@ export default function AddProfilePic({ navigation, route }) {
     }
   };
 
+  const useDefaultPhoto = () => {
+    setDefaultPhotoBool(true);
+    setLoading(false);
+    dispatch(editUserInfo({ profilePicture: '' }));
+    console.log('use default photo function');
+  };
+
   const uploadPicture = async () => {
     const uri = image;
     const childPath = `profile/${user.email}`;
@@ -91,7 +99,7 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   const navigateToNext = () => {
-    navigation.navigate('Confirmation', { password });
+    navigation.navigate('Confirmation', { password, defaultPhotoBool });
   };
 
   const displayLoadingScreen = () => {
@@ -136,6 +144,10 @@ export default function AddProfilePic({ navigation, route }) {
         <Text style={styles.buttonText}>Choose from Gallery</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.button} onPress={() => useDefaultPhoto()}>
+        <Text style={styles.buttonText}>Use Default Photo</Text>
+      </TouchableOpacity>
+
       <View style={styles.progressContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('ProfileStepTwo')}>
           <Icon type="font-awesome" name="chevron-left" color="#000" />
@@ -148,7 +160,9 @@ export default function AddProfilePic({ navigation, route }) {
         <TouchableOpacity
           onPress={() => {
             setLoading(true);
-            uploadPicture();
+            if (!defaultPhotoBool) {
+              uploadPicture();
+            }
             if (loading) {
               alert('Please wait until the photo has been uploaded...');
             } else {
