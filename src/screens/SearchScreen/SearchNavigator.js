@@ -1,14 +1,14 @@
-import React from 'react';
-import { Icon } from 'react-native-elements';
-import { createStackNavigator } from '@react-navigation/stack';
-import SearchScreen from './SearchScreen';
-import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile';
+import React from 'react'
+import { Icon } from 'react-native-elements'
+import { createStackNavigator } from '@react-navigation/stack'
+import SearchScreen from './SearchScreen'
+import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile'
 
-const SearchStack = createStackNavigator();
+const SearchStack = createStackNavigator()
 
 const renderName = (route) => {
-  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
-};
+  return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`
+}
 
 const userChatIcon = (navigation) => (
   <Icon
@@ -16,8 +16,9 @@ const userChatIcon = (navigation) => (
     name="message-outline"
     size={25}
     onPress={() => navigation.navigate('Chat')}
+    containerStyle={{ paddingRight: 20 }}
   />
-);
+)
 
 export default function ProfileNavigator({ navigation }) {
   return (
@@ -38,5 +39,5 @@ export default function ProfileNavigator({ navigation }) {
         })}
       />
     </SearchStack.Navigator>
-  );
+  )
 }

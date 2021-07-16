@@ -38,7 +38,7 @@ export default function ProfileNavigator({ navigation }) {
           })
       }}
     >
-      <Text>Log Out</Text>
+      <Text style={{ marginRight: 20 }}>Log Out</Text>
     </TouchableOpacity>
   )
 
