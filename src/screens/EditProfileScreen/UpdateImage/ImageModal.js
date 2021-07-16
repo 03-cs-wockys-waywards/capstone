@@ -55,6 +55,7 @@ export default function ImageModal({ user, setUser, setUserPic }) {
     setModalVisible(false)
   }
 
+  // upload local uri to firebase storage to create a viable url
   const uploadPicture = async (image) => {
     const uri = image
     const childPath = `profile/${user.id}`
@@ -71,27 +72,7 @@ export default function ImageModal({ user, setUser, setUserPic }) {
       console.log('There was an error: ', snapshot)
     }
 
-    const taskUpdateRedux = () => {
-      task.snapshot.ref.getDownloadURL().then((snapshot) => {
-        dispatch(editUserInfo({ profilePicture: snapshot }))
-        console.log('Redux update completed')
-      })
-    }
-
-    const taskUpdateFirebase = async (snapshot) => {
-      const userRef = firebase.firestore().collection('users').doc(user.id)
-
-      await userRef.update({ profilePicture: snapshot })
-      console.log('Firebase update completed')
-    }
-
-    task.on(
-      'state-changed',
-      taskProgress,
-      taskError,
-      taskUpdateRedux,
-      taskUpdateFirebase
-    )
+    task.on('state-changed', taskProgress, taskError)
   }
 
   return (
