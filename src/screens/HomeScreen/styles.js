@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   listContainer: {
@@ -41,4 +41,17 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-});
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: '60%',
+  },
+  emptyMessage: {
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingHorizontal: '10%',
+    lineHeight: 30,
+    color: '#223147',
+  },
+})
