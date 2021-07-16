@@ -28,6 +28,7 @@ export default function AddProfilePic({ navigation, route }) {
   const [image, setImage] = useState(profilePicture || null);
   const [loading, setLoading] = useState(false);
   const [defaultPhotoBool, setDefaultPhotoBool] = useState(false);
+  const [imageOption, setImageOption] = useState('');
 
   const dispatch = useDispatch();
 
@@ -53,6 +54,7 @@ export default function AddProfilePic({ navigation, route }) {
     if (!result.cancelled) {
       dispatch(editUserInfo({ profilePicture: result.uri }));
       setImage(result.uri);
+      setImageOption('camera');
     }
   };
 
@@ -68,14 +70,15 @@ export default function AddProfilePic({ navigation, route }) {
     if (!result.cancelled) {
       dispatch(editUserInfo({ profilePicture: result.uri }));
       setImage(result.uri);
+      setImageOption('gallery');
     }
   };
 
   const useDefaultPhoto = () => {
     setDefaultPhotoBool(true);
     setLoading(false);
+    setImageOption('default');
     dispatch(editUserInfo({ profilePicture: '' }));
-    console.log('use default photo function');
   };
 
   const uploadPicture = async () => {
@@ -160,10 +163,13 @@ export default function AddProfilePic({ navigation, route }) {
         <TouchableOpacity
           onPress={() => {
             setLoading(true);
-            if (!defaultPhotoBool) {
+            if (imageOption === '') {
+              alert(
+                'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
+              );
+            } else if (!defaultPhotoBool) {
               uploadPicture();
-            }
-            if (loading) {
+            } else if (loading) {
               alert('Please wait until the photo has been uploaded...');
             } else {
               navigateToNext();
