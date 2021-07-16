@@ -1,34 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
   TouchableOpacity,
   View,
   SafeAreaView,
-} from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import styles from './styles'
-import { firebase } from '../../firebaseSpecs/config'
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
+import { handleErrors } from '../../helpers';
+import { firebase } from '../../firebaseSpecs/config';
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Registration')
-  }
+    navigation.navigate('Registration');
+  };
 
   const onLoginPress = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        console.log(result)
+        console.log(result);
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        handleErrors(error.code);
+      });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,5 +70,5 @@ export default function LoginScreen({ navigation }) {
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
-  )
+  );
 }

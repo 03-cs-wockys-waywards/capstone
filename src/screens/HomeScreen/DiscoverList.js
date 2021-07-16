@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { FlatList } from 'react-native'
+import { FlatList, Text } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/discoverUsersReducer'
 import UserRow from './UserRow'
 import { firebase } from '../../firebaseSpecs/config'
+import styles from './styles'
+
+const EmptyMessage = () => {
+  return (
+    <Text style={[styles.emptyMessage, styles.emptyContainer]}>
+      No users with a similar interest... yet 🥺
+    </Text>
+  )
+}
 
 export class DiscoverList extends Component {
   constructor(props) {
@@ -52,6 +61,7 @@ export class DiscoverList extends Component {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         initialNumToRender={7}
+        ListEmptyComponent={EmptyMessage}
       />
     )
   }

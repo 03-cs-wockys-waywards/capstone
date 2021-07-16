@@ -1,10 +1,17 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  noAccessMessageContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: '15%',
   },
   headerContainer: {
     justifyContent: 'center',
@@ -23,6 +30,17 @@ export default StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
   },
+  noAccessMessageTitleText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    lineHeight: 50,
+    textAlign: 'center',
+  },
+  noAccessMessageText: {
+    fontSize: 18,
+    lineHeight: 30,
+    textAlign: 'center',
+  },
   button: {
     height: 48,
     borderRadius: 45,
@@ -39,6 +57,9 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  buttonContainer: {
+    marginTop: 30,
+  },
   image: {
     width: 300,
     height: 300,
@@ -50,6 +71,22 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '15%',
+    bottom: '9%',
   },
-})
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    backgroundColor: '#00000040',
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+});

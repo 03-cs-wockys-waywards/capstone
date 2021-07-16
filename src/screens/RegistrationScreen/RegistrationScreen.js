@@ -1,36 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
-  Image,
   Text,
   TextInput,
   TouchableOpacity,
   View,
   SafeAreaView,
-} from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import styles from './styles'
-import { firebase } from '../../firebaseSpecs/config'
-import { useDispatch } from 'react-redux'
-import { editUserInfo } from '../../store/userReducer'
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
 
 export default function RegistrationScreen({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-
-  const dispatch = useDispatch()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Login')
-  }
+    navigation.navigate('Login');
+  };
 
   const onRegisterPress = () => {
+    // regex to check for valid email
+    const regex = /^[^\s@]+@[^\s@]+$/;
     if (password !== confirmPassword) {
-      alert("Passwords don't match.")
+      alert("Passwords don't match.");
+    } else if (email.length === 0 || !regex.test(email)) {
+      alert('Please enter a valid email address');
+    } else if (password.length < 6) {
+      alert('The password is too weak. Please use 6 or more characters.');
     } else {
-      navigation.navigate('ProfileStepOne', { email, password })
+      navigation.navigate('ProfileStepOne', { email, password });
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -84,5 +84,5 @@ export default function RegistrationScreen({ navigation }) {
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
-  )
+  );
 }

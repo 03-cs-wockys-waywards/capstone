@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { FlatList } from 'react-native'
+import { FlatList, Text, View } from 'react-native'
 import { fetchPotentialMatches } from '../../store/potentialMatchesReducer'
 import UserRow from './UserRow'
 import { firebase } from '../../firebaseSpecs/config'
+import styles from './styles'
+
+const EmptyMessage = () => {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyMessage}>No matches yet...</Text>
+      <Text style={styles.emptyMessage}>Continue to mingle! 😉</Text>
+    </View>
+  )
+}
 
 export class MatchesList extends Component {
   constructor(props) {
@@ -37,17 +47,15 @@ export class MatchesList extends Component {
       currentUserLikes.includes(user.id)
     )
 
-    if (matches.length > 0) {
-      return (
-        <FlatList
-          data={matches}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          initialNumToRender={7}
-        />
-      )
-    }
-    return <></>
+    return (
+      <FlatList
+        data={matches}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        initialNumToRender={7}
+        ListEmptyComponent={EmptyMessage}
+      />
+    )
   }
 }
 

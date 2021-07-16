@@ -31,7 +31,8 @@ export default function UserDetails({ user }) {
 
   return (
     <ImageBackground
-      source={{ uri: profilePicture }}
+// image source must be in {uri: linkToPhoto } format!
+      source={{ uri: profilePicture ? profilePicture : null }}=======
       style={styles.image}
       imageStyle={styles.imageStyle}
     >
@@ -48,5 +49,5 @@ export default function UserDetails({ user }) {
         </View>
       </View>
     </ImageBackground>
-  )
+  );
 }

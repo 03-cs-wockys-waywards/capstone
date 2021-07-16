@@ -51,4 +51,17 @@ export default StyleSheet.create({
     height: null,
     resizeMode: 'cover',
   },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: '60%',
+  },
+  emptyMessage: {
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingHorizontal: '10%',
+    lineHeight: 30,
+    color: '#223147',
+  },
 })

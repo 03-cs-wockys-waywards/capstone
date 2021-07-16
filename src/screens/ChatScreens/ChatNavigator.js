@@ -9,14 +9,14 @@ export default function ChatNavigator({ navigation }) {
   return (
     <ChatStack.Navigator>
       <ChatStack.Screen
-        name="ChatFeedScreen"
+        name="ChatFeed"
         component={ChatFeedScreen}
         options={() => ({
           title: 'Chat Feed',
         })}
       />
       <ChatStack.Screen
-        name="ChatRoomScreen"
+        name="ChatRoom"
         component={ChatRoomScreen}
         options={() => ({
           title: '',
