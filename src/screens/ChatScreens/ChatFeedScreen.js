@@ -22,12 +22,18 @@ export default function ChatFeedScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const messagesRef = firebase.firestore().collection('messages');
+
   // only run the where query when the currentUser.id exists
   // to avoid breaking the logout logic
+  // const query = currentUser.id
+  //   ? messagesRef.where('to', '==', currentUser.id)
+  //   : null;
+  // const [_messages] = useCollectionData(query);
+
   const query = currentUser.id
-    ? messagesRef.where('to', '==', currentUser.id)
-    : null;
-  const [_messages] = useCollectionData(query);
+  ? messagesRef.where('users', 'array-contains', currentUser.id)
+  : null;
+const [_messages] = useCollectionData(query);
 
   useEffect(() => {
     dispatch(fetchPotentialMatches(currentUser.id));
@@ -41,18 +47,18 @@ export default function ChatFeedScreen({ navigation }) {
     senderId2: [ { message1 }, { message2 }, ... ],
   }
   */
-  const getMessageStore = () => {
-    const messageStore = {};
-    if (_messages && _messages.length) {
-      _messages.forEach((message) => {
-        const { from } = message;
-        messageStore[from]
-          ? messageStore[from].push(message)
-          : (messageStore[from] = [message]);
-      });
-    }
-    return messageStore;
-  };
+  // const getMessageStore = () => {
+  //   const messageStore = {};
+  //   if (_messages && _messages.length) {
+  //     _messages.forEach((message) => {
+  //       const { from } = message;
+  //       messageStore[from]
+  //         ? messageStore[from].push(message)
+  //         : (messageStore[from] = [message]);
+  //     });
+  //   }
+  //   return messageStore;
+  // };
 
   /*
   - used for retrieving user objects by their ids.
@@ -62,19 +68,19 @@ export default function ChatFeedScreen({ navigation }) {
     userId2: { user object },
   }
   */
-  const getMatchesStore = () => {
-    const matchesStore = {};
-    if (matches && matches.length) {
-      matches.forEach((match) => {
-        const { id } = match;
-        matchesStore[id] = match;
-      });
-    }
-    return matchesStore;
-  };
+  // const getMatchesStore = () => {
+  //   const matchesStore = {};
+  //   if (matches && matches.length) {
+  //     matches.forEach((match) => {
+  //       const { id } = match;
+  //       matchesStore[id] = match;
+  //     });
+  //   }
+  //   return matchesStore;
+  // };
 
-  const messageStore = getMessageStore();
-  const matchesStore = getMatchesStore();
+  // const messageStore = getMessageStore();
+  // const matchesStore = getMatchesStore();
 
   /*
   - used for retrieving array of messages to map over in render method.
@@ -84,17 +90,17 @@ export default function ChatFeedScreen({ navigation }) {
     { senderId: str, text: str },
   ]
   */
-  const getMessages = () => {
-    const senderIds = Object.keys(messageStore);
-    const messages = senderIds.map((id) => {
-      const { text } = messageStore[id][0];
-      return {
-        senderId: id,
-        text,
-      };
-    });
-    return messages;
-  };
+  // const getMessages = () => {
+  //   const senderIds = Object.keys(messageStore);
+  //   const messages = senderIds.map((id) => {
+  //     const { text } = messageStore[id][0];
+  //     return {
+  //       senderId: id,
+  //       text,
+  //     };
+  //   });
+  //   return messages;
+  // };
 
   const handlePress = (match) => {
     navigation.navigate('ChatRoom', {
@@ -102,15 +108,14 @@ export default function ChatFeedScreen({ navigation }) {
     });
   };
 
-  const messages = getMessages();
+  // const messages = getMessages();
+
+  console.log(_messages)
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
-        {/* <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Chat Feed</Text>
-        </View> */}
-        {messages &&
+        {/* {messages &&
           messages.map((message, index) => {
             const match = matchesStore[message.senderId];
             return match ? (
@@ -125,7 +130,7 @@ export default function ChatFeedScreen({ navigation }) {
             ) : (
               <></>
             );
-          })}
+          })} */}
       </ScrollView>
     </SafeAreaView>
   );
