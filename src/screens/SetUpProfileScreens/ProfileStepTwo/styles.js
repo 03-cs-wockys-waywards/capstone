@@ -9,8 +9,8 @@ export default StyleSheet.create({
     height: '100%',
   },
   headerContainer: {
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 10,
   },
   headerTitle: {
@@ -20,15 +20,30 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   headerText: {
-    fontSize: 16,
-    lineHeight: 19,
-    marginTop: 15,
-    marginBottom: 15,
+    fontSize: 30,
+    fontWeight: '600',
+    lineHeight: 36,
+    marginBottom: 5,
   },
   subtitle: {
     textAlign: 'center',
     width: 250,
     fontStyle: 'italic',
+  },
+
+  labelText: {
+    fontSize: 16,
+    lineHeight: 19,
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  progressContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    left: 0,
+    right: 0,
+    bottom: '5%',
   },
   flatList: {
     marginBottom: '32%',
@@ -50,13 +65,5 @@ export default StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
-  },
-  progressContainer: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    left: 0,
-    right: 0,
-    bottom: '3%',
   },
 })
