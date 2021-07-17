@@ -1,35 +1,35 @@
-import React, { useState } from 'react'
-import { SafeAreaView, ScrollView, TouchableOpacity, Text } from 'react-native'
-import { firebase } from '../../firebaseSpecs/config'
-import styles from './styles'
-import { useSelector, useDispatch } from 'react-redux'
-import UpdateImage from './UpdateImage/UpdateImage'
-import UpdateName from './UpdateName'
-import UpdatePronouns from './UpdatePronouns'
-import UpdateInterests from './UpdateInterests/UpdateInterests'
-import { editUserInfo } from '../../store/userReducer'
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { firebase } from '../../firebaseSpecs/config';
+import styles from './styles';
+import { useSelector, useDispatch } from 'react-redux';
+import UpdateImage from './UpdateImage/UpdateImage';
+import UpdateName from './UpdateName';
+import UpdatePronouns from './UpdatePronouns';
+import UpdateInterests from './UpdateInterests/UpdateInterests';
+import { editUserInfo } from '../../store/userReducer';
 
 export default function EditProfile({ navigation }) {
-  const _user = useSelector((state) => state.user)
-  const [user, setUser] = useState(_user)
+  const _user = useSelector((state) => state.user);
+  const [user, setUser] = useState(_user);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const updateFirebase = () => {
-    const uid = _user.id
-    const data = _user
-    const usersRef = firebase.firestore().collection('users')
+    const uid = _user.id;
+    const data = user;
+    const usersRef = firebase.firestore().collection('users');
     usersRef
       .doc(uid)
       .set(data)
       .catch((error) => {
-        alert(error)
+        alert(error);
       })
       .then(() => {
-        dispatch(editUserInfo(user))
-        navigation.popToTop()
-      })
-  }
+        dispatch(editUserInfo(user));
+        navigation.popToTop();
+      });
+  };
 
   return (
     <SafeAreaView style={styles.topView}>
@@ -43,5 +43,5 @@ export default function EditProfile({ navigation }) {
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
