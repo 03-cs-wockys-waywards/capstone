@@ -16,10 +16,12 @@ export default function Checkbox({ state, setState, name, value }) {
         textStyle={{
           fontSize: 16,
           fontWeight: 'normal',
+          fontFamily: 'Lato_400Regular',
+          letterSpacing: 0.2,
         }}
         checkedIcon="check-circle"
         uncheckedIcon="check-circle"
-        checkedColor="#1575D4"
+        checkedColor="#4B9CED"
         checked={state.includes(value)}
         onPress={() => {
           let newState = [...state, value]
