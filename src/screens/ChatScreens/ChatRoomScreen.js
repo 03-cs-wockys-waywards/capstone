@@ -21,26 +21,19 @@ import styles from './styles';
 export default function ChatRoomScreen({ route }) {
   console.log("----------------  IN CHAT ROOM  ----------------");
   const { docId } = route.params;
-  console.log("documentId in ChatRoom >>>>>", docId);
-
   // const { match } = route.params;
-  // const user = useSelector((state) => state.user);
-  // const { toUser, fromUser } = useSelector((state) => state.messages);
-  // // const messages = [...toUser, ...fromUser];
+  const user = useSelector((state) => state.user);
   // const dispatch = useDispatch();
-  // const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   // const [text, setText] = useState('');
 
-  // const messagesRef = firebase.firestore().collection('messages');
-
-  // useEffect(() => {
-  //   const unsubscribe = async () => {
-  //     await dispatch(fetchMessagesToUser(user.id, match.id));
-  //     await dispatch(fetchMessagesFromUser(user.id, match.id));
-  //     setMessages([ ...toUser, ...fromUser ]);
-  //   }
-  //   return () => unsubscribe();
-  // }, [messages]);
+  useEffect(() => {
+    const messagesRef = firebase.firestore().collection('messages');
+    const unsubscribe = messagesRef.doc(docId).onSnapshot((doc) => {
+      console.log("Data in useEffect >>>>>>", doc.data())
+    });
+    return () => unsubscribe();
+  }, []);
 
   // console.log("messages >>>>>", messages);
 
