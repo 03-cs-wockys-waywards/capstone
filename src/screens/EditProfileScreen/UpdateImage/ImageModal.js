@@ -7,17 +7,12 @@ import {
   Modal,
   Pressable,
 } from 'react-native'
-import { useDispatch } from 'react-redux'
-import { editUserInfo } from '../../../store/userReducer'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 import { firebase } from '../../../firebaseSpecs/config'
 
 export default function ImageModal({ user, setUser, setUserPic }) {
   const [modalVisible, setModalVisible] = useState(false)
-  const [newPic, setImage] = useState(null)
-
-  const dispatch = useDispatch()
 
   const useCamera = async () => {
     const { status } = await Camera.requestPermissionsAsync()
@@ -25,12 +20,12 @@ export default function ImageModal({ user, setUser, setUserPic }) {
     if (status === 'granted') {
       const image = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
+        // aspect: [1, 1],
+        quality: 0.6,
       })
 
       if (!image.cancelled) {
-        //setUser({ ...user, profilePicture: image.uri })
+        setUserPic(image.uri)
         uploadPicture(image.uri)
       }
     }
@@ -44,11 +39,12 @@ export default function ImageModal({ user, setUser, setUserPic }) {
       const image = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
+        // aspect: [1, 1],
+        quality: 0.6,
       })
+
       if (!image.cancelled) {
-        //setUser({ ...user, profilePicture: image.uri })
+        setUserPic(image.uri)
         uploadPicture(image.uri)
       }
     }
@@ -62,17 +58,7 @@ export default function ImageModal({ user, setUser, setUserPic }) {
     const response = await fetch(uri)
     const blob = await response.blob()
 
-    const task = firebase.storage().ref().child(childPath).put(blob)
-
-    const taskProgress = (snapshot) => {
-      console.log(`Transferred: ${snapshot.bytesTransferred}`)
-    }
-
-    const taskError = (snapshot) => {
-      console.log('There was an error: ', snapshot)
-    }
-
-    task.on('state-changed', taskProgress, taskError)
+    firebase.storage().ref().child(childPath).put(blob)
   }
 
   return (

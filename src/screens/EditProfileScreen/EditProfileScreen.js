@@ -16,11 +16,8 @@ export default function EditProfile({ navigation }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    //console.log('User BEFORE dispatch >>>>> ', _user.interests)
     dispatch(editUserInfo(user))
   }, [user])
-
-  //console.log('User AFTER dispatch/useEffect >>>>> ', _user.interests)
 
   const updateFirebase = () => {
     const uid = _user.id
@@ -29,9 +26,6 @@ export default function EditProfile({ navigation }) {
     usersRef
       .doc(uid)
       .set(data)
-      .then(() => {
-        navigation.popToTop()
-      })
       .catch((error) => {
         alert(error)
       })
