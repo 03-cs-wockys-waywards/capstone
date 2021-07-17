@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView, ScrollView, TouchableOpacity, Text } from 'react-native'
 import { firebase } from '../../firebaseSpecs/config'
 import styles from './styles'
@@ -15,10 +15,6 @@ export default function EditProfile({ navigation }) {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(editUserInfo(user))
-  }, [user])
-
   const updateFirebase = () => {
     const uid = _user.id
     const data = _user
@@ -28,6 +24,10 @@ export default function EditProfile({ navigation }) {
       .set(data)
       .catch((error) => {
         alert(error)
+      })
+      .then(() => {
+        dispatch(editUserInfo(user))
+        navigation.popToTop()
       })
   }
 

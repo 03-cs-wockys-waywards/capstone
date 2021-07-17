@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { View, Image } from 'react-native'
 import ImageModal from './ImageModal'
 import { firebase } from '../../../firebaseSpecs/config'
-import { editUserInfo } from '../../../store/userReducer'
 import styles from '../styles'
 
 export default function UpdateImage({ user, setUser }) {
@@ -28,7 +26,7 @@ export default function UpdateImage({ user, setUser }) {
   return (
     <View style={styles.imageContainer}>
       <Image source={{ uri: userPic }} style={styles.image} />
-      <ImageModal user={user} setUser={setUser} setUserPic={setUserPic} />
+      <ImageModal userId={user.id} setUserPic={setUserPic} />
     </View>
   )
 }

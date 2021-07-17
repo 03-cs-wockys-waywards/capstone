@@ -11,7 +11,7 @@ import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 import { firebase } from '../../../firebaseSpecs/config'
 
-export default function ImageModal({ user, setUser, setUserPic }) {
+export default function ImageModal({ userId, setUserPic }) {
   const [modalVisible, setModalVisible] = useState(false)
 
   const useCamera = async () => {
@@ -21,7 +21,7 @@ export default function ImageModal({ user, setUser, setUserPic }) {
       const image = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         // aspect: [1, 1],
-        quality: 0.6,
+        quality: 0.5,
       })
 
       if (!image.cancelled) {
@@ -40,7 +40,7 @@ export default function ImageModal({ user, setUser, setUserPic }) {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         // aspect: [1, 1],
-        quality: 0.6,
+        quality: 0.5,
       })
 
       if (!image.cancelled) {
@@ -54,7 +54,7 @@ export default function ImageModal({ user, setUser, setUserPic }) {
   // upload local uri to firebase storage to create a viable url
   const uploadPicture = async (image) => {
     const uri = image
-    const childPath = `profile/${user.id}`
+    const childPath = `profile/${userId}`
     const response = await fetch(uri)
     const blob = await response.blob()
 
