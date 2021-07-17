@@ -66,7 +66,7 @@ export default function ChatRoomScreen({ route }) {
         {loading ? (
           <></>
         ) : (
-          messages.map((message, index) => {
+          messages && messages.map((message, index) => {
             const { text, from } = message;
             return (
               <ChatBubble

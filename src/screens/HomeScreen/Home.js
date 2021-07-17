@@ -35,14 +35,12 @@ const userChatIcon = (route, navigation) => {
     const [chatRoom] = value;
     docId = chatRoom.id;
   } else {
-    const matchId = match.id
-    const users = { matchId: true, currentUserId: true }
     const chatRoom = messagesRef.doc();
     chatRoom.set({
       users: {
         [match.id]: true,
-        [currentUserId]: true
-      }
+        [currentUserId]: true,
+      },
     });
     docId = chatRoom.id;
   }
