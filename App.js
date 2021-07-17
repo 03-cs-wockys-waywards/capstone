@@ -31,17 +31,6 @@ import {
   Lato_900Black,
   Lato_900Black_Italic,
 } from '@expo-google-fonts/lato'
-import {
-  RobotoSlab_100Thin,
-  RobotoSlab_200ExtraLight,
-  RobotoSlab_300Light,
-  RobotoSlab_400Regular,
-  RobotoSlab_500Medium,
-  RobotoSlab_600SemiBold,
-  RobotoSlab_700Bold,
-  RobotoSlab_800ExtraBold,
-  RobotoSlab_900Black,
-} from '@expo-google-fonts/roboto-slab'
 
 if (!global.btoa) {
   global.btoa = encode
@@ -61,15 +50,6 @@ const customFonts = {
   Lato_700Bold_Italic,
   Lato_900Black,
   Lato_900Black_Italic,
-  RobotoSlab_100Thin,
-  RobotoSlab_200ExtraLight,
-  RobotoSlab_300Light,
-  RobotoSlab_400Regular,
-  RobotoSlab_500Medium,
-  RobotoSlab_600SemiBold,
-  RobotoSlab_700Bold,
-  RobotoSlab_800ExtraBold,
-  RobotoSlab_900Black,
 }
 
 const Stack = createStackNavigator()
@@ -81,6 +61,7 @@ export class App extends Component {
       user: null,
       loading: true,
       isLoggedIn: false,
+      fontsLoaded: false,
     }
   }
 
@@ -126,7 +107,7 @@ export class App extends Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          {isLoggedIn ? (
+          {isLoggedIn && fontsLoaded ? (
             <Stack.Navigator
               initialRouteName="Main"
               headerMode="none"

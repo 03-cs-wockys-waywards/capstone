@@ -1,42 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { editUserInfo } from '../../../store/userReducer';
-import { View, Image } from 'react-native';
-import ImageModal from './ImageModal';
-import { firebase } from '../../../firebaseSpecs/config';
-import styles from '../styles';
+import React, { useEffect, useState } from 'react'
+import { View, Image } from 'react-native'
+import ImageModal from './ImageModal'
+import { firebase } from '../../../firebaseSpecs/config'
+import styles from '../styles'
 
 export default function UpdateImage({ user, setUser }) {
-  const { profilePicture } = user;
-  const [userPic, setUserPic] = useState(profilePicture);
+  const { profilePicture } = user
+  const [userPic, setUserPic] = useState(profilePicture)
 
-  // const dispatch = useDispatch()
+  const getPicUrl = () => {
+    const profilePicRef = firebase.storage().ref().child(`profile/${user.id}`)
 
-  // const loadProfilePicture = () => {
-  //   const profilePicRef = firebase
-  //     .storage()
-  //     .ref()
-  //     .child(`profile/${user.id}`)
+    profilePicRef.getDownloadURL().then((url) => {
+      // setUserPic(url)
+      setUser({ ...user, profilePicture: url })
+    })
+  }
 
-  //   profilePicRef.getDownloadURL().then((url) => {
-  //     setUserPic(url)
-  //     // Save user profile photo in redux
-  //     dispatch(editUserInfo({ profilePicture: url }))
-  //   })
-  // }
+  useEffect(() => {
+    if (profilePicture !== userPic) {
+      getPicUrl()
+    }
+  }, [userPic])
 
-  // useEffect(() => {
-  //   loadProfilePicture()
-  // }, [])
-
-  //console.log('Rhetta profile picture: ', user.profilePicture)
   return (
     <View style={styles.imageContainer}>
-      <Image
-        source={{ uri: profilePicture ? profilePicture : null }}
-        style={styles.image}
-      />
-      <ImageModal user={user} setUser={setUser} setUserPic={setUserPic} />
+      <Image source={{ uri: userPic }} style={styles.image} />
+      <ImageModal userId={user.id} setUserPic={setUserPic} />
     </View>
-  );
+  )
 }

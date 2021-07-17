@@ -27,7 +27,11 @@ export class SearchScreen extends Component {
   }
 
   componentDidMount() {
-    this.setState({ originalData: this.props.discoverUsers });
+    // filter out the current user from discover list
+    const discoverUsers = this.props.discoverUsers.filter(
+      (person) => person.id !== this.props.user.id
+    );
+    this.setState({ originalData: discoverUsers });
   }
 
   updateSearchText(term) {
@@ -134,6 +138,7 @@ export class SearchScreen extends Component {
 }
 
 const mapState = (state) => ({
+  user: state.user,
   discoverUsers: state.discoverUsers,
 });
 

@@ -13,119 +13,57 @@ import ChatFeedRow from '../../components/ChatFeedRow';
 import ChatRoomScreen from './ChatRoomScreen';
 import styles from './styles';
 
+// // QUERY FOR CHAT ROOM
+// const ChatRoomQuery = currentUser.id
+//   ? messagesRef.where(`users.${currentUser.id}`, "==", true).where("users.E1GPo5ZjsJWSvxwVjhpaEsXEHUj2", "==", true)
+//   : null;
+// const [chatRoomThread] = useCollectionData(ChatRoomQuery);
+
+// const matchesIds = chatRoomThread.map((chatRoom) => {
+//   const { users } = chatRoom;
+//   return Object.keys(users).filter((user) => {
+//     return user.id !== currentUser.id
+//   });
+// });
+
 export default function ChatFeedScreen({ navigation }) {
   const currentUser = useSelector((state) => state.user);
-  const potentialMatches = useSelector((state) => state.potentialMatches);
-  const matches = potentialMatches.filter((user) =>
-    currentUser.likes.includes(user.id)
-  );
-  const dispatch = useDispatch();
-
   const messagesRef = firebase.firestore().collection('messages');
-  // only run the where query when the currentUser.id exists
-  // to avoid breaking the logout logic
   const query = currentUser.id
-    ? messagesRef.where('to', '==', currentUser.id)
+    ? messagesRef.where(`users.${currentUser.id}`, '==', true)
     : null;
-  const [_messages] = useCollectionData(query);
+  const [chatRooms, loading, error] = useCollectionData(query, {
+    idField: 'id',
+  });
 
-  useEffect(() => {
-    dispatch(fetchPotentialMatches(currentUser.id));
-  }, []);
-
-  /*
-  - used for grouping messages by sender.
-  - returns an object that stores sender ids as keys and an array of messages from that sender as values:
-  {
-    senderId1: [ { message1 }, { message2 }, ... ],
-    senderId2: [ { message1 }, { message2 }, ... ],
-  }
-  */
-  const getMessageStore = () => {
-    const messageStore = {};
-    if (_messages && _messages.length) {
-      _messages.forEach((message) => {
-        const { from } = message;
-        messageStore[from]
-          ? messageStore[from].push(message)
-          : (messageStore[from] = [message]);
-      });
-    }
-    return messageStore;
+  const handlePress = (id) => {
+    // console.log("ChatRoom documentID in handlePress >>>>", id)
+    navigation.navigate('ChatRoom', { docId: id });
   };
-
-  /*
-  - used for retrieving user objects by their ids.
-  - returns an object that stores ids as keys and user objects as values:
-  {
-    userId1: { user object },
-    userId2: { user object },
-  }
-  */
-  const getMatchesStore = () => {
-    const matchesStore = {};
-    if (matches && matches.length) {
-      matches.forEach((match) => {
-        const { id } = match;
-        matchesStore[id] = match;
-      });
-    }
-    return matchesStore;
-  };
-
-  const messageStore = getMessageStore();
-  const matchesStore = getMatchesStore();
-
-  /*
-  - used for retrieving array of messages to map over in render method.
-  - returns an array of objects storing unique sender ids as keys and message text as values:
-  [
-    { senderId: str, text: str },
-    { senderId: str, text: str },
-  ]
-  */
-  const getMessages = () => {
-    const senderIds = Object.keys(messageStore);
-    const messages = senderIds.map((id) => {
-      const { text } = messageStore[id][0];
-      return {
-        senderId: id,
-        text,
-      };
-    });
-    return messages;
-  };
-
-  const handlePress = (match) => {
-    navigation.navigate('ChatRoom', {
-      match,
-    });
-  };
-
-  const messages = getMessages();
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
-        {/* <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Chat Feed</Text>
-        </View> */}
-        {messages &&
-          messages.map((message, index) => {
-            const match = matchesStore[message.senderId];
-            return match ? (
+        {loading ? (
+          <></>
+        ) : (
+          chatRooms &&
+          chatRooms.map((chatRoom) => {
+            const { id, latestMessage } = chatRoom;
+            return (
               <ChatFeedRow
-                key={index}
+                key={id}
                 avatar={null}
-                firstName={match.firstName}
-                lastName={match.lastName}
-                latestMessage={message.text}
-                handlePress={() => handlePress(match)}
+                firstName={'Placeholder'}
+                lastName={'X'}
+                latestMessage={
+                  latestMessage ? latestMessage.text : 'Start chatting!'
+                }
+                handlePress={() => handlePress(id)}
               />
-            ) : (
-              <></>
             );
-          })}
+          })
+        )}
       </ScrollView>
     </SafeAreaView>
   );
