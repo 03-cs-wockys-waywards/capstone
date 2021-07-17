@@ -42,12 +42,14 @@ export default function ChatRoomScreen({ route }) {
 
   const sendMessage = () => {
     const { id } = currentUser;
+    const data = {
+      from: id,
+      text,
+      createdAt: new Date()
+    }
     docRef.update({
-      messages: firebase.firestore.FieldValue.arrayUnion({
-        from: id,
-        text,
-        createdAt: new Date(),
-      }),
+      messages: firebase.firestore.FieldValue.arrayUnion(data),
+      latestMessage: data
     });
     setText("");
   };
