@@ -42,6 +42,12 @@ export default function UpdatePronouns({ user, setUser }) {
         onClose={() => setOpen(false)}
         listMode="SCROLLVIEW"
         maxHeight={100}
+        labelProps={{
+          numberOfLines: 1,
+        }}
+        mode="BADGE"
+        showBadgeDot={false}
+        badgeColors={['#E5F4D4', '#F4ECD4']}
       />
     </View>
   )
