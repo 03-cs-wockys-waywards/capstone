@@ -1,4 +1,5 @@
 import React from 'react'
+import { TouchableOpacity } from 'react-native'
 import { View, Text, StyleSheet } from 'react-native'
 
 export const SmallPill = ({ text, backgroundColor }) => {
@@ -14,6 +15,18 @@ export const MediumPill = ({ text, backgroundColor }) => {
     <View style={styles.medInterest} backgroundColor={backgroundColor}>
       <Text style={styles.medInterestText}>{text}</Text>
     </View>
+  )
+}
+
+export const MediumInterestButton = ({ onPress, text, backgroundColor }) => {
+  const bgColor = {
+    backgroundColor,
+  }
+
+  return (
+    <TouchableOpacity onPress={onPress} style={[styles.medInterest, bgColor]}>
+      <Text style={styles.medInterestText}>{text}</Text>
+    </TouchableOpacity>
   )
 }
 

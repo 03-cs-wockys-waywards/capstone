@@ -16,8 +16,8 @@ export default function UpdateInterests({ user, setUser }) {
   }, [])
 
   return (
-    <View style={{ zIndex: -5 }}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.row}>
         <Text style={styles.label}>Interests</Text>
         <InterestsModal user={user} setUser={setUser} />
       </View>
@@ -34,10 +34,15 @@ export default function UpdateInterests({ user, setUser }) {
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    flex: 1,
+    zIndex: -5,
+    justifyContent: 'center',
+    marginHorizontal: 60,
+  },
+  row: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 60,
   },
   interestsContainer: {
     flexGrow: 1,
@@ -45,16 +50,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 60,
     marginBottom: '10%',
   },
   label: {
     fontSize: 16,
-    letterSpacing: 0.125,
     fontWeight: '500',
     lineHeight: 19,
     marginTop: 15,
-    marginBottom: 15,
     paddingTop: 3,
   },
 })

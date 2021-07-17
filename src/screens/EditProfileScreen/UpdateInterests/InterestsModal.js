@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
-  SafeAreaView,
-  View,
   Text,
   TouchableOpacity,
   Modal,
-  FlatList,
+  SafeAreaView,
   StyleSheet,
+  ScrollView,
+  View,
 } from 'react-native'
-//import styles from './style'
 import allInterests from '../../SetUpProfileScreens/ProfileStepTwo/interestsArray'
-import { MediumPill } from '../../../components/SmallPill'
-import { getLightColorsArray } from '../../../helpers/getColorsArray'
-import { lightColors } from '../../../helpers/colors.js'
+import { MediumInterestButton } from '../../../components/SmallPill'
 
 export default function InterestsModal({ user, setUser }) {
   const [interests, setInterests] = useState(user.interests)
   const [modalVisible, setModalVisible] = useState(false)
-  const [colors, setColors] = useState([])
-
-  useEffect(() => {
-    const colors = getLightColorsArray(lightColors, allInterests.length)
-    setColors(colors)
-  }, [])
 
   const handlePress = (item) => {
     if (interests.includes(item)) {
@@ -39,35 +30,38 @@ export default function InterestsModal({ user, setUser }) {
     }
   }
 
-  const renderItem = ({ item, index }) => {
-    return (
-      <TouchableOpacity onPress={() => handlePress(item)}>
-        <MediumPill
-          key={index}
-          text={item}
-          backgroundColor={interests.includes(item) ? '#EAB803' : colors[index]}
-        />
-      </TouchableOpacity>
-    )
-  }
-
   return (
-    <>
+    <SafeAreaView>
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
-        <TouchableOpacity
-          style={[styles.button, styles.buttonClose]}
-          onPress={() => handleAddInterests()}
-        >
-          <Text style={styles.textStyle}>Update my interests</Text>
-        </TouchableOpacity>
-        <FlatList
-          numColumns={3}
-          horizontal={false}
-          columnWrapperStyle={styles.row}
-          data={allInterests}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Update your interests below</Text>
+            <Text style={styles.subtitle}>
+              Selected {interests.length}/5 interests
+            </Text>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => handleAddInterests()}
+            >
+              <Text style={styles.textStyle}>Confirm</Text>
+            </TouchableOpacity>
+            <ScrollView
+              style={styles.flatlist}
+              contentContainerStyle={styles.flatListContainer}
+            >
+              {allInterests.map((item, index) => (
+                <MediumInterestButton
+                  key={index}
+                  onPress={() => handlePress(item)}
+                  text={item}
+                  backgroundColor={
+                    interests.includes(item) ? '#C2D831' : '#F0F5CC'
+                  }
+                />
+              ))}
+            </ScrollView>
+          </View>
+        </View>
       </Modal>
 
       <TouchableOpacity
@@ -76,29 +70,24 @@ export default function InterestsModal({ user, setUser }) {
       >
         <Text style={styles.textStyle}>+ / -</Text>
       </TouchableOpacity>
-    </>
+    </SafeAreaView>
   )
 }
 
 export const styles = StyleSheet.create({
-  interestsContainer: {
-    flexGrow: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 60,
-  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 23,
   },
   modalView: {
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
+    paddingHorizontal: 5,
+    paddingVertical: 35,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -119,9 +108,9 @@ export const styles = StyleSheet.create({
     backgroundColor: '#132077',
   },
   buttonClose: {
-    backgroundColor: '#2788EA',
+    backgroundColor: '#F81A51',
     marginBottom: 20,
-    marginTop: '20%',
+    paddingHorizontal: 50,
   },
   textStyle: {
     color: 'white',
@@ -131,14 +120,20 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 10,
     textAlign: 'center',
+    fontFamily: 'Lato_300Light_Italic',
+    fontSize: 20,
+    letterSpacing: 0.2,
   },
-  row: {
-    flex: 1,
+  subtitle: {
+    marginBottom: 10,
+  },
+  flatListContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignContent: 'flex-start',
-    marginHorizontal: 15,
+    flexDirection: 'row',
+    margin: 5,
   },
 })
