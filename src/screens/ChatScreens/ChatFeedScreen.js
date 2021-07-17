@@ -35,10 +35,9 @@ export default function ChatFeedScreen({ navigation }) {
   });
 
   const handlePress = (id) => {
-    console.log("ChatRoom documentID in handlePress >>>>", id)
+    // console.log("ChatRoom documentID in handlePress >>>>", id)
+    navigation.navigate("ChatRoom", { docId: id });
   }
-
-  // console.log(chatRooms)
 
   return (
     <SafeAreaView style={styles.container}>

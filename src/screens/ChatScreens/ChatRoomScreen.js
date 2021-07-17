@@ -18,46 +18,49 @@ import {
 import ChatBubble from '../../components/ChatBubble';
 import styles from './styles';
 
-export default function ChatFeedScreen({ route }) {
+export default function ChatRoomScreen({ route }) {
   console.log("----------------  IN CHAT ROOM  ----------------");
-  const { match } = route.params;
-  const user = useSelector((state) => state.user);
-  const { toUser, fromUser } = useSelector((state) => state.messages);
-  // const messages = [...toUser, ...fromUser];
-  const dispatch = useDispatch();
-  const [messages, setMessages] = useState([]);
-  const [text, setText] = useState('');
+  const { docId } = route.params;
+  console.log("documentId in ChatRoom >>>>>", docId);
 
-  const messagesRef = firebase.firestore().collection('messages');
+  // const { match } = route.params;
+  // const user = useSelector((state) => state.user);
+  // const { toUser, fromUser } = useSelector((state) => state.messages);
+  // // const messages = [...toUser, ...fromUser];
+  // const dispatch = useDispatch();
+  // const [messages, setMessages] = useState([]);
+  // const [text, setText] = useState('');
 
-  useEffect(() => {
-    const unsubscribe = async () => {
-      await dispatch(fetchMessagesToUser(user.id, match.id));
-      await dispatch(fetchMessagesFromUser(user.id, match.id));
-      setMessages([ ...toUser, ...fromUser ]);
-    }
-    return () => unsubscribe();
-  }, [messages]);
+  // const messagesRef = firebase.firestore().collection('messages');
+
+  // useEffect(() => {
+  //   const unsubscribe = async () => {
+  //     await dispatch(fetchMessagesToUser(user.id, match.id));
+  //     await dispatch(fetchMessagesFromUser(user.id, match.id));
+  //     setMessages([ ...toUser, ...fromUser ]);
+  //   }
+  //   return () => unsubscribe();
+  // }, [messages]);
 
   // console.log("messages >>>>>", messages);
 
-  const sendMessage = async () => {
-    const { id, profilePicture } = user;
+  // const sendMessage = async () => {
+  //   const { id, profilePicture } = user;
 
-    await messagesRef.add({
-      text,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      profilePicture,
-      from: id,
-      to: match.id,
-    });
+  //   await messagesRef.add({
+  //     text,
+  //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //     profilePicture,
+  //     from: id,
+  //     to: match.id,
+  //   });
 
-    setText('');
-  };
+  //   setText('');
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
+      {/* <ScrollView style={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <Text
             style={styles.headerText}
@@ -75,7 +78,7 @@ export default function ChatFeedScreen({ route }) {
       <TextInput onChangeText={setText} value={text} placeholder="Message" />
       <TouchableOpacity onPress={() => sendMessage()}>
         <Text>Send</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </SafeAreaView>
   );
 }
