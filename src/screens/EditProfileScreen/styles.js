@@ -73,7 +73,7 @@ export default StyleSheet.create({
   button: {
     height: 48,
     borderRadius: 45,
-    backgroundColor: '#132077',
+    backgroundColor: '#F81A51',
     width: 250,
     alignSelf: 'center',
     alignItems: 'center',
