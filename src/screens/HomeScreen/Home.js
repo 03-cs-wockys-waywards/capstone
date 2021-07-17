@@ -18,45 +18,47 @@ const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
 };
 
-const userChatIcon = (route, navigation) => {
+const openChatRoom = (route, navigation) => {
   let docId;
   const { user: match } = route.params;
   const currentUserId = firebase.auth().currentUser.uid;
   const messagesRef = firebase.firestore().collection("messages");
-  const query = currentUserId
-    ? messagesRef
-        .where(`users.${currentUserId}`, "==", true)
-        .where(`users.${match.id}`, "==", true)
-    : null;
-  const [value, loading, error] = useCollectionDataOnce(query, {
-    idField: "id",
-  });
-  if (!loading && value.length) {
-    const [chatRoom] = value;
-    docId = chatRoom.id;
-  } else {
-    const chatRoom = messagesRef.doc();
-    chatRoom.set({
-      users: {
-        [match.id]: true,
-        [currentUserId]: true,
-      },
+  messagesRef
+    .where(`users.${currentUserId}`, "==", true)
+    .where(`users.${match.id}`, "==", true)
+    .get()
+    .then((chatRoom) => {
+      if (chatRoom.exists) {
+        docId = chatRoom.id;
+        console.log("docId in if >>>>>", docId);
+      } else {
+        const chatRoom = messagesRef.doc();
+        chatRoom.set({
+          users: {
+            [match.id]: true,
+            [currentUserId]: true,
+          },
+        });
+        docId = chatRoom.id;
+        console.log("docId in else >>>>", docId);
+      }
+    })
+    .then(() => {
+      console.log("docId in last .then >>>>", docId);
+      navigation.navigate("Chat Room", {
+        match,
+        docId,
+      });
     });
-    docId = chatRoom.id;
-  }
+};
 
-  console.log("chatRoomId in userChatIcon >>>>>", docId);
+const userChatIcon = (route, navigation) => {
   return (
     <Icon
       type="material-community"
       name="message-outline"
       size={25}
-      onPress={() =>
-        navigation.navigate("Chat Room", {
-          match,
-          docId,
-        })
-      }
+      onPress={() => openChatRoom(route, navigation)}
     />
   );
 };

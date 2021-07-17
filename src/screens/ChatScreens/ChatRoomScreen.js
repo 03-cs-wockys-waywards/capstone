@@ -54,7 +54,7 @@ export default function ChatRoomScreen({ route }) {
     setText("");
   };
 
-  console.log("docId>>>>>", docId)
+  console.log("docId in ChatRoom >>>>>", docId)
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
