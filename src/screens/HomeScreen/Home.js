@@ -1,11 +1,13 @@
 import React from 'react'
-import { Text, Image, StyleSheet } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack'
 import UsersList from './UsersList'
 import SingleUserProfile from '../SingleUserProfileScreen/SingleUserProfile'
 import headerLogo from '../../../assets/images/header-logo.png'
 import ChatRoomScreen from "../ChatScreens/ChatRoomScreen";
+import { firebase } from "../../firebaseSpecs/config";
+import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
 
 const HomeStack = createStackNavigator()
 
@@ -17,7 +19,22 @@ const renderName = (route) => {
 }
 
 const userChatIcon = (route, navigation) => {
+  let docId;
   const { user: match } = route.params;
+  const currentUserId = firebase.auth().currentUser.uid;
+  const messagesRef = firebase.firestore().collection("messages");
+  const query = currentUserId
+  ? messagesRef.where(`users.${currentUserId}`, "==", true).where(`users.${match.id}`, "==", true)
+  : null;
+const [value, loading, error] = useCollectionDataOnce(query, {
+  idField: "id"
+});
+if (!loading) {
+  const [ chatRoom ] = value;
+  docId = chatRoom.id
+} 
+
+console.log('chatRoomId in userChatIcon >>>>>', docId)
   return (
     <Icon
       type="material-community"
@@ -26,6 +43,7 @@ const userChatIcon = (route, navigation) => {
       onPress={() =>
         navigation.navigate("Chat Room", {
           match,
+          docId
         })
       }
     />
