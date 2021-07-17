@@ -23,9 +23,7 @@ export default function UpdateInterests({ user, setUser }) {
       </View>
       <View style={styles.interestsContainer}>
         {interests.map((interest, idx) => {
-          return (
-            <Pill key={idx} text={interest} backgroundColor={colors[idx]} />
-          )
+          return <Pill key={idx} text={interest} backgroundColor={'#FEDEE6'} />
         })}
       </View>
     </View>

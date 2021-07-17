@@ -156,10 +156,10 @@ export const styles = StyleSheet.create({
     backgroundColor: '#2788EA',
   },
   buttonOpen: {
-    backgroundColor: '#132077',
+    backgroundColor: '#2788EA',
   },
   buttonClose: {
-    backgroundColor: '#E8073F',
+    backgroundColor: '#F81A51',
   },
   textStyle: {
     fontSize: 16,

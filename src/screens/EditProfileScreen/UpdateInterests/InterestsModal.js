@@ -68,7 +68,7 @@ export default function InterestsModal({ user, setUser }) {
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.textStyle}>+ / -</Text>
+        <Text style={styles.buttonOpen}>+ / -</Text>
       </TouchableOpacity>
     </SafeAreaView>
   )
@@ -105,7 +105,11 @@ export const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#132077',
+    backgroundColor: '#C2D831',
+    textAlign: 'center',
+    fontSize: 15,
+    letterSpacing: 0.5,
+    paddingHorizontal: 10,
   },
   buttonClose: {
     backgroundColor: '#F81A51',
