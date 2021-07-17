@@ -34,28 +34,32 @@ export default function ChatFeedScreen({ navigation }) {
     idField: "id"
   });
 
-  console.log(chatRooms)
+  const handlePress = (id) => {
+    console.log("ChatRoom documentID in handlePress >>>>", id)
+  }
+
+  // console.log(chatRooms)
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
-        {/* {threads.map((thread, index) => {
-            const matchId = thread.users.filter((user) => user.id !== currentUser.id)[0];
-            const match = matchesStore[matchId];
-            const { latestMessage } = thread;
-            return match ? (
-              <ChatFeedRow
-                key={index}
-                avatar={null}
-                firstName={match.firstName}
-                lastName={match.lastName}
-                latestMessage={latestMessage.text}
-                handlePress={() => handlePress(thread, match)}
-              />
-            ) : ( 
-            <></>
-             )
-          })} */}
+      {loading ? (
+        <></>
+      ) : (
+        chatRooms.map((chatRoom) => {
+          const { id, latestMessage } = chatRoom;
+          return (
+            <ChatFeedRow
+              key={id}
+              avatar={null}
+              firstName={"Placeholder"}
+              lastName={"X"}
+              latestMessage={latestMessage.text}
+              handlePress={() => handlePress(id)}
+            />
+          )
+        })
+      )}
       </ScrollView>
     </SafeAreaView>
   );
