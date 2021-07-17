@@ -30,12 +30,14 @@ export default function ChatRoomScreen({ route }) {
   useEffect(() => {
     const messagesRef = firebase.firestore().collection('messages');
     const unsubscribe = messagesRef.doc(docId).onSnapshot((doc) => {
-      console.log("Data in useEffect >>>>>>", doc.data())
+      const { messages } = doc.data();
+      // console.log("Messages in useEffect >>>>>>", messages)
+      setMessages(messages);
     });
     return () => unsubscribe();
   }, []);
 
-  // console.log("messages >>>>>", messages);
+  console.log("Messages outside of useEffect >>>>>", messages);
 
   // const sendMessage = async () => {
   //   const { id, profilePicture } = user;
