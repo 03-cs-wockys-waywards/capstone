@@ -47,8 +47,10 @@ export default function ProfileStepOne({ navigation, route }) {
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Step 1:</Text>
-          <Text style={styles.labelText}>Who are you?</Text>
+          <Text style={styles.headerText}>Who are you?</Text>
+          <Text style={styles.subtitle}>
+            Only the first initial of your last name will be shown
+          </Text>
         </View>
         <View>
           <Text style={styles.labelText}>My name is:</Text>
@@ -99,7 +101,7 @@ export default function ProfileStepOne({ navigation, route }) {
           <EmptyCircle />
           <EmptyCircle />
           <TouchableOpacity onPress={handlePress}>
-            <Icon type="font-awesome" name="chevron-right" color="#000" />
+            <Icon type="font-awesome" name="chevron-right" color="#FBC912" />
           </TouchableOpacity>
         </View>
       </ScrollView>

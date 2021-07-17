@@ -1,10 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native'
 
+// Styles for Set Up Profile: Step Three
 export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    margin: '10%',
+    height: '100%',
+  },
+  headerContainer: {
+    justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
   noAccessMessageContainer: {
     flex: 1,
@@ -12,11 +19,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: '15%',
-  },
-  headerContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
   },
   headerText: {
     fontSize: 30,
@@ -71,7 +73,7 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '9%',
+    bottom: '7%',
   },
   modalBackground: {
     flex: 1,
@@ -89,4 +91,4 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
-});
+})

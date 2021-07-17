@@ -1,15 +1,16 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native'
 
+// Styles for Set Up Profile: Step Two
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    marginHorizontal: '5%',
+    flexDirection: 'column',
+    margin: '10%',
+    height: '100%',
   },
   headerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 41,
     marginBottom: 10,
   },
   headerTitle: {
@@ -23,6 +24,11 @@ export default StyleSheet.create({
     lineHeight: 19,
     marginTop: 15,
     marginBottom: 15,
+  },
+  subtitle: {
+    textAlign: 'center',
+    width: 250,
+    fontStyle: 'italic',
   },
   flatList: {
     marginBottom: '32%',
@@ -51,6 +57,6 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '9%',
+    bottom: '3%',
   },
-});
+})
