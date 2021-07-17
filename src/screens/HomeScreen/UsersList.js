@@ -1,31 +1,44 @@
-import React, { Component } from 'react'
-import { SafeAreaView, Text, ImageBackground, View } from 'react-native'
-import { ButtonGroup } from 'react-native-elements'
-import DiscoverList from './DiscoverList'
-import MatchesList from './MatchesList'
-import styles from './styles'
-import image from '../../../assets/gradient.png'
+import React, { Component } from 'react';
+import { SafeAreaView, Text, ImageBackground, View } from 'react-native';
+import { ButtonGroup } from 'react-native-elements';
+import { firebase } from '../../firebaseSpecs/config';
+import TutorialModal from '../../components/TutorialModal';
+import DiscoverList from './DiscoverList';
+import MatchesList from './MatchesList';
+import styles from './styles';
+import image from '../../../assets/gradient.png';
 
 export default class UsersList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       selectedIndex: 0,
+      modalVisible: false,
+    };
+    this.updateIndex = this.updateIndex.bind(this);
+  }
+
+  componentDidMount() {
+    const creationTime = firebase.auth().currentUser.metadata.creationTime;
+    const lastSignInTime = firebase.auth().currentUser.metadata.lastSignInTime;
+    console.log('Creation Time', creationTime);
+    console.log('Last SignIn Time', lastSignInTime);
+    if (creationTime === lastSignInTime) {
+      this.setState({ modalVisible: true });
     }
-    this.updateIndex = this.updateIndex.bind(this)
   }
 
   updateIndex(selectedIndex) {
-    this.setState({ selectedIndex })
+    this.setState({ selectedIndex });
   }
 
   render() {
-    const { navigation } = this.props
-    const { selectedIndex } = this.state
+    const { navigation } = this.props;
+    const { selectedIndex, modalVisible } = this.state;
 
-    const buttonOne = () => <Text>Discover</Text>
-    const buttonTwo = () => <Text>Matches</Text>
-    const buttons = [{ element: buttonOne }, { element: buttonTwo }]
+    const buttonOne = () => <Text>Discover</Text>;
+    const buttonTwo = () => <Text>Matches</Text>;
+    const buttons = [{ element: buttonOne }, { element: buttonTwo }];
 
     return (
       <SafeAreaView style={styles.container}>
@@ -50,6 +63,11 @@ export default class UsersList extends Component {
           }}
         />
         <ImageBackground source={image} style={styles.image}>
+          <TutorialModal
+            modalVisible={modalVisible}
+            handleRequestClose={() => console.log('handleRequestClose')}
+            closeModal={() => console.log('closeModal')}
+          />
           <View style={styles.flatListContainer}>
             {selectedIndex === 0 ? (
               <DiscoverList navigation={navigation} />
@@ -59,6 +77,6 @@ export default class UsersList extends Component {
           </View>
         </ImageBackground>
       </SafeAreaView>
-    )
+    );
   }
 }
