@@ -53,7 +53,7 @@ export default function ChatFeedScreen({ navigation }) {
               avatar={null}
               firstName={"Placeholder"}
               lastName={"X"}
-              latestMessage={latestMessage.text}
+              latestMessage={latestMessage ? latestMessage.text : 'Start chatting!'}
               handlePress={() => handlePress(id)}
             />
           )
