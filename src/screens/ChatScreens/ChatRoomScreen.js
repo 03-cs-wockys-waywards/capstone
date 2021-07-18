@@ -15,19 +15,21 @@ import ChatBubble from "../../components/ChatBubble";
 import styles from "./styles";
 
 export default function ChatRoomScreen({ route }) {
-  console.log("----------------  IN CHAT ROOM  ----------------");
+  console.log('---------- IN CHAT ROOM -----------')
   const { docId } = route.params;
   // const { match } = route.params;
   const currentUser = useSelector((state) => state.user);
   const [messages, setMessages] = useState([]);
+  const [displayData, setDisplayData] = useState({});
   const [loading, setLoading] = useState(true);
   const docRef = firebase.firestore().collection("messages").doc(docId);
   const [text, setText] = useState("");
 
   useEffect(() => {
     const unsubscribe = docRef.onSnapshot((doc) => {
-      const { messages } = doc.data();
+      const { messages, displayData } = doc.data();
       setMessages(messages);
+      setDisplayData(displayData);
       if (loading) {
         setLoading(false);
       }
@@ -49,7 +51,8 @@ export default function ChatRoomScreen({ route }) {
     setText("");
   };
 
-  console.log("docId in ChatRoom >>>>>", docId)
+  console.log('displayData >>>>>>', displayData)
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>

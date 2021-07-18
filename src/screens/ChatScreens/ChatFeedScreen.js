@@ -2,15 +2,10 @@ import { firebase } from "../../firebaseSpecs/config";
 import "firebase/firestore";
 import "firebase/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchPotentialMatches,
-  setMatches,
-} from "../../store/potentialMatchesReducer";
+import React from "react";
+import { useSelector } from "react-redux";
 import { SafeAreaView, ScrollView, View, Text } from "react-native";
 import ChatFeedRow from "../../components/ChatFeedRow";
-import ChatRoomScreen from "./ChatRoomScreen";
 import styles from "./styles";
 
 // THIS ISN'T WORKING & I CANT FIGURE OUT WHY
