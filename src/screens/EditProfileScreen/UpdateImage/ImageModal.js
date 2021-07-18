@@ -127,11 +127,12 @@ export const styles = StyleSheet.create({
     marginTop: 30,
   },
   modalView: {
+    height: '30%',
     marginVertical: '75%',
     marginHorizontal: '10%',
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    padding: '3%',
     alignItems: 'center',
     shadowColor: 'black',
     shadowOffset: { height: 2, width: 2 },
