@@ -27,30 +27,11 @@ export class DiscoverList extends Component {
     this.onRefresh = this.onRefresh.bind(this)
   }
 
-  // get current user's doc & interests
   componentDidMount() {
-    // firebase
-    //   .firestore()
-    //   .collection('users')
-    //   .doc(firebase.auth().currentUser.uid)
-    //   .get()
-    //   .then((snapshot) => {
-    //     if (snapshot.exists) {
-    //       const user = snapshot.data()
-    //       const interests = user.interests
-    //       // set interests on state
-    //       this.setState({ interests })
-    //       // set users with similar interests in the redux store
-    //       this.props.setInterests(interests)
-    //     } else {
-    //       console.log('user does not exist')
-    //     }
-    //   })
+    // get list of users with similar interests
     this.props.getUsers()
     this.setState({ isFetching: false })
   }
-
-  fetchInterests
 
   renderItem({ item }) {
     return <UserRow item={item} navigation={this.props.navigation} />
@@ -61,9 +42,7 @@ export class DiscoverList extends Component {
   }
 
   onRefresh() {
-    //console.log('BEFORE fetch on refresh: ', this.state.isFetching)
     this.setState({ isFetching: true }, () => {
-      //console.log('DURING fetch on refresh: ', this.state.isFetching)
       this.props.getUsers()
       this.setState({ isFetching: false })
     })
@@ -74,8 +53,6 @@ export class DiscoverList extends Component {
     const { user, users } = this.props
     // filter out the current user from discover list
     const discoverUsers = users.filter((person) => person.id !== user.id)
-
-    //console.log('fetch on refresh in RENDER: ', this.state.isFetching)
 
     return (
       <FlatList
@@ -97,7 +74,6 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-  // setInterests: (interests) => dispatch(fetchUsersWithInterests(interests)),
   getUsers: () => dispatch(fetchUsersWithInterests()),
 })
 
