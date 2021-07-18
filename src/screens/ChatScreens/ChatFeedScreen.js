@@ -38,6 +38,11 @@ export default function ChatFeedScreen({ navigation }) {
     idField: "id",
   });
 
+  const getMatch = (displayData) => {
+    const [matchId] = Object.keys(displayData).filter((id) => id !== currentUser.id);
+    return displayData[matchId];
+  }
+
   const handlePress = (id) => {
     navigation.navigate("ChatRoom", { docId: id });
   };
@@ -52,16 +57,16 @@ export default function ChatFeedScreen({ navigation }) {
           chatRooms
             .filter((chatRoom) => chatRoom.messages)
             .map((chatRoom) => {
-              const { id, latestMessage } = chatRoom;
+              const { id, latestMessage, displayData } = chatRoom;
+              const match = getMatch(displayData);
+              const { firstName, lastName, avatar } = match;
               return (
                 <ChatFeedRow
                   key={id}
-                  avatar={null}
-                  firstName={"Placeholder"}
-                  lastName={"X"}
-                  latestMessage={
-                    latestMessage ? latestMessage.text : "Start chatting!"
-                  }
+                  avatar={avatar}
+                  firstName={firstName}
+                  lastName={lastName}
+                  latestMessage={latestMessage.text}
                   handlePress={() => handlePress(id)}
                 />
               );

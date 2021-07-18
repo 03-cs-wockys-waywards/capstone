@@ -21,7 +21,6 @@ const renderName = (route) => {
 const openChatRoom = (route, navigation, currentUser) => {
   let docId;
   const { user: match } = route.params;
-  // const currentUserId = firebase.auth().currentUser.uid;
   const messagesRef = firebase.firestore().collection("messages");
   messagesRef
     .where(`users.${currentUser.id}`, "==", true)
@@ -34,7 +33,6 @@ const openChatRoom = (route, navigation, currentUser) => {
         });
       } else {
         const chatRoom = messagesRef.doc();
-        console.log('match in openChatRoom >>>>>', match)
         chatRoom.set({
           users: {
             [match.id]: true,
@@ -48,8 +46,8 @@ const openChatRoom = (route, navigation, currentUser) => {
             },
             [currentUser.id]: {
               firstName: currentUser.firstName,
-              lastName: match.lastName,
-              avatar: match.profilePicture
+              lastName: currentUser.lastName,
+              avatar: currentUser.profilePicture
             }
           }  
         });
