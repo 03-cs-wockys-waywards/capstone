@@ -62,7 +62,9 @@ export class App extends Component {
       loading: true,
       isLoggedIn: false,
       fontsLoaded: false,
-    };
+    }
+
+    this.loadFontsAsync = this.loadFontsAsync.bind(this)
   }
 
   async loadFontsAsync() {
