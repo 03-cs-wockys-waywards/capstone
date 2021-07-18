@@ -184,7 +184,7 @@ export default function AddProfilePic({ navigation, route }) {
             type="ionicon"
             name="camera-outline"
             color="#D1E265"
-            size="28"
+            size={28}
             onPress={() => useCamera()}
           />
 
@@ -194,7 +194,7 @@ export default function AddProfilePic({ navigation, route }) {
             type="ionicon"
             name="images-outline"
             color="#D1E265"
-            size="28"
+            size={28}
             onPress={() => pickImage()}
           />
         </View>

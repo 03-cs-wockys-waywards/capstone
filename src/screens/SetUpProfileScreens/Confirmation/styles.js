@@ -1,8 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native'
 
+// Styles for Set Up Confirmation Page
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
+    paddingTop: StatusBar.currentHeight,
   },
   scrollContainer: {
     marginTop: '10%',
@@ -15,10 +17,19 @@ export default StyleSheet.create({
     marginHorizontal: '10%',
   },
   headerText: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: '600',
     lineHeight: 36,
     marginBottom: 5,
+    fontFamily: 'Lato_900Black',
+    letterSpacing: 0.5,
+    color: '#1575D4',
+  },
+  subtitle: {
+    textAlign: 'center',
+    width: 300,
+    fontFamily: 'Lato_300Light_Italic',
+    fontSize: 16,
   },
   subheadingText: {
     fontSize: 18,
@@ -38,14 +49,9 @@ export default StyleSheet.create({
     lineHeight: 30,
     paddingLeft: 15,
   },
-  labelText: {
-    fontSize: 16,
-    lineHeight: 19,
-    marginTop: 15,
-    marginBottom: 15,
-  },
   profilePreviewContainer: {
     margin: 15,
+    marginBottom: 25,
   },
   image: {
     alignItems: 'center',
@@ -74,21 +80,26 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
-    height: 48,
+    height: 45,
     borderRadius: 45,
-    backgroundColor: '#136360',
+    backgroundColor: '#4B9CED',
     width: 200,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: 'black',
+    shadowOffset: { height: 2, width: 2 },
+    shadowOpacity: 0.3,
+    alignSelf: 'center',
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: 17,
+    fontFamily: 'Lato_700Bold_Italic',
+    letterSpacing: 0.4,
   },
   confirmButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginVertical: '5%',
   },
-});
+})

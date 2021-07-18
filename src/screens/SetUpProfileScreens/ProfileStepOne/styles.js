@@ -7,6 +7,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     height: '100%',
     justifyContent: 'center',
+    paddingTop: StatusBar.currentHeight,
   },
   headerContainer: {
     justifyContent: 'center',
