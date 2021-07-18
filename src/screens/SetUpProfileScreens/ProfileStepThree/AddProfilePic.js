@@ -80,6 +80,7 @@ export default function AddProfilePic({ navigation, route }) {
     setDefaultPhotoBool(true);
     setImageOption('default');
     dispatch(editUserInfo({ profilePicture: '' }));
+    setTimeout(() => navigateToNext(), 500);
   };
 
   const uploadPicture = async () => {
@@ -170,7 +171,13 @@ export default function AddProfilePic({ navigation, route }) {
         <Text style={styles.buttonText}>Choose from Gallery</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => useDefaultPhoto()}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          useDefaultPhoto();
+          // navigateToNext();
+        }}
+      >
         <Text style={styles.buttonText}>Use Default Photo</Text>
       </TouchableOpacity>
 
