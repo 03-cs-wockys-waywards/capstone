@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,60 +6,85 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
-} from 'react-native'
-import { Camera } from 'expo-camera'
-import * as ImagePicker from 'expo-image-picker'
-import { firebase } from '../../../firebaseSpecs/config'
+} from 'react-native';
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
 
-export default function ImageModal({ userId, setUserPic }) {
-  const [modalVisible, setModalVisible] = useState(false)
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tingle-capstone/upload';
+
+export default function ImageModal({ setUserPic }) {
+  const [modalVisible, setModalVisible] = useState(false);
 
   const useCamera = async () => {
-    const { status } = await Camera.requestPermissionsAsync()
+    const { status } = await Camera.requestPermissionsAsync();
 
     if (status === 'granted') {
       const image = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
-        // aspect: [1, 1],
-        quality: 0.5,
-      })
+        aspect: [4, 3],
+        base64: true,
+      });
 
       if (!image.cancelled) {
-        setUserPic(image.uri)
-        uploadPicture(image.uri)
+        let base64Img = `data:image/jpg;base64,${image.base64}`;
+
+        let data = {
+          file: base64Img,
+          upload_preset: 'iy4cnozl',
+        };
+
+        fetch(CLOUDINARY_URL, {
+          body: JSON.stringify(data),
+          headers: {
+            'content-type': 'application/json',
+          },
+          method: 'POST',
+        })
+          .then(async (r) => {
+            let data = await r.json();
+            setUserPic(data.url);
+          })
+          .catch((err) => console.log(err));
       }
     }
-    setModalVisible(false)
-  }
+    setModalVisible(false);
+  };
 
   const useLibrary = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (status === 'granted') {
       const image = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        // aspect: [1, 1],
-        quality: 0.5,
-      })
+        aspect: [4, 3],
+        base64: true,
+      });
 
       if (!image.cancelled) {
-        setUserPic(image.uri)
-        uploadPicture(image.uri)
+        let base64Img = `data:image/jpg;base64,${image.base64}`;
+
+        let data = {
+          file: base64Img,
+          upload_preset: 'iy4cnozl',
+        };
+
+        fetch(CLOUDINARY_URL, {
+          body: JSON.stringify(data),
+          headers: {
+            'content-type': 'application/json',
+          },
+          method: 'POST',
+        })
+          .then(async (r) => {
+            let data = await r.json();
+            setUserPic(data.url);
+          })
+          .catch((err) => console.log(err));
       }
     }
-    setModalVisible(false)
-  }
-
-  // upload local uri to firebase storage to create a viable url
-  const uploadPicture = async (image) => {
-    const uri = image
-    const childPath = `profile/${userId}`
-    const response = await fetch(uri)
-    const blob = await response.blob()
-
-    firebase.storage().ref().child(childPath).put(blob)
-  }
+    setModalVisible(false);
+  };
 
   return (
     <View>
@@ -68,7 +93,7 @@ export default function ImageModal({ userId, setUserPic }) {
           <Pressable
             style={styles.button}
             onPress={() => {
-              useCamera()
+              useCamera();
             }}
           >
             <Text style={styles.textStyle}>Take Picture</Text>
@@ -91,7 +116,7 @@ export default function ImageModal({ userId, setUserPic }) {
         <Text style={styles.textStyle}>Change Profile Picture</Text>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 export const styles = StyleSheet.create({
@@ -147,4 +172,4 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-})
+});
