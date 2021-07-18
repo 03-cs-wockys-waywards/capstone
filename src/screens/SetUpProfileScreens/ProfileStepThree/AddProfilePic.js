@@ -84,6 +84,7 @@ export default function AddProfilePic({ navigation, route }) {
     setImageOption('default')
     setImage(defaultPhoto)
     dispatch(editUserInfo({ profilePicture: defaultPhoto }))
+    navigateToNext()
   }
 
   const uploadPicture = async () => {
@@ -220,7 +221,7 @@ export default function AddProfilePic({ navigation, route }) {
           <TouchableOpacity
             onPress={() => {
               setLoading(true)
-              if (imageOption === '') {
+              if (image === null) {
                 alert(
                   'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
                 )
