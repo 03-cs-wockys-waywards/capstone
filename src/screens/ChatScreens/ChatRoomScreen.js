@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebaseSpecs/config";
 import "firebase/firestore";
 import "firebase/auth";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchMessagesToUser,
-  fetchMessagesFromUser,
-} from "../../store/messagesReducer";
+import { useSelector } from "react-redux";
 import {
   SafeAreaView,
   ScrollView,
@@ -23,7 +19,6 @@ export default function ChatRoomScreen({ route }) {
   const { docId } = route.params;
   // const { match } = route.params;
   const currentUser = useSelector((state) => state.user);
-  // const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const docRef = firebase.firestore().collection("messages").doc(docId);
@@ -37,7 +32,12 @@ export default function ChatRoomScreen({ route }) {
         setLoading(false);
       }
     });
-    return () => unsubscribe();
+    const unsubscribeAndDelete = () => {
+      unsubscribe();
+      docRef.delete();
+    }
+    return () => messages.length ? unsubscribe() : unsubscribeAndDelete();
+    // return () => unsubscribe();
   }, []);
 
   const sendMessage = () => {
