@@ -58,12 +58,36 @@ export default function AddProfilePic({ navigation, route }) {
       allowsEditing: true,
       aspect: [4, 3],
       //quality: 0.5,
+      base64: true,
     })
 
     if (!result.cancelled) {
-      dispatch(editUserInfo({ profilePicture: result.uri }))
-      setImage(result.uri)
+      // dispatch(editUserInfo({ profilePicture: result.uri }))
+      // setImage(result.uri)
+      setSelectedImage({ localUri: result.uri })
       setImageOption('camera')
+      let base64Img = `data:image/jpg;base64,${result.base64}`
+
+      let data = {
+        file: base64Img,
+        upload_preset: 'iy4cnozl',
+      }
+
+      fetch(CLOUDINARY_URL, {
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      })
+        .then(async (r) => {
+          let data = await r.json()
+
+          setPhotoUrl(data.url)
+        })
+        .catch((err) => console.log(err))
+
+      dispatch(editUserInfo({ profilePicture: photoUrl }))
     }
   }
 
