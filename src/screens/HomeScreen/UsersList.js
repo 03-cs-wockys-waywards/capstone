@@ -20,13 +20,13 @@ export default class UsersList extends Component {
   }
 
   componentDidMount() {
+    const { modalAppeared } = this.state.modalAppeared;
     const creationTime = firebase.auth().currentUser.metadata.creationTime;
     const lastSignInTime = firebase.auth().currentUser.metadata.lastSignInTime;
-    // console.log('Creation Time', creationTime);
-    // console.log('Last SignIn Time', lastSignInTime);
-    if (!this.state.modalAppeared && creationTime === lastSignInTime) {
-      this.setState({ modalVisible: true });
-      this.setState({ modalAppeared: true });
+    if (modalAppeared) {
+      this.setState({ modalVisible: false });
+    } else if (!modalAppeared && creationTime === lastSignInTime) {
+      this.setState({ modalVisible: true, modalAppeared: true });
     }
   }
 
@@ -67,8 +67,8 @@ export default class UsersList extends Component {
         <ImageBackground source={image} style={styles.image}>
           <TutorialModal
             modalVisible={modalVisible}
-            handleRequestClose={() => console.log('handleRequestClose')}
-            closeModal={() => console.log('closeModal')}
+            handleRequestClose={() => this.setState({ modalVisible: false })}
+            closeModal={() => this.setState({ modalVisible: false })}
           />
           <View style={styles.flatListContainer}>
             {selectedIndex === 0 ? (

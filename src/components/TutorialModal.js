@@ -1,6 +1,5 @@
 import React from 'react';
-import { Modal, View, Text, Image, Pressable, StyleSheet } from 'react-native';
-import { Lato_400Regular, Lato_700Bold } from '@expo-google-fonts/lato';
+import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
 export default function TutorialModal({
   modalVisible,
