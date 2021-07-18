@@ -82,12 +82,10 @@ export default function AddProfilePic({ navigation, route }) {
       })
         .then(async (r) => {
           let data = await r.json()
-
           setPhotoUrl(data.url)
+          dispatch(editUserInfo({ profilePicture: data.url }))
         })
         .catch((err) => console.log(err))
-
-      dispatch(editUserInfo({ profilePicture: photoUrl }))
     }
   }
 
@@ -122,12 +120,10 @@ export default function AddProfilePic({ navigation, route }) {
       })
         .then(async (r) => {
           let data = await r.json()
-
           setPhotoUrl(data.url)
+          dispatch(editUserInfo({ profilePicture: data.url }))
         })
         .catch((err) => console.log(err))
-
-      dispatch(editUserInfo({ profilePicture: photoUrl }))
     }
   }
 
