@@ -15,21 +15,28 @@ import ChatBubble from "../../components/ChatBubble";
 import styles from "./styles";
 
 export default function ChatRoomScreen({ route }) {
-  console.log('---------- IN CHAT ROOM -----------')
+  console.log("---------- IN CHAT ROOM -----------");
   const { docId } = route.params;
-  // const { match } = route.params;
   const currentUser = useSelector((state) => state.user);
   const [messages, setMessages] = useState([]);
-  const [displayData, setDisplayData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [match, setMatch] = useState({});
   const docRef = firebase.firestore().collection("messages").doc(docId);
   const [text, setText] = useState("");
+
+  const getMatch = (displayData) => {
+    const [matchId] = Object.keys(displayData).filter(
+      (id) => id !== currentUser.id
+    );
+    return displayData[matchId];
+  };
 
   useEffect(() => {
     const unsubscribe = docRef.onSnapshot((doc) => {
       const { messages, displayData } = doc.data();
+      const match = getMatch(displayData);
       setMessages(messages);
-      setDisplayData(displayData);
+      setMatch(match);
       if (loading) {
         setLoading(false);
       }
@@ -42,29 +49,28 @@ export default function ChatRoomScreen({ route }) {
     const data = {
       from: id,
       text,
-      createdAt: new Date()
-    }
+      createdAt: new Date(),
+    };
     docRef.update({
       messages: firebase.firestore.FieldValue.arrayUnion(data),
-      latestMessage: data
+      latestMessage: data,
     });
     setText("");
   };
 
-  console.log('displayData >>>>>>', displayData)
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
-        {/* <View style={styles.headerContainer}>
-          <Text
-            style={styles.headerText}
-          >{`${match.firstName} ${match.lastName[0]}.`}</Text>
-        </View> */}
         {loading ? (
           <></>
         ) : (
-          messages && messages.map((message, index) => {
+          <View>
+            <View style={styles.headerContainer}>
+              <Text
+                style={styles.headerText}
+              >{`${match.firstName} ${match.lastName[0]}.`}</Text>
+            </View>
+            {messages && messages.map((message, index) => {
             const { text, from } = message;
             return (
               <ChatBubble
@@ -73,7 +79,8 @@ export default function ChatRoomScreen({ route }) {
                 user={from === currentUser.id ? "currentUser" : "match"}
               />
             );
-          })
+          })}
+          </View>
         )}
         <TextInput onChangeText={setText} value={text} placeholder="Message" />
         <TouchableOpacity onPress={() => sendMessage()}>

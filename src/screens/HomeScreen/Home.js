@@ -56,7 +56,6 @@ const openChatRoom = (route, navigation, currentUser) => {
     })
     .then(() => {
       navigation.navigate("Chat Room", {
-        match,
         docId,
       });
     });
