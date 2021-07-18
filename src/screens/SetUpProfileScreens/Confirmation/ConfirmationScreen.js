@@ -8,7 +8,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
-import { editUserInfo } from '../../../store/userReducer'
 import { Pill } from '../../../components/Pill'
 import { firebase } from '../../../firebaseSpecs/config'
 
@@ -23,8 +22,9 @@ const colors = getLightColorsArray(lightColors, 5)
 
 export default function ConfirmationScreen({ navigation, route }) {
   const { password, defaultPhotoBool } = route.params
-  const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
+  const profilePicture = user.profilePicture
+  console.log('This is our profile picture in Confirmation: ', profilePicture)
   const [picURL, setPicURL] = useState('')
 
   const registerUser = () => {
@@ -72,25 +72,6 @@ export default function ConfirmationScreen({ navigation, route }) {
     })
   }
 
-  const loadProfilePicture = () => {
-    if (!defaultPhotoBool) {
-      const profilePicRef = firebase
-        .storage()
-        .ref()
-        .child(`profile/${user.email}`)
-
-      profilePicRef.getDownloadURL().then((url) => {
-        setPicURL(url)
-        // Save user profile photo in redux
-        dispatch(editUserInfo({ profilePicture: url }))
-      })
-    }
-  }
-
-  useEffect(() => {
-    loadProfilePicture()
-  }, [])
-
   const renderProfilePicture = () => {
     // if the user selected to use a default photo
     if (defaultPhotoBool) {
@@ -116,10 +97,10 @@ export default function ConfirmationScreen({ navigation, route }) {
           </View>
         </ImageBackground>
       )
-    } else if (picURL) {
+    } else if (profilePicture) {
       return (
         <ImageBackground
-          source={{ uri: picURL }}
+          source={{ uri: profilePicture }}
           style={styles.image}
           imageStyle={styles.imageStyle}
           resizeMode="cover"
