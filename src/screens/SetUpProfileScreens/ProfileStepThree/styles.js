@@ -3,10 +3,11 @@ import { StyleSheet, StatusBar } from 'react-native'
 // Styles for Set Up Profile: Step Three
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'column',
-    margin: '10%',
     height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerContainer: {
     justifyContent: 'center',
@@ -21,16 +22,20 @@ export default StyleSheet.create({
     marginHorizontal: '15%',
   },
   headerText: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: '600',
     lineHeight: 36,
     marginBottom: 5,
+    fontFamily: 'Lato_900Black',
+    letterSpacing: 0.5,
+    color: '#1575D4',
   },
-  labelText: {
+  subtitle: {
+    textAlign: 'center',
+    width: 250,
+    fontFamily: 'Lato_300Light_Italic',
     fontSize: 16,
-    lineHeight: 19,
-    marginTop: 15,
-    marginBottom: 15,
+    paddingBottom: 10,
   },
   noAccessMessageTitleText: {
     fontSize: 24,
@@ -44,28 +49,28 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    height: 48,
+    height: 45,
     borderRadius: 45,
-    backgroundColor: '#136360',
-    width: 250,
+    backgroundColor: '#4B9CED',
+    width: 200,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
+    shadowColor: 'black',
+    shadowOffset: { height: 2, width: 2 },
+    shadowOpacity: 0.2,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  buttonContainer: {
-    marginTop: 30,
+    fontSize: 17,
+    fontFamily: 'Lato_700Bold_Italic',
+    letterSpacing: 0.4,
   },
   image: {
     width: 300,
     height: 300,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#ececec',
+    borderRadius: 300 / 2,
+    marginBottom: 15,
   },
   progressContainer: {
     position: 'absolute',
@@ -73,7 +78,7 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '7%',
+    bottom: '0%',
   },
   modalBackground: {
     flex: 1,

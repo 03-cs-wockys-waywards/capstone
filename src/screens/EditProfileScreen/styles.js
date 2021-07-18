@@ -57,7 +57,6 @@ export default StyleSheet.create({
     marginHorizontal: 60,
     marginVertical: 5,
   },
-  dropdown: {},
   dropMenu: {
     width: '67%',
     alignSelf: 'flex-end',

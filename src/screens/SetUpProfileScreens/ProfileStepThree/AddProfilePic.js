@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {
   SafeAreaView,
+  ScrollView,
   View,
   Text,
   TouchableOpacity,
@@ -17,6 +18,8 @@ import { firebase } from '../../../firebaseSpecs/config'
 import { useDispatch, useSelector } from 'react-redux'
 import { editUserInfo } from '../../../store/userReducer'
 import styles from './styles'
+
+const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631f9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80`
 
 export default function AddProfilePic({ navigation, route }) {
   const { password } = route.params
@@ -48,8 +51,8 @@ export default function AddProfilePic({ navigation, route }) {
     setLoading(true)
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
+      // aspect: [1, 1],
+      quality: 0.5,
     })
 
     if (!result.cancelled) {
@@ -64,8 +67,8 @@ export default function AddProfilePic({ navigation, route }) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
+      // aspect: [1, 1],
+      quality: 0.5,
     })
 
     if (!result.cancelled) {
@@ -79,7 +82,8 @@ export default function AddProfilePic({ navigation, route }) {
     setLoading(false)
     setDefaultPhotoBool(true)
     setImageOption('default')
-    dispatch(editUserInfo({ profilePicture: '' }))
+    setImage(defaultPhoto)
+    dispatch(editUserInfo({ profilePicture: defaultPhoto }))
   }
 
   const uploadPicture = async () => {
@@ -150,58 +154,89 @@ export default function AddProfilePic({ navigation, route }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Step 3:</Text>
-        <Text style={styles.labelText}>Add a profile picture.</Text>
-      </View>
+    <SafeAreaView style={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>How do you look?</Text>
+          <Text style={styles.subtitle}>
+            Add a profile picture that shows off that quirky personality of
+            yours!
+          </Text>
+        </View>
 
-      <Image
-        source={{ uri: image }}
-        style={styles.image}
-        PlaceholderContent={<ActivityIndicator />}
-      />
+        <Image
+          source={{ uri: image }}
+          style={styles.image}
+          PlaceholderContent={<ActivityIndicator />}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={() => useCamera()}>
-        <Text style={styles.buttonText}>Take Photo</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
-        <Text style={styles.buttonText}>Choose from Gallery</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => useDefaultPhoto()}>
-        <Text style={styles.buttonText}>Use Default Photo</Text>
-      </TouchableOpacity>
-
-      <View style={styles.progressContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('ProfileStepTwo')}>
-          <Icon type="font-awesome" name="chevron-left" color="#FBC912" />
-        </TouchableOpacity>
-        <FilledCircle />
-        <FilledCircle />
-        <FilledCircle />
-        <EmptyCircle />
-        {/* {loading && displayLoadingScreen()} */}
-        <TouchableOpacity
-          onPress={() => {
-            setLoading(true)
-            if (imageOption === '') {
-              alert(
-                'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
-              )
-            } else if (!defaultPhotoBool) {
-              uploadPicture()
-            } else if (loading) {
-              alert('Please wait until the photo has been uploaded...')
-            } else {
-              navigateToNext()
-            }
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: 200,
+            marginBottom: 15,
           }}
         >
-          <Icon type="font-awesome" name="chevron-right" color="#FBC912" />
+          <Icon
+            raised
+            reverse="true"
+            type="ionicon"
+            name="camera-outline"
+            color="#D1E265"
+            size="28"
+            onPress={() => useCamera()}
+          />
+
+          <Icon
+            raised
+            reverse="true"
+            type="ionicon"
+            name="images-outline"
+            color="#D1E265"
+            size="28"
+            onPress={() => pickImage()}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => useDefaultPhoto()}
+        >
+          <Text style={styles.buttonText}>Use Default Photo</Text>
         </TouchableOpacity>
-      </View>
+
+        <View style={styles.progressContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ProfileStepTwo')}
+          >
+            <Icon type="font-awesome" name="chevron-left" color="#FBC912" />
+          </TouchableOpacity>
+          <FilledCircle />
+          <FilledCircle />
+          <FilledCircle />
+          <EmptyCircle />
+          {/* {loading && displayLoadingScreen()} */}
+          <TouchableOpacity
+            onPress={() => {
+              setLoading(true)
+              if (imageOption === '') {
+                alert(
+                  'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
+                )
+              } else if (!defaultPhotoBool) {
+                uploadPicture()
+              } else if (loading) {
+                alert('Please wait until the photo has been uploaded...')
+              } else {
+                navigateToNext()
+              }
+            }}
+          >
+            <Icon type="font-awesome" name="chevron-right" color="#FBC912" />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
