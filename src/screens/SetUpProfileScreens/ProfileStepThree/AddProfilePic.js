@@ -123,7 +123,7 @@ export default function AddProfilePic({ navigation, route }) {
     setLoading(false)
     setDefaultPhotoBool(true)
     setImageOption('default')
-    setImage(defaultPhoto)
+    setPhotoUrl(defaultPhoto)
     dispatch(editUserInfo({ profilePicture: defaultPhoto }))
     navigateToNext()
   }
