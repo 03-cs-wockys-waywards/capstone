@@ -49,7 +49,7 @@ export default function AddProfilePic({ navigation, route }) {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.5,
     });
 
     if (!result.cancelled) {
@@ -65,7 +65,7 @@ export default function AddProfilePic({ navigation, route }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.5,
     });
 
     if (!result.cancelled) {
