@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { editUserInfo } from '../../../store/userReducer'
 import styles from './styles'
 
+let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tingle-capstone/upload'
+
 const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631f9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80`
 
 export default function AddProfilePic({ navigation, route }) {
@@ -29,10 +31,13 @@ export default function AddProfilePic({ navigation, route }) {
 
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
   const [hasCameraPermission, setHasCameraPermission] = useState(null)
-  const [image, setImage] = useState(profilePicture || null)
+  //const [image, setImage] = useState(profilePicture || null)
   const [loading, setLoading] = useState(false)
   const [defaultPhotoBool, setDefaultPhotoBool] = useState(false)
   const [imageOption, setImageOption] = useState('')
+
+  const [selectedImage, setSelectedImage] = useState(profilePicture || null)
+  const [photoUrl, setPhotoUrl] = useState(null)
 
   const dispatch = useDispatch()
 
@@ -51,8 +56,8 @@ export default function AddProfilePic({ navigation, route }) {
     setLoading(true)
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      // aspect: [1, 1],
-      quality: 0.5,
+      aspect: [4, 3],
+      //quality: 0.5,
     })
 
     if (!result.cancelled) {
@@ -67,14 +72,38 @@ export default function AddProfilePic({ navigation, route }) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      // aspect: [1, 1],
-      quality: 0.5,
+      aspect: [4, 3],
+      //quality: 0.5,
+      base64: true,
     })
 
     if (!result.cancelled) {
-      dispatch(editUserInfo({ profilePicture: result.uri }))
-      setImage(result.uri)
+      //dispatch(editUserInfo({ profilePicture: result.uri }))
+      //setImage(result.uri)
+      setSelectedImage({ localUri: result.uri })
       setImageOption('gallery')
+      let base64Img = `data:image/jpg;base64,${result.base64}`
+
+      let data = {
+        file: base64Img,
+        upload_preset: 'iy4cnozl',
+      }
+
+      fetch(CLOUDINARY_URL, {
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      })
+        .then(async (r) => {
+          let data = await r.json()
+
+          setPhotoUrl(data.url)
+        })
+        .catch((err) => console.log(err))
+
+      dispatch(editUserInfo({ profilePicture: photoUrl }))
     }
   }
 
@@ -87,42 +116,42 @@ export default function AddProfilePic({ navigation, route }) {
     navigateToNext()
   }
 
-  const uploadPicture = async () => {
-    const uri = image
-    const childPath = `profile/${user.email}`
-    const response = await fetch(uri)
-    const blob = await response.blob()
+  // const uploadPicture = async () => {
+  //   const uri = image
+  //   const childPath = `profile/${user.email}`
+  //   const response = await fetch(uri)
+  //   const blob = await response.blob()
 
-    const task = firebase
-      .storage()
-      .ref()
-      .child(childPath)
-      .put(blob)
-      .then(() => {
-        setLoading(false)
-        // setTimeout(() => {}, 1500)
-        // setTimeout(() => {
-        //   setLoading(false);
-        // }, 1500);
-      })
-  }
+  //   const task = firebase
+  //     .storage()
+  //     .ref()
+  //     .child(childPath)
+  //     .put(blob)
+  //     .then(() => {
+  //       setLoading(false)
+  //       // setTimeout(() => {}, 1500)
+  //       // setTimeout(() => {
+  //       //   setLoading(false);
+  //       // }, 1500);
+  //     })
+  // }
 
   const navigateToNext = () => {
     navigation.navigate('Confirmation', { password, defaultPhotoBool })
   }
 
-  const displayLoadingScreen = () => {
-    console.log('loading inside displayLoadingScreen func', loading)
-    return (
-      <Modal transparent={true} animationType={'none'} visible={loading}>
-        <View style={styles.modalBackground}>
-          <View style={styles.activityIndicatorWrapper}>
-            <ActivityIndicator animating={loading} />
-          </View>
-        </View>
-      </Modal>
-    )
-  }
+  // const displayLoadingScreen = () => {
+  //   console.log('loading inside displayLoadingScreen func', loading)
+  //   return (
+  //     <Modal transparent={true} animationType={'none'} visible={loading}>
+  //       <View style={styles.modalBackground}>
+  //         <View style={styles.activityIndicatorWrapper}>
+  //           <ActivityIndicator animating={loading} />
+  //         </View>
+  //       </View>
+  //     </Modal>
+  //   )
+  // }
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
     return (
@@ -133,7 +162,7 @@ export default function AddProfilePic({ navigation, route }) {
           to your camera and photos in your device settings.
         </Text>
         <View style={styles.buttonContainer}>
-          <Button title="Enable Access" style={styles.enableAccessText} />
+          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
         </View>
       </SafeAreaView>
     )
@@ -148,7 +177,7 @@ export default function AddProfilePic({ navigation, route }) {
           to your camera and photos in your device settings.
         </Text>
         <View style={styles.buttonContainer}>
-          <Button title="Enable Access" style={styles.enableAccessText} />
+          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
         </View>
       </SafeAreaView>
     )
@@ -220,15 +249,15 @@ export default function AddProfilePic({ navigation, route }) {
           {/* {loading && displayLoadingScreen()} */}
           <TouchableOpacity
             onPress={() => {
-              setLoading(true)
-              if (image === null) {
+              // setLoading(true)
+              if (photoUrl === null) {
                 alert(
                   'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
                 )
-              } else if (!defaultPhotoBool) {
-                uploadPicture()
-              } else if (loading) {
-                alert('Please wait until the photo has been uploaded...')
+                // } else if (!defaultPhotoBool) {
+                //   uploadPicture()
+                // } else if (loading) {
+                //   alert('Please wait until the photo has been uploaded...')
               } else {
                 navigateToNext()
               }
