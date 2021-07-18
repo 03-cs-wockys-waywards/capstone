@@ -1,37 +1,57 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native'
 
+// Styles for Set Up Profile: Step Two
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    marginHorizontal: '5%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: StatusBar.currentHeight,
   },
   headerContainer: {
-    alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 41,
+    alignItems: 'center',
     marginBottom: 10,
   },
-  headerTitle: {
+  headerText: {
     fontSize: 30,
     fontWeight: '600',
     lineHeight: 36,
     marginBottom: 5,
+    fontFamily: 'Lato_900Black',
+    letterSpacing: 0.5,
+    color: '#1575D4',
   },
-  headerText: {
+  subheader: {
+    fontFamily: 'Lato_300Light_Italic',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontFamily: 'Lato_400Regular',
+    color: '#F93A6A',
+  },
+  subText: {
+    textAlign: 'center',
+    width: 350,
     fontSize: 16,
-    lineHeight: 19,
-    marginTop: 15,
-    marginBottom: 15,
   },
-  flatList: {
-    marginBottom: '32%',
+  scrollView: {
+    width: '100%',
+    alignSelf: 'center',
   },
-  flatListContainer: {
+  scrollContainer: {
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexWrap: 'wrap',
+  },
+  interests: {
+    flex: 1,
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
   },
   item: {
     padding: 20,
@@ -46,11 +66,13 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   progressContainer: {
+    flex: 1,
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '9%',
+    alignItems: 'center',
+    bottom: '0%',
   },
-});
+})

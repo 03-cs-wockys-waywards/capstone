@@ -11,11 +11,15 @@ import {
 import { editUserInfo } from '../../../store/userReducer'
 import { Pill } from '../../../components/Pill'
 import { firebase } from '../../../firebaseSpecs/config'
-import { getRandomLightColor } from '../../../helpers/getRandomLightColor'
+
+import { getLightColorsArray } from '../../../helpers/getColorsArray'
+import { lightColors } from '../../../helpers/colors'
 import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../../../assets/images/default-profile-picture.jpg'
 import { handleErrors } from '../../../helpers'
 import styles from './styles'
+
+const colors = getLightColorsArray(lightColors, 5)
 
 export default function ConfirmationScreen({ navigation, route }) {
   const { password, defaultPhotoBool } = route.params
@@ -62,9 +66,8 @@ export default function ConfirmationScreen({ navigation, route }) {
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
-      const backgroundColor = getRandomLightColor()
       return (
-        <Pill key={index} text={interest} backgroundColor={backgroundColor} />
+        <Pill key={index} text={interest} backgroundColor={colors[index]} />
       )
     })
   }
@@ -143,18 +146,16 @@ export default function ConfirmationScreen({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Profile Confirmation</Text>
-          <Text style={styles.labelText}>
-            This is how your profile appears to others.
+          <Text style={styles.subtitle}>
+            This is how your profile will appear to others.
           </Text>
         </View>
         <View style={styles.profilePreviewContainer}>
           {renderProfilePicture()}
         </View>
-        <View style={styles.confirmButtonContainer}>
-          <TouchableOpacity style={styles.button} onPress={registerUser}>
-            <Text style={styles.buttonText}>Confirm</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.button} onPress={registerUser}>
+          <Text style={styles.buttonText}>Confirm</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   )
