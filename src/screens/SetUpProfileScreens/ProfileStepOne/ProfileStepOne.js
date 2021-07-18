@@ -44,7 +44,7 @@ export default function ProfileStepOne({ navigation, route }) {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flexGrow: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Who are you?</Text>

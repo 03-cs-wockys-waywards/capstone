@@ -4,55 +4,54 @@ import { StyleSheet, StatusBar } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    margin: '10%',
     height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: StatusBar.currentHeight,
   },
   headerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
   },
-  headerTitle: {
-    fontSize: 30,
-    fontWeight: '600',
-    lineHeight: 36,
-    marginBottom: 5,
-  },
   headerText: {
     fontSize: 30,
     fontWeight: '600',
     lineHeight: 36,
     marginBottom: 5,
+    fontFamily: 'Lato_900Black',
+    letterSpacing: 0.5,
+    color: '#1575D4',
+  },
+  subheader: {
+    fontFamily: 'Lato_300Light_Italic',
+    marginBottom: 10,
   },
   subtitle: {
+    fontFamily: 'Lato_400Regular',
+    color: '#F93A6A',
+  },
+  subText: {
     textAlign: 'center',
-    width: 250,
-    fontStyle: 'italic',
-  },
-
-  labelText: {
+    width: 350,
     fontSize: 16,
-    lineHeight: 19,
-    marginTop: 15,
-    marginBottom: 15,
   },
-  progressContainer: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    left: 0,
-    right: 0,
-    bottom: '5%',
+  scrollView: {
+    width: '100%',
+    alignSelf: 'center',
   },
-  flatList: {
-    marginBottom: '32%',
-  },
-  flatListContainer: {
+  scrollContainer: {
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexWrap: 'wrap',
+  },
+  interests: {
+    flex: 1,
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
   },
   item: {
     padding: 20,
@@ -65,5 +64,15 @@ export default StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
+  },
+  progressContainer: {
+    flex: 1,
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    bottom: '0%',
   },
 })
