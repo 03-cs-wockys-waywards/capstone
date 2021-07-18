@@ -43,8 +43,6 @@ export default function ChatFeedScreen({ navigation }) {
     idField: "id",
   });
 
-  console.log("ChatRooms >>>>>", chatRooms);
-
   const handlePress = (id) => {
     navigation.navigate("ChatRoom", { docId: id });
   };

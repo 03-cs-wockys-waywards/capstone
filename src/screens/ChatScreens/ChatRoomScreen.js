@@ -32,12 +32,7 @@ export default function ChatRoomScreen({ route }) {
         setLoading(false);
       }
     });
-    const unsubscribeAndDelete = () => {
-      unsubscribe();
-      docRef.delete();
-    }
-    return () => messages.length ? unsubscribe() : unsubscribeAndDelete();
-    // return () => unsubscribe();
+    return () => unsubscribe();
   }, []);
 
   const sendMessage = () => {

@@ -30,7 +30,6 @@ const openChatRoom = (route, navigation) => {
     .then((chatRoom) => {
       if (chatRoom.exists) {
         docId = chatRoom.id;
-        console.log("docId in if >>>>>", docId);
       } else {
         const chatRoom = messagesRef.doc();
         chatRoom.set({
@@ -40,11 +39,9 @@ const openChatRoom = (route, navigation) => {
           },
         });
         docId = chatRoom.id;
-        console.log("docId in else >>>>", docId);
       }
     })
     .then(() => {
-      console.log("docId in last .then >>>>", docId);
       navigation.navigate("Chat Room", {
         match,
         docId,
