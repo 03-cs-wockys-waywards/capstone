@@ -195,7 +195,7 @@ export default function AddProfilePic({ navigation, route }) {
         </View>
 
         <Image
-          source={{ uri: image }}
+          source={{ uri: photoUrl }}
           style={styles.image}
           PlaceholderContent={<ActivityIndicator />}
         />
