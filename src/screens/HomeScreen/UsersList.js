@@ -14,6 +14,7 @@ export default class UsersList extends Component {
     this.state = {
       selectedIndex: 0,
       modalVisible: false,
+      modalAppeared: false,
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -21,10 +22,11 @@ export default class UsersList extends Component {
   componentDidMount() {
     const creationTime = firebase.auth().currentUser.metadata.creationTime;
     const lastSignInTime = firebase.auth().currentUser.metadata.lastSignInTime;
-    console.log('Creation Time', creationTime);
-    console.log('Last SignIn Time', lastSignInTime);
-    if (creationTime === lastSignInTime) {
+    // console.log('Creation Time', creationTime);
+    // console.log('Last SignIn Time', lastSignInTime);
+    if (!this.state.modalAppeared && creationTime === lastSignInTime) {
       this.setState({ modalVisible: true });
+      this.setState({ modalAppeared: true });
     }
   }
 
