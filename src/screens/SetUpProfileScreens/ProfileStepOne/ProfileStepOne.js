@@ -44,11 +44,13 @@ export default function ProfileStepOne({ navigation, route }) {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flexGrow: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Step 1:</Text>
-          <Text style={styles.labelText}>Who are you?</Text>
+          <Text style={styles.headerText}>Who are you?</Text>
+          <Text style={styles.subtitle}>
+            Only the first initial of your last name will be shown
+          </Text>
         </View>
         <View>
           <Text style={styles.labelText}>My name is:</Text>
@@ -67,30 +69,32 @@ export default function ProfileStepOne({ navigation, route }) {
         </View>
         <View>
           <Text style={styles.labelText}>My pronouns are:</Text>
-          <Checkbox
-            state={pronouns}
-            setState={setPronouns}
-            name={'She / Her'}
-            value={'she'}
-          />
-          <Checkbox
-            state={pronouns}
-            setState={setPronouns}
-            name={'He / Him'}
-            value={'he'}
-          />
-          <Checkbox
-            state={pronouns}
-            setState={setPronouns}
-            name={'They / Them'}
-            value={'they'}
-          />
-          <Checkbox
-            state={pronouns}
-            setState={setPronouns}
-            name={"I'd rather not say"}
-            value={'undisclosed'}
-          />
+          <View style={{ alignSelf: 'center' }}>
+            <Checkbox
+              state={pronouns}
+              setState={setPronouns}
+              name={'She / Her'}
+              value={'she'}
+            />
+            <Checkbox
+              state={pronouns}
+              setState={setPronouns}
+              name={'He / Him'}
+              value={'he'}
+            />
+            <Checkbox
+              state={pronouns}
+              setState={setPronouns}
+              name={'They / Them'}
+              value={'they'}
+            />
+            <Checkbox
+              state={pronouns}
+              setState={setPronouns}
+              name={"I'd rather not say"}
+              value={'undisclosed'}
+            />
+          </View>
         </View>
         <View style={styles.progressContainer}>
           <Icon type="font-awesome" name="chevron-left" color="transparent" />
@@ -99,7 +103,7 @@ export default function ProfileStepOne({ navigation, route }) {
           <EmptyCircle />
           <EmptyCircle />
           <TouchableOpacity onPress={handlePress}>
-            <Icon type="font-awesome" name="chevron-right" color="#000" />
+            <Icon type="font-awesome" name="chevron-right" color="#FBC912" />
           </TouchableOpacity>
         </View>
       </ScrollView>

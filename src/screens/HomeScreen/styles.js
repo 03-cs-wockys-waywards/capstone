@@ -62,6 +62,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: '10%',
     lineHeight: 30,
-    color: '#F9E9EF',
+    color: '#fff',
   },
 })

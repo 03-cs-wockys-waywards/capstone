@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   SafeAreaView,
+  ScrollView,
   View,
   Text,
   TouchableOpacity,
@@ -8,116 +9,141 @@ import {
   Modal,
   Image,
   Button,
-} from 'react-native';
-import { Icon } from 'react-native-elements';
-import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
-import { Camera } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker';
-import { firebase } from '../../../firebaseSpecs/config';
-import { useDispatch, useSelector } from 'react-redux';
-import { editUserInfo } from '../../../store/userReducer';
-import styles from './styles';
+} from 'react-native'
+import { Icon } from 'react-native-elements'
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
+import { Camera } from 'expo-camera'
+import * as ImagePicker from 'expo-image-picker'
+import { useDispatch, useSelector } from 'react-redux'
+import { editUserInfo } from '../../../store/userReducer'
+import styles from './styles'
+
+let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tingle-capstone/upload'
+
+const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631f9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80`
 
 export default function AddProfilePic({ navigation, route }) {
-  const { password } = route.params;
+  const { password } = route.params
 
-  const user = useSelector((state) => state.user);
-  const profilePicture = user.profilePicture;
+  const user = useSelector((state) => state.user)
+  const profilePicture = user.profilePicture
 
-  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [image, setImage] = useState(profilePicture || null);
-  const [loading, setLoading] = useState(false);
-  const [defaultPhotoBool, setDefaultPhotoBool] = useState(false);
-  const [imageOption, setImageOption] = useState('');
+  const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
+  const [hasCameraPermission, setHasCameraPermission] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [defaultPhotoBool, setDefaultPhotoBool] = useState(false)
+  const [imageOption, setImageOption] = useState('')
 
-  const dispatch = useDispatch();
+  const [selectedImage, setSelectedImage] = useState(profilePicture || null)
+  const [photoUrl, setPhotoUrl] = useState(null)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    (async () => {
-      const cameraStatus = await Camera.requestPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === 'granted');
+    ;(async () => {
+      const cameraStatus = await Camera.requestPermissionsAsync()
+      setHasCameraPermission(cameraStatus.status === 'granted')
 
       const galleryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermission(galleryStatus.status === 'granted');
-    })();
-  }, []);
+        await ImagePicker.requestMediaLibraryPermissionsAsync()
+      setHasGalleryPermission(galleryStatus.status === 'granted')
+    })()
+  }, [])
 
   const useCamera = async () => {
-    setLoading(true);
+    setLoading(true)
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
+      aspect: [4, 3],
+      base64: true,
+    })
 
     if (!result.cancelled) {
-      dispatch(editUserInfo({ profilePicture: result.uri }));
-      setImage(result.uri);
-      setImageOption('camera');
+      setSelectedImage({ localUri: result.uri })
+      setImageOption('camera')
+      let base64Img = `data:image/jpg;base64,${result.base64}`
+
+      let data = {
+        file: base64Img,
+        upload_preset: 'iy4cnozl',
+      }
+
+      fetch(CLOUDINARY_URL, {
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      })
+        .then(async (r) => {
+          let data = await r.json()
+          setPhotoUrl(data.url)
+          dispatch(editUserInfo({ profilePicture: data.url }))
+        })
+        .catch((err) => console.log(err))
     }
-  };
+  }
 
   const pickImage = async () => {
-    setLoading(true);
+    setLoading(true)
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
+      aspect: [4, 3],
+      base64: true,
+    })
 
     if (!result.cancelled) {
-      dispatch(editUserInfo({ profilePicture: result.uri }));
-      setImage(result.uri);
-      setImageOption('gallery');
+      setSelectedImage({ localUri: result.uri })
+      setImageOption('gallery')
+      let base64Img = `data:image/jpg;base64,${result.base64}`
+
+      let data = {
+        file: base64Img,
+        upload_preset: 'iy4cnozl',
+      }
+
+      fetch(CLOUDINARY_URL, {
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      })
+        .then(async (r) => {
+          let data = await r.json()
+          setPhotoUrl(data.url)
+          dispatch(editUserInfo({ profilePicture: data.url }))
+        })
+        .catch((err) => console.log(err))
     }
-  };
+  }
 
   const useDefaultPhoto = () => {
-    setLoading(false);
-    setDefaultPhotoBool(true);
-    setImageOption('default');
-    dispatch(editUserInfo({ profilePicture: '' }));
-  };
-
-  const uploadPicture = async () => {
-    const uri = image;
-    const childPath = `profile/${user.email}`;
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    const task = firebase
-      .storage()
-      .ref()
-      .child(childPath)
-      .put(blob)
-      .then(() => {
-        setLoading(false);
-        // setTimeout(() => {}, 1500)
-        // setTimeout(() => {
-        //   setLoading(false);
-        // }, 1500);
-      });
-  };
+    setLoading(false)
+    setDefaultPhotoBool(true)
+    setImageOption('default')
+    setPhotoUrl(defaultPhoto)
+    dispatch(editUserInfo({ profilePicture: defaultPhoto }))
+    navigateToNext()
+  }
 
   const navigateToNext = () => {
-    navigation.navigate('Confirmation', { password, defaultPhotoBool });
-  };
+    navigation.navigate('Confirmation', { password, defaultPhotoBool })
+  }
 
-  const displayLoadingScreen = () => {
-    console.log('loading inside displayLoadingScreen func', loading);
-    return (
-      <Modal transparent={true} animationType={'none'} visible={loading}>
-        <View style={styles.modalBackground}>
-          <View style={styles.activityIndicatorWrapper}>
-            <ActivityIndicator animating={loading} />
-          </View>
-        </View>
-      </Modal>
-    );
-  };
+  // const displayLoadingScreen = () => {
+  //   console.log('loading inside displayLoadingScreen func', loading)
+  //   return (
+  //     <Modal transparent={true} animationType={'none'} visible={loading}>
+  //       <View style={styles.modalBackground}>
+  //         <View style={styles.activityIndicatorWrapper}>
+  //           <ActivityIndicator animating={loading} />
+  //         </View>
+  //       </View>
+  //     </Modal>
+  //   )
+  // }
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
     return (
@@ -128,10 +154,10 @@ export default function AddProfilePic({ navigation, route }) {
           to your camera and photos in your device settings.
         </Text>
         <View style={styles.buttonContainer}>
-          <Button title="Enable Access" style={styles.enableAccessText} />
+          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
         </View>
       </SafeAreaView>
-    );
+    )
   }
 
   if (hasCameraPermission === false || hasGalleryPermission === false) {
@@ -143,65 +169,96 @@ export default function AddProfilePic({ navigation, route }) {
           to your camera and photos in your device settings.
         </Text>
         <View style={styles.buttonContainer}>
-          <Button title="Enable Access" style={styles.enableAccessText} />
+          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
         </View>
       </SafeAreaView>
-    );
+    )
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Step 3:</Text>
-        <Text style={styles.labelText}>Add a profile picture.</Text>
-      </View>
+    <SafeAreaView style={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>How do you look?</Text>
+          <Text style={styles.subtitle}>
+            Add a profile picture that shows off that quirky personality of
+            yours!
+          </Text>
+        </View>
 
-      <Image
-        source={{ uri: image }}
-        style={styles.image}
-        PlaceholderContent={<ActivityIndicator />}
-      />
+        <Image
+          source={{ uri: photoUrl }}
+          style={styles.image}
+          PlaceholderContent={<ActivityIndicator />}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={() => useCamera()}>
-        <Text style={styles.buttonText}>Take Photo</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
-        <Text style={styles.buttonText}>Choose from Gallery</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => useDefaultPhoto()}>
-        <Text style={styles.buttonText}>Use Default Photo</Text>
-      </TouchableOpacity>
-
-      <View style={styles.progressContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('ProfileStepTwo')}>
-          <Icon type="font-awesome" name="chevron-left" color="#000" />
-        </TouchableOpacity>
-        <FilledCircle />
-        <FilledCircle />
-        <FilledCircle />
-        <EmptyCircle />
-        {/* {loading && displayLoadingScreen()} */}
-        <TouchableOpacity
-          onPress={() => {
-            setLoading(true);
-            if (imageOption === '') {
-              alert(
-                'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
-              );
-            } else if (!defaultPhotoBool) {
-              uploadPicture();
-            } else if (loading) {
-              alert('Please wait until the photo has been uploaded...');
-            } else {
-              navigateToNext();
-            }
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: 200,
+            marginBottom: 15,
           }}
         >
-          <Icon type="font-awesome" name="chevron-right" color="#000" />
+          <Icon
+            raised
+            reverse="true"
+            type="ionicon"
+            name="camera-outline"
+            color="#D1E265"
+            size={28}
+            onPress={() => useCamera()}
+          />
+
+          <Icon
+            raised
+            reverse="true"
+            type="ionicon"
+            name="images-outline"
+            color="#D1E265"
+            size={28}
+            onPress={() => pickImage()}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => useDefaultPhoto()}
+        >
+          <Text style={styles.buttonText}>Use Default Photo</Text>
         </TouchableOpacity>
-      </View>
+
+        <View style={styles.progressContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ProfileStepTwo')}
+          >
+            <Icon type="font-awesome" name="chevron-left" color="#FBC912" />
+          </TouchableOpacity>
+          <FilledCircle />
+          <FilledCircle />
+          <FilledCircle />
+          <EmptyCircle />
+          {/* {loading && displayLoadingScreen()} */}
+          <TouchableOpacity
+            onPress={() => {
+              // setLoading(true)
+              if (photoUrl === null) {
+                alert(
+                  'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
+                )
+                // } else if (!defaultPhotoBool) {
+                //   uploadPicture()
+                // } else if (loading) {
+                //   alert('Please wait until the photo has been uploaded...')
+              } else {
+                navigateToNext()
+              }
+            }}
+          >
+            <Icon type="font-awesome" name="chevron-right" color="#FBC912" />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
-  );
+  )
 }

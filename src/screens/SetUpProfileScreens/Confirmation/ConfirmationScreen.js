@@ -8,19 +8,23 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
-import { editUserInfo } from '../../../store/userReducer'
 import { Pill } from '../../../components/Pill'
 import { firebase } from '../../../firebaseSpecs/config'
-import { getRandomLightColor } from '../../../helpers/getRandomLightColor'
+
+import { getLightColorsArray } from '../../../helpers/getColorsArray'
+import { lightColors } from '../../../helpers/colors'
 import { displaySemanticPronouns } from '../../../helpers/displaySemanticPronouns'
 import defaultProfilePicture from '../../../../assets/images/default-profile-picture.jpg'
 import { handleErrors } from '../../../helpers'
 import styles from './styles'
 
+const colors = getLightColorsArray(lightColors, 5)
+
 export default function ConfirmationScreen({ navigation, route }) {
   const { password, defaultPhotoBool } = route.params
-  const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
+  const profilePicture = user.profilePicture
+  console.log('This is our profile picture in Confirmation: ', profilePicture)
   const [picURL, setPicURL] = useState('')
 
   const registerUser = () => {
@@ -62,31 +66,11 @@ export default function ConfirmationScreen({ navigation, route }) {
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
-      const backgroundColor = getRandomLightColor()
       return (
-        <Pill key={index} text={interest} backgroundColor={backgroundColor} />
+        <Pill key={index} text={interest} backgroundColor={colors[index]} />
       )
     })
   }
-
-  const loadProfilePicture = () => {
-    if (!defaultPhotoBool) {
-      const profilePicRef = firebase
-        .storage()
-        .ref()
-        .child(`profile/${user.email}`)
-
-      profilePicRef.getDownloadURL().then((url) => {
-        setPicURL(url)
-        // Save user profile photo in redux
-        dispatch(editUserInfo({ profilePicture: url }))
-      })
-    }
-  }
-
-  useEffect(() => {
-    loadProfilePicture()
-  }, [])
 
   const renderProfilePicture = () => {
     // if the user selected to use a default photo
@@ -113,10 +97,10 @@ export default function ConfirmationScreen({ navigation, route }) {
           </View>
         </ImageBackground>
       )
-    } else if (picURL) {
+    } else if (profilePicture) {
       return (
         <ImageBackground
-          source={{ uri: picURL }}
+          source={{ uri: profilePicture }}
           style={styles.image}
           imageStyle={styles.imageStyle}
           resizeMode="cover"
@@ -143,18 +127,16 @@ export default function ConfirmationScreen({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Profile Confirmation</Text>
-          <Text style={styles.labelText}>
-            This is how your profile appears to others.
+          <Text style={styles.subtitle}>
+            This is how your profile will appear to others.
           </Text>
         </View>
         <View style={styles.profilePreviewContainer}>
           {renderProfilePicture()}
         </View>
-        <View style={styles.confirmButtonContainer}>
-          <TouchableOpacity style={styles.button} onPress={registerUser}>
-            <Text style={styles.buttonText}>Confirm</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.button} onPress={registerUser}>
+          <Text style={styles.buttonText}>Confirm</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   )
