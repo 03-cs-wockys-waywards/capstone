@@ -27,9 +27,11 @@ const openChatRoom = (route, navigation) => {
     .where(`users.${currentUserId}`, "==", true)
     .where(`users.${match.id}`, "==", true)
     .get()
-    .then((chatRoom) => {
-      if (chatRoom.exists) {
-        docId = chatRoom.id;
+    .then((snapshot) => {
+      if (!snapshot.empty) {
+        snapshot.docs.forEach((doc) => {
+          docId = doc.id;
+        });
       } else {
         const chatRoom = messagesRef.doc();
         chatRoom.set({
