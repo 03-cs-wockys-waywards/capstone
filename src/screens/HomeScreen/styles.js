@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -62,6 +62,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: '10%',
     lineHeight: 30,
-    color: '#223147',
+    color: '#fff',
   },
-})
+});
