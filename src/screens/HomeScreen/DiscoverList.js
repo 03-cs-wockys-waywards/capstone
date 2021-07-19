@@ -18,27 +18,19 @@ export class DiscoverList extends Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      isFetching: false,
+      interests: [],
+    }
+
     this.renderItem = this.renderItem.bind(this)
-    this.keyExtractor = this.keyExtractor.bind(this)
+    this.onRefresh = this.onRefresh.bind(this)
   }
 
-  // get current user's doc & interests
   componentDidMount() {
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(firebase.auth().currentUser.uid)
-      .get()
-      .then((snapshot) => {
-        if (snapshot.exists) {
-          const user = snapshot.data()
-          const interests = user.interests
-          // set users with similar interests in the redux store
-          this.props.setInterests(interests)
-        } else {
-          console.log('user does not exist')
-        }
-      })
+    // get list of users with similar interests
+    this.props.getUsers()
+    this.setState({ isFetching: false })
   }
 
   renderItem({ item }) {
@@ -47,6 +39,13 @@ export class DiscoverList extends Component {
 
   keyExtractor(item) {
     return item.id.toString()
+  }
+
+  onRefresh() {
+    this.setState({ isFetching: true }, () => {
+      this.props.getUsers()
+      this.setState({ isFetching: false })
+    })
   }
 
   render() {
@@ -62,6 +61,8 @@ export class DiscoverList extends Component {
         renderItem={renderItem}
         initialNumToRender={7}
         ListEmptyComponent={EmptyMessage}
+        onRefresh={() => this.onRefresh()}
+        refreshing={this.state.isFetching}
       />
     )
   }
@@ -73,7 +74,7 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-  setInterests: (interests) => dispatch(fetchUsersWithInterests(interests)),
+  getUsers: () => dispatch(fetchUsersWithInterests()),
 })
 
 export default connect(mapState, mapDispatch)(DiscoverList)
