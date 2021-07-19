@@ -15,7 +15,6 @@ import ChatBubble from "../../components/ChatBubble";
 import styles from "./styles";
 
 export default function ChatRoomScreen({ route }) {
-  console.log("---------- IN CHAT ROOM -----------");
   const { docId } = route.params;
   const currentUser = useSelector((state) => state.user);
   const [messages, setMessages] = useState([]);
@@ -45,6 +44,7 @@ export default function ChatRoomScreen({ route }) {
   }, []);
 
   const sendMessage = () => {
+    if (!text) return;
     const { id } = currentUser;
     const data = {
       from: id,

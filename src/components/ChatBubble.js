@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function ChatBubble({ message, user }) {
   const styles = StyleSheet.create({
     userChatContainer: {
-      alignSelf: 'flex-start',
+      alignSelf: 'flex-end',
       justifyContent: 'center',
       paddingVertical: 12,
       paddingHorizontal: 20,

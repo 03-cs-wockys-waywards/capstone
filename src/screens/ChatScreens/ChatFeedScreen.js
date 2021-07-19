@@ -4,29 +4,8 @@ import "firebase/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import React from "react";
 import { useSelector } from "react-redux";
-import { SafeAreaView, ScrollView, View, Text } from "react-native";
+import { SafeAreaView, ScrollView, TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import ChatFeedRow from "../../components/ChatFeedRow";
-import styles from "./styles";
-
-// THIS ISN'T WORKING & I CANT FIGURE OUT WHY
-// useEffect(() => {
-//   console.log('in useEffect')
-//   const messagesRef = firebase.firestore().collection("messages");
-//   messagesRef
-//     .where(`users.${currentUser.id}`, "==", true)
-//     .get()
-//     .then((snapshot) => {
-//       if (snapshot) {
-//         const chatRooms = snapshot.map((doc) => {
-//           const data = doc.data();
-//           return { ...data, id: doc.id }
-//         });
-//         setChatRooms(chatRooms)
-//       } else {
-//         console.log('no chat rooms found for this user');
-//       }
-//     })
-// }, []);
 
 export default function ChatFeedScreen({ navigation }) {
   const currentUser = useSelector((state) => state.user);
@@ -34,7 +13,7 @@ export default function ChatFeedScreen({ navigation }) {
   const query = currentUser.id
     ? messagesRef.where(`users.${currentUser.id}`, "==", true)
     : null;
-  const [chatRooms, loading, error] = useCollectionData(query, {
+  const [chatRooms, loading] = useCollectionData(query, {
     idField: "id",
   });
 
@@ -62,14 +41,14 @@ export default function ChatFeedScreen({ navigation }) {
               const match = getMatch(displayData);
               const { firstName, lastName, avatar } = match;
               return (
-                <ChatFeedRow
-                  key={id}
-                  avatar={avatar}
-                  firstName={firstName}
-                  lastName={lastName}
-                  latestMessage={latestMessage.text}
-                  handlePress={() => handlePress(id)}
-                />
+                <TouchableOpacity key={id} onPress={() => handlePress(id)}>
+                  <ChatFeedRow
+                    avatar={avatar}
+                    firstName={firstName}
+                    lastName={lastName}
+                    latestMessage={latestMessage.text}
+                  />
+                </TouchableOpacity>
               );
             })
         )}
@@ -77,3 +56,13 @@ export default function ChatFeedScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#dee2eb'
+  },
+  scrollContainer: {
+    paddingBottom: '15%',
+  },
+})
