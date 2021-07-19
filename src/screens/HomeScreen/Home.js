@@ -7,7 +7,7 @@ import SingleUserProfile from "../SingleUserProfileScreen/SingleUserProfile";
 import headerLogo from "../../../assets/images/header-logo.png";
 import ChatRoomScreen from "../ChatScreens/ChatRoomScreen";
 import { firebase } from "../../firebaseSpecs/config";
-import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
+import { shallowEqual, useSelector } from 'react-redux';
 
 const HomeStack = createStackNavigator();
 
@@ -18,13 +18,12 @@ const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
 };
 
-const openChatRoom = (route, navigation) => {
+const openChatRoom = (route, navigation, currentUser) => {
   let docId;
   const { user: match } = route.params;
-  const currentUserId = firebase.auth().currentUser.uid;
   const messagesRef = firebase.firestore().collection("messages");
   messagesRef
-    .where(`users.${currentUserId}`, "==", true)
+    .where(`users.${currentUser.id}`, "==", true)
     .where(`users.${match.id}`, "==", true)
     .get()
     .then((snapshot) => {
@@ -37,27 +36,39 @@ const openChatRoom = (route, navigation) => {
         chatRoom.set({
           users: {
             [match.id]: true,
-            [currentUserId]: true,
+            [currentUser.id]: true,
           },
+          displayData: {
+            [match.id]: {
+              firstName: match.firstName,
+              lastName: match.lastName,
+              avatar: match.profilePicture,
+            },
+            [currentUser.id]: {
+              firstName: currentUser.firstName,
+              lastName: currentUser.lastName,
+              avatar: currentUser.profilePicture
+            }
+          }  
         });
         docId = chatRoom.id;
       }
     })
     .then(() => {
       navigation.navigate("Chat Room", {
-        match,
         docId,
       });
     });
 };
 
 const userChatIcon = (route, navigation) => {
+  const currentUser = useSelector((state) => state.user, shallowEqual)
   return (
     <Icon
       type="material-community"
       name="message-outline"
       size={25}
-      onPress={() => openChatRoom(route, navigation)}
+      onPress={() => openChatRoom(route, navigation, currentUser)}
     />
   );
 };

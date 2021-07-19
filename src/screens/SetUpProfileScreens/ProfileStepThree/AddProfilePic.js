@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
-  Modal,
   Image,
   Button,
 } from 'react-native';
@@ -24,7 +23,6 @@ const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631
 
 export default function AddProfilePic({ navigation, route }) {
   const { password } = route.params;
-
   const user = useSelector((state) => state.user);
   const profilePicture = user.profilePicture;
 
@@ -36,7 +34,7 @@ export default function AddProfilePic({ navigation, route }) {
 
   const [selectedImage, setSelectedImage] = useState(profilePicture || null);
   const [photoUrl, setPhotoUrl] = useState(null);
-
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,7 +49,6 @@ export default function AddProfilePic({ navigation, route }) {
   }, []);
 
   const useCamera = async () => {
-    setLoading(true);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -59,8 +56,6 @@ export default function AddProfilePic({ navigation, route }) {
     });
 
     if (!result.cancelled) {
-      setSelectedImage({ localUri: result.uri });
-      setImageOption('camera');
       let base64Img = `data:image/jpg;base64,${result.base64}`;
 
       let data = {
@@ -85,7 +80,6 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   const pickImage = async () => {
-    setLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -94,8 +88,6 @@ export default function AddProfilePic({ navigation, route }) {
     });
 
     if (!result.cancelled) {
-      setSelectedImage({ localUri: result.uri });
-      setImageOption('gallery');
       let base64Img = `data:image/jpg;base64,${result.base64}`;
 
       let data = {
@@ -120,9 +112,7 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   const useDefaultPhoto = () => {
-    setLoading(false);
     setDefaultPhotoBool(true);
-    setImageOption('default');
     setPhotoUrl(defaultPhoto);
     dispatch(editUserInfo({ profilePicture: defaultPhoto }));
     navigateToNext();
@@ -131,20 +121,7 @@ export default function AddProfilePic({ navigation, route }) {
   const navigateToNext = () => {
     navigation.navigate('Confirmation', { password, defaultPhotoBool });
   };
-
-  // const displayLoadingScreen = () => {
-  //   console.log('loading inside displayLoadingScreen func', loading)
-  //   return (
-  //     <Modal transparent={true} animationType={'none'} visible={loading}>
-  //       <View style={styles.modalBackground}>
-  //         <View style={styles.activityIndicatorWrapper}>
-  //           <ActivityIndicator animating={loading} />
-  //         </View>
-  //       </View>
-  //     </Modal>
-  //   )
-  // }
-
+  
   if (hasCameraPermission === null || hasGalleryPermission === false) {
     return (
       <SafeAreaView style={styles.noAccessMessageContainer}>
@@ -256,18 +233,12 @@ export default function AddProfilePic({ navigation, route }) {
           <FilledCircle />
           <FilledCircle />
           <EmptyCircle />
-          {/* {loading && displayLoadingScreen()} */}
           <TouchableOpacity
             onPress={() => {
-              // setLoading(true)
               if (photoUrl === null) {
                 alert(
                   'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
                 );
-                // } else if (!defaultPhotoBool) {
-                //   uploadPicture()
-                // } else if (loading) {
-                //   alert('Please wait until the photo has been uploaded...')
               } else {
                 navigateToNext();
               }
