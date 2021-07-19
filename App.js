@@ -68,8 +68,9 @@ export class App extends Component {
   }
 
   async loadFontsAsync() {
-    await Font.loadAsync(customFonts)
-    this.setState({ fontsLoaded: true })
+    await Font.loadAsync(customFonts).then(() =>
+      this.setState({ fontsLoaded: true })
+    )
   }
 
   componentDidMount() {
@@ -103,7 +104,7 @@ export class App extends Component {
     const { loading, user, isLoggedIn, fontsLoaded } = this.state
 
     if (loading && !fontsLoaded) {
-      return <></>
+      return <AppLoading />
     }
 
     return (
