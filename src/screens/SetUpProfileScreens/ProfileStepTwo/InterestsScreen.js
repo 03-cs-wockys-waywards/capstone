@@ -1,47 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   View,
   ScrollView,
   SafeAreaView,
   Text,
   TouchableOpacity,
-} from 'react-native'
-import { Icon } from 'react-native-elements'
-import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles'
-import interests from './interestsArray'
-import styles from './styles'
-import { InterestButton } from '../../../components/InterestButton'
-import { useSelector, useDispatch } from 'react-redux'
-import { editUserInfo } from '../../../store/userReducer'
+} from 'react-native';
+import { Icon } from 'react-native-elements';
+import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
+import interests from './interestsArray';
+import styles from './styles';
+import { InterestButton } from '../../../components/InterestButton';
+import { useSelector, useDispatch } from 'react-redux';
+import { editUserInfo } from '../../../store/userReducer';
 
 export default function InterestsScreen({ navigation, route }) {
-  const { password } = route.params
+  const { password } = route.params;
 
-  const user = useSelector((state) => state.user)
-  const init = user.interests.length ? user.interests : []
-  const [selectedInterests, setSelectedInterests] = useState(init)
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user);
+  const init = user.interests.length ? user.interests : [];
+  const [selectedInterests, setSelectedInterests] = useState(init);
+  const dispatch = useDispatch();
 
   const handlePress = (item) => {
     if (selectedInterests.includes(item)) {
       setSelectedInterests(
         selectedInterests.filter((interest) => interest !== item)
-      )
+      );
     } else if (selectedInterests.length < 5) {
-      setSelectedInterests([...selectedInterests, item])
+      setSelectedInterests([...selectedInterests, item]);
     }
-  }
+  };
 
   const navigateToNext = () => {
     if (selectedInterests.length) {
-      dispatch(editUserInfo({ interests: selectedInterests }))
-      navigation.navigate('ProfileStepThree', { password })
+      dispatch(editUserInfo({ interests: selectedInterests }));
+      navigation.navigate('ProfileStepThree', { password });
     } else {
       alert(
         'Please select at least 1 interest. More interests mean a higher chance of finding your match!'
-      )
+      );
     }
-  }
+  };
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }}>
@@ -57,7 +57,7 @@ export default function InterestsScreen({ navigation, route }) {
             You selected {selectedInterests.length} out of 5 interests.
           </Text>
         </View>
-        <View style={{ height: '70%' }}>
+        <View style={{ height: '60%', marginBottom: '10%' }}>
           <ScrollView
             style={styles.scrollView}
             contentContainerStyle={styles.scrollContainer}
@@ -96,5 +96,5 @@ export default function InterestsScreen({ navigation, route }) {
         </View>
       </View>
     </SafeAreaView>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import React from 'react'
-import { CheckBox } from 'react-native-elements'
+import React from 'react';
+import { CheckBox } from 'react-native-elements';
 
-export default function Checkbox({ state, setState, name, value }) {
+export default function Checkbox({ state, name, value, onPress }) {
   return (
     <>
       <CheckBox
@@ -23,14 +23,8 @@ export default function Checkbox({ state, setState, name, value }) {
         uncheckedIcon="check-circle"
         checkedColor="#4B9CED"
         checked={state.includes(value)}
-        onPress={() => {
-          let newState = [...state, value]
-          if (state.includes(value)) {
-            newState = newState.filter((pronoun) => pronoun !== value)
-          }
-          setState(newState)
-        }}
+        onPress={onPress}
       />
     </>
-  )
+  );
 }
