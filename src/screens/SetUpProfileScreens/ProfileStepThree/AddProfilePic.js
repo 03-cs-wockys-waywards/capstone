@@ -7,26 +7,34 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Button,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editUserInfo } from '../../../store/userReducer';
 import styles from './styles';
 
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tingle-capstone/upload';
+let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tingle-capstone/upload';
 
 const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631f9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80`;
 
 export default function AddProfilePic({ navigation, route }) {
   const { password } = route.params;
+  const user = useSelector((state) => state.user);
+  const profilePicture = user.profilePicture;
+
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [defaultPhotoBool, setDefaultPhotoBool] = useState(false);
-  const [photoUrl, setPhotoUrl] = useState(null);
+  const [imageOption, setImageOption] = useState('');
 
+  const [selectedImage, setSelectedImage] = useState(profilePicture || null);
+  const [photoUrl, setPhotoUrl] = useState(null);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -113,17 +121,26 @@ export default function AddProfilePic({ navigation, route }) {
   const navigateToNext = () => {
     navigation.navigate('Confirmation', { password, defaultPhotoBool });
   };
-
+  
   if (hasCameraPermission === null || hasGalleryPermission === false) {
     return (
       <SafeAreaView style={styles.noAccessMessageContainer}>
-        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
-        <Text style={styles.noAccessMessageText}>
-          For your most enjoyable Tingle experience, please give Tingle access
-          to your camera and photos in your device settings.
+        <Text style={styles.noAccessMessageTitleText}>
+          Unable to access photos
         </Text>
-        <View style={styles.buttonContainer}>
-          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, Tingle would need access to
+          your camera and photos. You can use the default photo for now, but to
+          show off your quirk, please enable camera and photos access in your
+          device settings in the future!
+        </Text>
+        <View style={styles.noAccessButtonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => useDefaultPhoto()}
+          >
+            <Text style={styles.buttonText}>Use Default Photo</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -132,13 +149,22 @@ export default function AddProfilePic({ navigation, route }) {
   if (hasCameraPermission === false || hasGalleryPermission === false) {
     return (
       <SafeAreaView style={styles.noAccessMessageContainer}>
-        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
-        <Text style={styles.noAccessMessageText}>
-          For your most enjoyable Tingle experience, please give Tingle access
-          to your camera and photos in your device settings.
+        <Text style={styles.noAccessMessageTitleText}>
+          Unable to access photos
         </Text>
-        <View style={styles.buttonContainer}>
-          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, Tingle would need access to
+          your camera and photos. You can use the default photo for now, but to
+          show off your quirk, please enable camera and photos access in your
+          device settings in the future!
+        </Text>
+        <View style={styles.noAccessButtonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => useDefaultPhoto()}
+          >
+            <Text style={styles.buttonText}>Use Default Photo</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
