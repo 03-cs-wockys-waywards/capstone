@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
@@ -30,6 +30,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignContent: 'center',
+    //alignItems: 'center',
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 3,
@@ -37,9 +38,11 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   userName: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '700',
     marginRight: 10,
+    fontFamily: 'Lato_900Black',
+    letterSpacing: 0.5,
   },
   interestsContainer: {
     flexDirection: 'row',
@@ -64,4 +67,4 @@ export default StyleSheet.create({
     lineHeight: 30,
     color: '#fff',
   },
-});
+})
