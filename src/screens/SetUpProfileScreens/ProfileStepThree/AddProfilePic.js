@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
-  Modal,
   Image,
   Button,
 } from 'react-native';
@@ -23,7 +22,6 @@ const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631
 
 export default function AddProfilePic({ navigation, route }) {
   const { password } = route.params;
-
   const user = useSelector((state) => state.user);
   const profilePicture = user.profilePicture;
 
@@ -50,7 +48,6 @@ export default function AddProfilePic({ navigation, route }) {
   }, []);
 
   const useCamera = async () => {
-    setLoading(true);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -58,8 +55,6 @@ export default function AddProfilePic({ navigation, route }) {
     });
 
     if (!result.cancelled) {
-      setSelectedImage({ localUri: result.uri });
-      setImageOption('camera');
       let base64Img = `data:image/jpg;base64,${result.base64}`;
 
       let data = {
@@ -84,7 +79,6 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   const pickImage = async () => {
-    setLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -93,8 +87,6 @@ export default function AddProfilePic({ navigation, route }) {
     });
 
     if (!result.cancelled) {
-      setSelectedImage({ localUri: result.uri });
-      setImageOption('gallery');
       let base64Img = `data:image/jpg;base64,${result.base64}`;
 
       let data = {
@@ -119,9 +111,7 @@ export default function AddProfilePic({ navigation, route }) {
   };
 
   const useDefaultPhoto = () => {
-    setLoading(false);
     setDefaultPhotoBool(true);
-    setImageOption('default');
     setPhotoUrl(defaultPhoto);
     dispatch(editUserInfo({ profilePicture: defaultPhoto }));
     navigateToNext();
@@ -131,29 +121,25 @@ export default function AddProfilePic({ navigation, route }) {
     navigation.navigate('Confirmation', { password, defaultPhotoBool });
   };
 
-  // const displayLoadingScreen = () => {
-  //   console.log('loading inside displayLoadingScreen func', loading)
-  //   return (
-  //     <Modal transparent={true} animationType={'none'} visible={loading}>
-  //       <View style={styles.modalBackground}>
-  //         <View style={styles.activityIndicatorWrapper}>
-  //           <ActivityIndicator animating={loading} />
-  //         </View>
-  //       </View>
-  //     </Modal>
-  //   )
-  // }
-
   if (hasCameraPermission === null || hasGalleryPermission === false) {
     return (
       <SafeAreaView style={styles.noAccessMessageContainer}>
-        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
-        <Text style={styles.noAccessMessageText}>
-          For your most enjoyable Tingle experience, please give Tingle access
-          to your camera and photos in your device settings.
+        <Text style={styles.noAccessMessageTitleText}>
+          Unable to access photos
         </Text>
-        <View style={styles.buttonContainer}>
-          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, Tingle would need access to
+          your camera and photos. You can use the default photo for now, but to
+          show off your quirk, please enable camera and photos access in your
+          device settings in the future!
+        </Text>
+        <View style={styles.noAccessButtonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => useDefaultPhoto()}
+          >
+            <Text style={styles.buttonText}>Use Default Photo</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -162,13 +148,22 @@ export default function AddProfilePic({ navigation, route }) {
   if (hasCameraPermission === false || hasGalleryPermission === false) {
     return (
       <SafeAreaView style={styles.noAccessMessageContainer}>
-        <Text style={styles.noAccessMessageTitleText}>Oh no! 😱</Text>
-        <Text style={styles.noAccessMessageText}>
-          For your most enjoyable Tingle experience, please give Tingle access
-          to your camera and photos in your device settings.
+        <Text style={styles.noAccessMessageTitleText}>
+          Unable to access photos
         </Text>
-        <View style={styles.buttonContainer}>
-          {/* <Button title="Enable Access" style={styles.enableAccessText} /> */}
+        <Text style={styles.noAccessMessageText}>
+          For your most enjoyable Tingle experience, Tingle would need access to
+          your camera and photos. You can use the default photo for now, but to
+          show off your quirk, please enable camera and photos access in your
+          device settings in the future!
+        </Text>
+        <View style={styles.noAccessButtonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => useDefaultPhoto()}
+          >
+            <Text style={styles.buttonText}>Use Default Photo</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -237,18 +232,12 @@ export default function AddProfilePic({ navigation, route }) {
           <FilledCircle />
           <FilledCircle />
           <EmptyCircle />
-          {/* {loading && displayLoadingScreen()} */}
           <TouchableOpacity
             onPress={() => {
-              // setLoading(true)
               if (photoUrl === null) {
                 alert(
                   'Please upload a profile picture. You can also choose a default photo option and choose a different photo later!'
                 );
-                // } else if (!defaultPhotoBool) {
-                //   uploadPicture()
-                // } else if (loading) {
-                //   alert('Please wait until the photo has been uploaded...')
               } else {
                 navigateToNext();
               }

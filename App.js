@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { firebase } from './src/firebaseSpecs/config';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import { firebase } from './src/firebaseSpecs/config'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import {
   LandingScreen,
   LoginScreen,
@@ -11,14 +11,14 @@ import {
   ProfileStepTwo,
   ProfileStepThree,
   Confirmation,
-} from './src/screens';
-import MainScreen from './src/Main';
-import { screenOptions, MyStatusBar } from './src/components/StatusBar';
-import { decode, encode } from 'base-64';
-import store from './src/store';
+} from './src/screens'
+import MainScreen from './src/Main'
+import { screenOptions, MyStatusBar } from './src/components/StatusBar'
+import { decode, encode } from 'base-64'
+import store from './src/store'
 
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import {
   Lato_100Thin,
   Lato_100Thin_Italic,
@@ -30,13 +30,13 @@ import {
   Lato_700Bold_Italic,
   Lato_900Black,
   Lato_900Black_Italic,
-} from '@expo-google-fonts/lato';
+} from '@expo-google-fonts/lato'
 
 if (!global.btoa) {
-  global.btoa = encode;
+  global.btoa = encode
 }
 if (!global.atob) {
-  global.atob = decode;
+  global.atob = decode
 }
 
 const customFonts = {
@@ -50,13 +50,13 @@ const customFonts = {
   Lato_700Bold_Italic,
   Lato_900Black,
   Lato_900Black_Italic,
-};
+}
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 export class App extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       user: null,
       loading: true,
@@ -68,42 +68,42 @@ export class App extends Component {
   }
 
   async loadFontsAsync() {
-    await Font.loadAsync(customFonts);
-    this.setState({ fontsLoaded: true });
+    await Font.loadAsync(customFonts).then(() =>
+      this.setState({ fontsLoaded: true })
+    )
   }
 
   componentDidMount() {
-    this.loadFontsAsync();
+    this.loadFontsAsync()
 
-    const usersRef = firebase.firestore().collection('users');
+    const usersRef = firebase.firestore().collection('users')
     firebase.auth().onAuthStateChanged((user) => {
-      //console.log('USER in COMPONENT DID MOUNT in APP: ', user)
       if (user) {
         usersRef
           .doc(user.uid)
           .get()
           .then((document) => {
-            const userData = document.data();
+            const userData = document.data()
             this.setState({
               loading: false,
               user: userData,
               isLoggedIn: true,
-            });
+            })
           })
           .catch((error) => {
-            this.setState({ loading: false });
-          });
+            this.setState({ loading: false })
+          })
       } else {
-        this.setState({ loading: false, isLoggedIn: false });
+        this.setState({ loading: false, isLoggedIn: false })
       }
-    });
+    })
   }
 
   render() {
-    const { loading, user, isLoggedIn, fontsLoaded } = this.state;
+    const { loading, user, isLoggedIn, fontsLoaded } = this.state
 
     if (loading && !fontsLoaded) {
-      return <></>;
+      return <AppLoading />
     }
 
     return (
@@ -149,8 +149,8 @@ export class App extends Component {
           <MyStatusBar backgroundColor="white" barStyle="dark-content" />
         </NavigationContainer>
       </Provider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

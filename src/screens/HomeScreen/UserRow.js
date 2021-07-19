@@ -31,9 +31,11 @@ export default function UserRow({ item, navigation }) {
     if (!isLiked) {
       dispatch(_addLike(id))
       setLike(true)
+      console.log('Liked')
     } else {
       dispatch(_removeLike(id))
       setLike(false)
+      console.log('Unliked')
     }
   }
 
@@ -46,29 +48,31 @@ export default function UserRow({ item, navigation }) {
   return (
     <TouchableOpacity onPress={handlePress}>
       <View style={styles.userRowContainer}>
-        <Avatar size={95} rounded source={{ uri: item.profilePicture }} />
+        <DoubleTap doubleTap={() => handleLike(item.id)} delay={200}>
+          <Avatar size={100} rounded source={{ uri: item.profilePicture }} />
+        </DoubleTap>
         <View style={styles.infoContainer}>
           <View style={styles.userTitle}>
             <Text style={styles.userName}>
               {item.firstName} {item.lastName[0]}.
             </Text>
-            <DoubleTap doubleTap={() => handleLike(item.id)} delay={200}>
-              {isLiked ? (
-                <Icon
-                  type="material-community"
-                  name="heart"
-                  size={20}
-                  color="#E8073F"
-                />
-              ) : (
-                <Icon
-                  type="material-community"
-                  name="heart-plus-outline"
-                  size={20}
-                  color="#E8073F"
-                />
-              )}
-            </DoubleTap>
+            {isLiked ? (
+              <Icon
+                type="material-community"
+                name="heart"
+                size={22}
+                color="#E8073F"
+                onPress={() => handleLike(item.id)}
+              />
+            ) : (
+              <Icon
+                type="material-community"
+                name="heart-plus-outline"
+                size={22}
+                color="#E8073F"
+                onPress={() => handleLike(item.id)}
+              />
+            )}
           </View>
           <View style={styles.interestsContainer}>
             {renderInterests(item.interests)}
