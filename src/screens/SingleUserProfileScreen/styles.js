@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -67,6 +67,17 @@ export default StyleSheet.create({
   imageStyle: {
     borderRadius: 15,
   },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  modalImage: {
+    borderRadius: 15,
+    width: '95%',
+    height: '90%',
+  },
   profileInfoContainer: {
     position: 'absolute',
     bottom: 20,
@@ -100,4 +111,4 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     marginVertical: '5%',
   },
-})
+});
