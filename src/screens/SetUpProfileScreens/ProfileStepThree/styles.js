@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from 'react-native'
+import { StyleSheet, StatusBar } from 'react-native';
 
 // Styles for Set Up Profile: Step Three
 export default StyleSheet.create({
@@ -49,6 +49,9 @@ export default StyleSheet.create({
     lineHeight: 30,
     textAlign: 'center',
   },
+  noAccessButtonContainer: {
+    marginTop: 20,
+  },
   button: {
     height: 45,
     borderRadius: 45,
@@ -97,4 +100,4 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
-})
+});
