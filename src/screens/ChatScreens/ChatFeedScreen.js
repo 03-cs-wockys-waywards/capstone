@@ -56,6 +56,7 @@ export default function ChatFeedScreen({ navigation }) {
           chatRooms &&
           chatRooms
             .filter((chatRoom) => chatRoom.messages)
+            .sort((a, b) => b.latestMessage.createdAt - a.latestMessage.createdAt)
             .map((chatRoom) => {
               const { id, latestMessage, displayData } = chatRoom;
               const match = getMatch(displayData);
