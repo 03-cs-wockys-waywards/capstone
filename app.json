@@ -1,12 +1,8 @@
 {
   "expo": {
-    "name": "React Native Firebase",
-    "slug": "react-native-firebase",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "name": "Tingle",
+    "slug": "tingle",
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,13 +14,11 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
-    "description": "Built by the team behind https://www.instamobile.io https://www.iosapptemplates.com https://www.instaflutter.com and https://www.instakotlin.com",
-    "githubUrl": "https://github.com/instamobile/react-native-firebase"
+    "description": "Tingle is a social media app that cultivates connections between people through selected niche interests.",
+    "githubUrl": "https://github.com/03-cs-wockys-waywards/capstone"
   }
 }
