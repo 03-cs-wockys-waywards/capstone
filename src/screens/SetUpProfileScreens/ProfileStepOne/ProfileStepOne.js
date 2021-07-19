@@ -16,7 +16,6 @@ import { editUserInfo } from '../../../store/userReducer';
 
 export default function ProfileStepOne({ navigation, route }) {
   const { email, password } = route.params;
-
   const reduxFirstName = useSelector((state) => state.user.firstName);
   const reduxLastName = useSelector((state) => state.user.lastName);
   const reduxPronouns = useSelector((state) => state.user.pronouns);
@@ -43,27 +42,21 @@ export default function ProfileStepOne({ navigation, route }) {
     }
   };
 
-  // useEffect(() => {
-  //   if (pronouns.includes('undisclosed')) {
-  //     const filteredPronouns = pronouns.filter(
-  //       (pronoun) => pronoun === 'undisclosed'
-  //     );
-  //     setPronouns(filteredPronouns);
-  //   } else {
-  //     const filteredPronouns = pronouns.filter(
-  //       (pronoun) => pronoun !== 'undisclosed'
-  //     );
-  //     setPronouns(filteredPronouns);
-  //   }
-  // }, [pronouns]);
-
   const handleCheckboxPress = (value) => {
     let newState = [...pronouns, value];
     // prevent pushing duplicate values into state
     if (pronouns.includes(value)) {
       newState = newState.filter((pronoun) => pronoun !== value);
+      setPronouns(newState);
     }
-    setPronouns(newState);
+    // mutually exclusive I'd rather not say button
+    if (value === 'undisclosed') {
+      newState = newState.filter((option) => option === 'undisclosed');
+      setPronouns(newState);
+    } else {
+      newState = newState.filter((option) => option !== 'undisclosed');
+      setPronouns(newState);
+    }
   };
 
   return (
