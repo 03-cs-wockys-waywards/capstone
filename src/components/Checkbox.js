@@ -1,7 +1,7 @@
-import React from 'react'
-import { CheckBox } from 'react-native-elements'
+import React from 'react';
+import { CheckBox } from 'react-native-elements';
 
-export default function Checkbox({ state, setState, name, value }) {
+export default function Checkbox({ state, setState, name, value, onPress }) {
   return (
     <>
       <CheckBox
@@ -23,14 +23,34 @@ export default function Checkbox({ state, setState, name, value }) {
         uncheckedIcon="check-circle"
         checkedColor="#4B9CED"
         checked={state.includes(value)}
+        // onPress={onPress}
         onPress={() => {
-          let newState = [...state, value]
+          let newState = [...state, value];
+          // prevent pushing duplicate values into state
           if (state.includes(value)) {
-            newState = newState.filter((pronoun) => pronoun !== value)
+            newState = newState.filter((option) => option !== value);
+            console.log('newState - first if', newState);
+
+            setState(newState);
           }
-          setState(newState)
+          if (value === 'undisclosed') {
+            newState = newState.filter((option) => option === 'undisclosed');
+            console.log('newState - second if', newState);
+            setState(newState);
+
+            // setState(filteredState);
+          } else {
+            newState = newState.filter((option) => option !== 'undisclosed');
+            console.log('newState - third if', newState);
+
+            setState(newState);
+
+            // setState(filteredState);
+          }
+          console.log('state', state);
+          // setState(newState);
         }}
       />
     </>
-  )
+  );
 }
