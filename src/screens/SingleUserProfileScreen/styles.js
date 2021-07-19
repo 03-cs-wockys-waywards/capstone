@@ -72,12 +72,17 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingVertical: '10%',
+    paddingVertical: '15%',
     paddingHorizontal: '5%',
   },
   modalImage: {
     width: '100%',
     height: '100%',
+  },
+  closeButton: {
+    width: 30,
+    marginLeft: '90%',
+    marginTop: '2%',
   },
   profileInfoContainer: {
     position: 'absolute',
