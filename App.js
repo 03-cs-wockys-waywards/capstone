@@ -102,7 +102,7 @@ export class App extends Component {
   render() {
     const { loading, user, isLoggedIn, fontsLoaded } = this.state
 
-    if (loading) {
+    if (loading && !fontsLoaded) {
       return <></>
     }
 
