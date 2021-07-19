@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from 'react-native'
+import { StyleSheet, StatusBar } from 'react-native';
 
 // Styles for Set Up Profile: Step One
 export default StyleSheet.create({
@@ -12,7 +12,7 @@ export default StyleSheet.create({
   headerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   headerText: {
     fontSize: 32,
@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   subtitle: {
     textAlign: 'center',
-    width: 250,
+    width: '80%',
     fontFamily: 'Lato_300Light_Italic',
     fontSize: 16,
   },
@@ -59,6 +59,6 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     left: 0,
     right: 0,
-    bottom: '0%',
+    bottom: '5%',
   },
-})
+});
