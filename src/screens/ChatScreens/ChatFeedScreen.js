@@ -2,15 +2,10 @@ import { firebase } from "../../firebaseSpecs/config";
 import "firebase/firestore";
 import "firebase/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchPotentialMatches,
-  setMatches,
-} from "../../store/potentialMatchesReducer";
+import React from "react";
+import { useSelector } from "react-redux";
 import { SafeAreaView, ScrollView, View, Text } from "react-native";
 import ChatFeedRow from "../../components/ChatFeedRow";
-import ChatRoomScreen from "./ChatRoomScreen";
 import styles from "./styles";
 
 // THIS ISN'T WORKING & I CANT FIGURE OUT WHY
@@ -43,6 +38,11 @@ export default function ChatFeedScreen({ navigation }) {
     idField: "id",
   });
 
+  const getMatch = (displayData) => {
+    const [matchId] = Object.keys(displayData).filter((id) => id !== currentUser.id);
+    return displayData[matchId];
+  }
+
   const handlePress = (id) => {
     navigation.navigate("ChatRoom", { docId: id });
   };
@@ -56,17 +56,18 @@ export default function ChatFeedScreen({ navigation }) {
           chatRooms &&
           chatRooms
             .filter((chatRoom) => chatRoom.messages)
+            .sort((a, b) => b.latestMessage.createdAt - a.latestMessage.createdAt)
             .map((chatRoom) => {
-              const { id, latestMessage } = chatRoom;
+              const { id, latestMessage, displayData } = chatRoom;
+              const match = getMatch(displayData);
+              const { firstName, lastName, avatar } = match;
               return (
                 <ChatFeedRow
                   key={id}
-                  avatar={null}
-                  firstName={"Placeholder"}
-                  lastName={"X"}
-                  latestMessage={
-                    latestMessage ? latestMessage.text : "Start chatting!"
-                  }
+                  avatar={avatar}
+                  firstName={firstName}
+                  lastName={lastName}
+                  latestMessage={latestMessage.text}
                   handlePress={() => handlePress(id)}
                 />
               );

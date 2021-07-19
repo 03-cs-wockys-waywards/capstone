@@ -64,7 +64,7 @@ export class App extends Component {
       fontsLoaded: false,
     }
 
-    this.loadFontsAsync = this.loadFontsAsync.bind(this)
+    this.loadFontsAsync = this.loadFontsAsync.bind(this);
   }
 
   async loadFontsAsync() {
@@ -77,7 +77,6 @@ export class App extends Component {
 
     const usersRef = firebase.firestore().collection('users');
     firebase.auth().onAuthStateChanged((user) => {
-      //console.log('USER in COMPONENT DID MOUNT in APP: ', user)
       if (user) {
         usersRef
           .doc(user.uid)
