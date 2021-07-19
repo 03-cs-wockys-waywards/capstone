@@ -5,7 +5,7 @@ export default StyleSheet.create({
   container: {
     flexGrow: 1,
     flexDirection: 'column',
-    marginHorizontal: '20%',
+    //marginHorizontal: '20%',
     marginTop: '50%',
     alignContent: 'center',
     justifyContent: 'center',
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     fontWeight: '400',
     textAlign: 'center',
     marginBottom: 75,
-    marginTop: -65,
+    marginTop: -50,
     fontFamily: 'Lato_300Light_Italic',
     letterSpacing: 0.6,
     color: '#F4D4E1',
