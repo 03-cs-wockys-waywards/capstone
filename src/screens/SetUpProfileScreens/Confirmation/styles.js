@@ -17,7 +17,7 @@ export default StyleSheet.create({
     marginHorizontal: '10%',
   },
   headerText: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: '600',
     lineHeight: 36,
     marginBottom: 5,
