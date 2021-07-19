@@ -16,8 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUserInfo } from '../../../store/userReducer';
 import styles from './styles';
-
-let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tingle-capstone/upload';
+import { CLOUDINARY_URL, upload_preset } from '@env';
 
 const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631f9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80`;
 
@@ -34,7 +33,7 @@ export default function AddProfilePic({ navigation, route }) {
 
   const [selectedImage, setSelectedImage] = useState(profilePicture || null);
   const [photoUrl, setPhotoUrl] = useState(null);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,7 +59,7 @@ export default function AddProfilePic({ navigation, route }) {
 
       let data = {
         file: base64Img,
-        upload_preset: 'iy4cnozl',
+        upload_preset,
       };
 
       fetch(CLOUDINARY_URL, {
@@ -92,7 +91,7 @@ export default function AddProfilePic({ navigation, route }) {
 
       let data = {
         file: base64Img,
-        upload_preset: 'iy4cnozl',
+        upload_preset,
       };
 
       fetch(CLOUDINARY_URL, {
@@ -121,7 +120,7 @@ export default function AddProfilePic({ navigation, route }) {
   const navigateToNext = () => {
     navigation.navigate('Confirmation', { password, defaultPhotoBool });
   };
-  
+
   if (hasCameraPermission === null || hasGalleryPermission === false) {
     return (
       <SafeAreaView style={styles.noAccessMessageContainer}>
