@@ -71,12 +71,13 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingVertical: '10%',
+    paddingHorizontal: '5%',
   },
   modalImage: {
-    borderRadius: 15,
-    width: '95%',
-    height: '90%',
+    width: '100%',
+    height: '100%',
   },
   profileInfoContainer: {
     position: 'absolute',
