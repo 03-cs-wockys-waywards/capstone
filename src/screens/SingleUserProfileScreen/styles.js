@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -67,6 +67,24 @@ export default StyleSheet.create({
   imageStyle: {
     borderRadius: 15,
   },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingVertical: '15%',
+    paddingHorizontal: '5%',
+  },
+  modalImage: {
+    width: '100%',
+    height: '100%',
+  },
+  closeButton: {
+    position: 'absolute',
+    width: 30,
+    marginLeft: '87%',
+    marginTop: '2%',
+  },
   profileInfoContainer: {
     position: 'absolute',
     bottom: 20,
@@ -74,6 +92,7 @@ export default StyleSheet.create({
     width: '90%',
     borderRadius: 15,
     paddingVertical: '2%',
+    marginHorizontal: '5%',
   },
   interestsContainer: {
     flexWrap: 'wrap',
@@ -100,4 +119,4 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     marginVertical: '5%',
   },
-})
+});
