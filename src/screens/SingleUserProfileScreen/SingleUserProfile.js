@@ -69,7 +69,6 @@ export default function SingleUserProfile({ route }) {
         <Pressable onPressIn={handlePress}>
           <ImageBackground
             source={{ uri: user.profilePicture }}
-            defaultSource={defaultProfilePicture}
             style={styles.image}
             imageStyle={styles.imageStyle}
           >
