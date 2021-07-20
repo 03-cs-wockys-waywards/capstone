@@ -36,31 +36,33 @@ export default function UserDetails({ user }) {
   };
 
   return (
-    <Pressable onPressIn={handlePress}>
-      <ImageBackground
-        // image source must be in {uri: linkToPhoto } format!
-        source={{ uri: profilePicture ? profilePicture : null }}
-        style={styles.image}
-        imageStyle={styles.imageStyle}
-      >
-        <View style={styles.profileInfoContainer}>
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.nameText}>
-              {firstName} {lastName[0]}.
-            </Text>
-          </View>
-          <Text style={styles.pronounText}>{renderPronouns(pronouns)}</Text>
-          <Text style={styles.subheadingText}>Interests</Text>
-          <View style={styles.interestsContainer}>
-            {renderInterests(interests)}
-          </View>
+    <>
+      <Pressable onPressIn={handlePress}>
+        <ImageBackground
+          // image source must be in {uri: linkToPhoto } format!
+          source={{ uri: profilePicture ? profilePicture : null }}
+          style={styles.image}
+          imageStyle={styles.imageStyle}
+        >
+          <EnlargedImageModel
+            user={user}
+            modalVisible={modalVisible}
+            closeModal={handlePress}
+          />
+        </ImageBackground>
+      </Pressable>
+      <View style={styles.profileInfoContainer}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={styles.nameText}>
+            {firstName} {lastName[0]}.
+          </Text>
         </View>
-        <EnlargedImageModel
-          user={user}
-          modalVisible={modalVisible}
-          closeModal={handlePress}
-        />
-      </ImageBackground>
-    </Pressable>
+        <Text style={styles.pronounText}>{renderPronouns(pronouns)}</Text>
+        <Text style={styles.subheadingText}>Interests</Text>
+        <View style={styles.interestsContainer}>
+          {renderInterests(interests)}
+        </View>
+      </View>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -74,6 +74,7 @@ export default StyleSheet.create({
     width: '90%',
     borderRadius: 15,
     paddingVertical: '2%',
+    marginHorizontal: '5%',
   },
   interestsContainer: {
     flexWrap: 'wrap',
@@ -100,4 +101,4 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     marginVertical: '5%',
   },
-})
+});

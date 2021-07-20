@@ -73,43 +73,6 @@ export default function SingleUserProfile({ route }) {
             style={styles.image}
             imageStyle={styles.imageStyle}
           >
-            <View style={styles.profileInfoContainer}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Text style={styles.nameText}>
-                  {renderName(user.firstName, user.lastName)}
-                </Text>
-                <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
-                  {like ? (
-                    <Icon
-                      type="material-community"
-                      name="heart"
-                      size={25}
-                      color="#E8073F"
-                    />
-                  ) : (
-                    <Icon
-                      type="material-community"
-                      name="heart-plus-outline"
-                      size={25}
-                      color="#E8073F"
-                    />
-                  )}
-                </DoubleTap>
-              </View>
-              <Text style={styles.pronounText}>
-                {renderPronouns(user.pronouns)}
-              </Text>
-              <Text style={styles.subheadingText}>Interests</Text>
-              <View style={styles.interestsContainer}>
-                {renderInterests(user.interests)}
-              </View>
-            </View>
             <EnlargedImageModel
               user={user}
               modalVisible={modalVisible}
@@ -117,6 +80,43 @@ export default function SingleUserProfile({ route }) {
             />
           </ImageBackground>
         </Pressable>
+        <View style={styles.profileInfoContainer}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Text style={styles.nameText}>
+              {renderName(user.firstName, user.lastName)}
+            </Text>
+            <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
+              {like ? (
+                <Icon
+                  type="material-community"
+                  name="heart"
+                  size={25}
+                  color="#E8073F"
+                />
+              ) : (
+                <Icon
+                  type="material-community"
+                  name="heart-plus-outline"
+                  size={25}
+                  color="#E8073F"
+                />
+              )}
+            </DoubleTap>
+          </View>
+          <Text style={styles.pronounText}>
+            {renderPronouns(user.pronouns)}
+          </Text>
+          <Text style={styles.subheadingText}>Interests</Text>
+          <View style={styles.interestsContainer}>
+            {renderInterests(user.interests)}
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
