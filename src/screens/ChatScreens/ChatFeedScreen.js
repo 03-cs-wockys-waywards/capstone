@@ -60,7 +60,7 @@ export default function ChatFeedScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dee2eb'
+    backgroundColor: '#F4ECD4'
   },
   scrollContainer: {
     paddingBottom: '15%',
