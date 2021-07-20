@@ -52,9 +52,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: '500',
     lineHeight: 19,
     marginTop: 15,
     paddingTop: 3,
+    fontFamily: 'Lato_700Bold',
+    letterSpacing: 0.25,
   },
 })

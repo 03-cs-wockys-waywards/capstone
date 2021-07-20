@@ -28,9 +28,7 @@ export class SearchScreen extends Component {
 
   componentDidMount() {
     // filter out the current user from discover list
-    const discoverUsers = this.props.discoverUsers.filter(
-      (person) => person.id !== this.props.user.id
-    );
+    const discoverUsers = this.props.discoverUsers;
     this.setState({ originalData: discoverUsers });
   }
 

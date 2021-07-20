@@ -39,7 +39,6 @@ export default StyleSheet.create({
   },
   userName: {
     fontSize: 19,
-    fontWeight: '700',
     marginRight: 10,
     fontFamily: 'Lato_900Black',
     letterSpacing: 0.5,
@@ -61,10 +60,16 @@ export default StyleSheet.create({
   },
   emptyMessage: {
     fontSize: 18,
-    fontWeight: '600',
     textAlign: 'center',
     paddingHorizontal: '10%',
     lineHeight: 30,
     color: '#fff',
+    fontFamily: 'Lato_900Black_Italic',
+    letterSpacing: 0.5,
+  },
+  toggleText: {
+    fontSize: 14,
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.3,
   },
 })
