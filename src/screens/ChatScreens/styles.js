@@ -3,9 +3,10 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
+    backgroundColor: '#F4ECD4',
   },
   scrollContainer: {
+    margin: 10,
     paddingBottom: '15%',
   },
   headerContainer: {
@@ -16,11 +17,11 @@ export default StyleSheet.create({
   },
   headerText: {
     fontSize: 30,
-    fontWeight: '600',
-    lineHeight: 36,
+    fontFamily: "Lato_900Black",
+    letterSpacing: 0.35,
     marginBottom: 5,
+    marginTop: 10,
   },
-  chatInputContainer: {
-    margin: 0
-  }
 });
+
+// 'c2d831', '#D4E9F4'

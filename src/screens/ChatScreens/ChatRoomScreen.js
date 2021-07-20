@@ -86,7 +86,7 @@ export default function ChatRoomScreen({ route }) {
           </View>
         )}
       </ScrollView>
-      <View style={styles.chatInputContainer}>
+      <View>
         <ChatInput text={text} setText={setText} sendMessage={sendMessage} />
       </View>
     </SafeAreaView>

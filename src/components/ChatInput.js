@@ -26,6 +26,7 @@ export default function ChatInput({ text, setText, sendMessage }) {
       containerStyle={styles.container}
       inputContainerStyle={styles.inputContainer}
       inputStyle={styles.inputStyle}
+      valueStyle={styles.text}
     />
   );
 }
@@ -41,5 +42,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   inputStyle: {
+  },
+  text: {
+    fontSize: 16,
+    fontFamily: "Lato_400Regular",
   }
 });
