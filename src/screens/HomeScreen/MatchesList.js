@@ -53,16 +53,19 @@ export class MatchesList extends Component {
     const currentUserLikes = user.likes
 
     // look through current user's likes array & find matches
-    // const matches = potentialMatches.filter((user) =>
-    //   currentUserLikes.includes(user.id)
-    // )
+    const matches = potentialMatches.filter((user) =>
+      currentUserLikes.includes(user.id)
+    )
 
     return (
       <FlatList
-        data={potentialMatches}
+        data={matches}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        initialNumToRender={7}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        updateCellsBatchingPeriod={70}
+        windowSize={1}
         ListEmptyComponent={EmptyMessage}
         onRefresh={() => this.onRefresh()}
         refreshing={this.state.isFetching}

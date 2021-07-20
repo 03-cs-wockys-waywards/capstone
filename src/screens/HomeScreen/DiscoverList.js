@@ -56,7 +56,10 @@ export class DiscoverList extends Component {
         data={users}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        initialNumToRender={7}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        updateCellsBatchingPeriod={70}
+        windowSize={1}
         ListEmptyComponent={EmptyMessage}
         onRefresh={() => this.onRefresh()}
         refreshing={this.state.isFetching}
