@@ -22,7 +22,7 @@ export default function ChatBubble({ message, user }) {
       marginLeft: 4,
       marginHorizontal: 4,
       borderRadius: 50,
-      backgroundColor: '#c2d831',
+      backgroundColor: "#D9E77E",
       marginTop: 3,
     },
     text: {

@@ -1,15 +1,14 @@
 import React from "react";
 import { Input, Icon } from "react-native-elements";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput, View, KeyboardAvoidingView, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function ChatInput({ text, setText, sendMessage }) {
   return (
     <Input
-    onChangeText={setText}
+      onChangeText={setText}
       value={text}
-      placeholder="Message"
-      multiline={true}
+      placeholder="Message..."
       rightIcon={
         text ? (
         <TouchableOpacity onPress={() => sendMessage()}>
@@ -17,6 +16,7 @@ export default function ChatInput({ text, setText, sendMessage }) {
             type="material-community"
             name="arrow-up-circle"
             size={28}
+            color={"#2788EA"}
           />
         </TouchableOpacity>
         ) : (
@@ -25,7 +25,7 @@ export default function ChatInput({ text, setText, sendMessage }) {
       }
       containerStyle={styles.container}
       inputContainerStyle={styles.inputContainer}
-      inputStyle={styles.inputStyle}
+      inputStyle={styles.input}
       valueStyle={styles.text}
     />
   );
@@ -33,18 +33,21 @@ export default function ChatInput({ text, setText, sendMessage }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
   },
-  inputContainer: {
-    borderRadius: 50,
-    backgroundColor: "#FAFBFC",
-    marginVertical: 20,
-    paddingHorizontal: 10,
-    fontSize: 17,
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: "space-around"
   },
-  inputStyle: {
+  header: {
+    fontSize: 36,
+    marginBottom: 48
   },
-  text: {
-    fontSize: 16,
-    fontFamily: "Lato_400Regular",
-  }
+  textInput: {
+    height: 40,
+    borderColor: "#000000",
+    borderBottomWidth: 1,
+    marginBottom: 36
+  },
 });

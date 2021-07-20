@@ -8,12 +8,16 @@ import {
   ScrollView,
   View,
   Text,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
   TextInput,
-  TouchableOpacity,
+  Platform,
+  Button,
 } from "react-native";
 import ChatBubble from "../../components/ChatBubble";
 import ChatInput from "../../components/ChatInput";
-import { Icon } from "react-native-elements";
+import KeyboardAvoidingComponent from "./KeyboardAvoidingComponent";
 import styles from "./styles";
 
 export default function ChatRoomScreen({ route }) {
@@ -61,34 +65,45 @@ export default function ChatRoomScreen({ route }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
-        {loading ? (
-          <></>
-        ) : (
-          <View>
-            <View style={styles.headerContainer}>
-              <Text
-                style={styles.headerText}
-              >{`${match.firstName} ${match.lastName[0]}.`}</Text>
+    <SafeAreaView style={{ flexGrow: 1 }}>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {loading ? (
+            <></>
+          ) : (
+            <View>
+              <View style={styles.headerContainer}>
+                <Text
+                  style={styles.headerText}
+                >{`${match.firstName} ${match.lastName[0]}.`}</Text>
+              </View>
+              {messages &&
+                messages.map((message, index) => {
+                  const { text, from } = message;
+                  return (
+                    <ChatBubble
+                      key={index}
+                      message={text}
+                      user={from === currentUser.id ? "currentUser" : "match"}
+                    />
+                  );
+                })}
             </View>
-            {messages &&
-              messages.map((message, index) => {
-                const { text, from } = message;
-                return (
-                  <ChatBubble
-                    key={index}
-                    message={text}
-                    user={from === currentUser.id ? "currentUser" : "match"}
-                  />
-                );
-              })}
-          </View>
-        )}
-      </ScrollView>
-      <View>
-        <ChatInput text={text} setText={setText} sendMessage={sendMessage} />
+          )}
+          <ChatInput text={text} setText={setText} sendMessage={sendMessage} />
+          <></>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
+}
+
+{/* <KeyboardAvoidingComponent text={text} setText={setText} sendMessage={sendMessage} /> */}
+// <KeyboardAvoidingComponent />
+{
+  /* <ChatInput
+  text={text}
+  setText={setText}
+  sendMessage={sendMessage}
+/> */
 }
