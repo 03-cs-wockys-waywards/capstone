@@ -36,6 +36,8 @@ export default StyleSheet.create({
     fontWeight: '600',
     paddingLeft: 15,
     lineHeight: 30,
+    fontFamily: 'Lato_700Bold_Italic',
+    letterSpacing: 0.5,
   },
   nameText: {
     fontSize: 22,
@@ -58,6 +60,9 @@ export default StyleSheet.create({
   profilePreviewContainer: {
     margin: 15,
     marginBottom: 25,
+    shadowColor: 'black',
+    shadowOffset: { height: 5, width: 3 },
+    shadowOpacity: 0.3,
   },
   image: {
     alignItems: 'center',
@@ -66,6 +71,7 @@ export default StyleSheet.create({
     width: '100%',
     height: 600,
     backgroundColor: '#d3d3d3',
+    shadowRadius: 3,
   },
   imageStyle: {
     borderRadius: 15,

@@ -43,7 +43,7 @@ export default StyleSheet.create({
     letterSpacing: 0.25,
   },
   profilePreviewContainer: {
-    margin: 25,
+    margin: 15,
     shadowColor: 'black',
     shadowOffset: { height: 5, width: 3 },
     shadowOpacity: 0.3,
