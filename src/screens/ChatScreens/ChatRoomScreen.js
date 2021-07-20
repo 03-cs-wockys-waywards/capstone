@@ -45,7 +45,7 @@ export default function ChatRoomScreen({ route }) {
     return () => unsubscribe();
   }, []);
 
-  function sendMessage () {
+  function sendMessage() {
     if (!text) return;
     const { id } = currentUser;
     const data = {
@@ -58,7 +58,7 @@ export default function ChatRoomScreen({ route }) {
       latestMessage: data,
     });
     setText("");
-  };
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -85,29 +85,10 @@ export default function ChatRoomScreen({ route }) {
               })}
           </View>
         )}
-        {/* <View style={styles.textInputContainer}>
-          <TextInput
-            onChangeText={setText}
-            value={text}
-            placeholder="Message"
-            multiline={true}
-          />
-          <TouchableOpacity
-            onPress={() => sendMessage()}
-          >
-            {text ? (
-              <Icon
-                type="material-community"
-                name="arrow-up-circle"
-                size={28}
-              ></Icon>
-            ) : (
-              <></>
-            )}
-          </TouchableOpacity>
-        </View> */}
-        <ChatInput text={text} setText={setText} sendMessage={sendMessage} />
       </ScrollView>
+      <View style={styles.chatInputContainer}>
+        <ChatInput text={text} setText={setText} sendMessage={sendMessage} />
+      </View>
     </SafeAreaView>
   );
 }

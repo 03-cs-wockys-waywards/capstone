@@ -12,6 +12,7 @@ export default function ChatBubble({ message, user }) {
       marginHorizontal: 4,
       borderRadius: 50,
       backgroundColor: 'white',
+      marginTop: 3,
     },
     matchChatContainer: {
       alignSelf: 'flex-start',
@@ -22,6 +23,7 @@ export default function ChatBubble({ message, user }) {
       marginHorizontal: 4,
       borderRadius: 50,
       backgroundColor: 'yellow',
+      marginTop: 3,
     },
   });
 

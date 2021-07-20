@@ -20,23 +20,7 @@ export default StyleSheet.create({
     lineHeight: 36,
     marginBottom: 5,
   },
-  textInputContainer: {
-    display: "flex",
-    flexDirection: "row",
-    padding: 7,
-    borderWidth: 1,
-    borderRadius: 50,
-    justifyContent: "space-between",
-  },
-  // textInput: {
-  //   padding: 10,
-  //   borderWidth: 1,
-  //   borderRadius: 50,
-  //   flexGrow: 1,
-  //   alignContent: "center",
-  //   zIndex: -5
-  // },
-  sendButton: {
-    zIndex: 5
+  chatInputContainer: {
+    margin: 0
   }
 });
