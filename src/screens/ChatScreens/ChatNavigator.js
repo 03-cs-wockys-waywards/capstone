@@ -5,7 +5,7 @@ import ChatRoomScreen from './ChatRoomScreen';
 
 const ChatStack = createStackNavigator();
 
-export default function ChatNavigator({ navigation }) {
+export default function ChatNavigator() {
   return (
     <ChatStack.Navigator>
       <ChatStack.Screen

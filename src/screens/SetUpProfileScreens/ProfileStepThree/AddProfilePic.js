@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
-  Button,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { EmptyCircle, FilledCircle } from '../../../components/ProgressCircles';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { editUserInfo } from '../../../store/userReducer';
 import styles from './styles';
 import { CLOUDINARY_URL, upload_preset } from '@env';
@@ -22,16 +21,10 @@ const defaultPhoto = `https://images.unsplash.com/photo-1526047932273-341f2a7631
 
 export default function AddProfilePic({ navigation, route }) {
   const { password } = route.params;
-  const user = useSelector((state) => state.user);
-  const profilePicture = user.profilePicture;
 
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [defaultPhotoBool, setDefaultPhotoBool] = useState(false);
-  const [imageOption, setImageOption] = useState('');
-
-  const [selectedImage, setSelectedImage] = useState(profilePicture || null);
   const [photoUrl, setPhotoUrl] = useState(null);
 
   const dispatch = useDispatch();

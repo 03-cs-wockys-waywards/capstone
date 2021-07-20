@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-// import styles from "../styles";
-import { Pill } from '../../../components/Pill'
-import { getLightColorsArray } from '../../../helpers/getColorsArray'
-import { lightColors } from '../../../helpers/colors.js'
-import InterestsModal from './InterestsModal'
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Pill } from '../../../components/Pill';
+import { getLightColorsArray } from '../../../helpers/getColorsArray';
+import { lightColors } from '../../../helpers/colors.js';
+import InterestsModal from './InterestsModal';
 
 export default function UpdateInterests({ user, setUser }) {
-  const { interests } = user
-  const [colors, setColors] = useState([])
+  const { interests } = user;
+  const [colors, setColors] = useState([]);
 
   useEffect(() => {
-    const colors = getLightColorsArray(lightColors, 5)
-    setColors(colors)
-  }, [])
+    const colors = getLightColorsArray(lightColors, 5);
+    setColors(colors);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -23,11 +22,11 @@ export default function UpdateInterests({ user, setUser }) {
       </View>
       <View style={styles.interestsContainer}>
         {interests.map((interest, idx) => {
-          return <Pill key={idx} text={interest} backgroundColor={'#FEDEE6'} />
+          return <Pill key={idx} text={interest} backgroundColor={'#FEDEE6'} />;
         })}
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -58,4 +57,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato_700Bold',
     letterSpacing: 0.25,
   },
-})
+});
