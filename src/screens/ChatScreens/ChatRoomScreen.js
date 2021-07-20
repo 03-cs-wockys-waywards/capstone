@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { firebase } from "../../firebaseSpecs/config";
 import "firebase/firestore";
 import "firebase/auth";
@@ -8,12 +8,6 @@ import {
   ScrollView,
   View,
   Text,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TextInput,
-  Platform,
-  Button,
 } from "react-native";
 import ChatBubble from "../../components/ChatBubble";
 import ChatInput from "../../components/ChatInput";
@@ -28,6 +22,7 @@ export default function ChatRoomScreen({ route }) {
   const [match, setMatch] = useState({});
   const docRef = firebase.firestore().collection("messages").doc(docId);
   const [text, setText] = useState("");
+  const scrollViewRef = useRef();
 
   const getMatch = (displayData) => {
     const [matchId] = Object.keys(displayData).filter(
@@ -67,7 +62,11 @@ export default function ChatRoomScreen({ route }) {
   return (
     <SafeAreaView style={{ flexGrow: 1 }}>
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView 
+          contentContainerStyle={styles.scrollContainer}
+          ref={scrollViewRef}
+          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+        >
           {loading ? (
             <></>
           ) : (
@@ -90,16 +89,15 @@ export default function ChatRoomScreen({ route }) {
                 })}
             </View>
           )}
-          <ChatInput text={text} setText={setText} sendMessage={sendMessage} />
-          <></>
+          <KeyboardAvoidingComponent text={text} setText={setText} sendMessage={sendMessage} />
         </ScrollView>
       </View>
     </SafeAreaView>
   );
 }
 
-{/* <KeyboardAvoidingComponent text={text} setText={setText} sendMessage={sendMessage} /> */}
-// <KeyboardAvoidingComponent />
+{/* <ChatInput text={text} setText={setText} sendMessage={sendMessage} /> */}
+
 {
   /* <ChatInput
   text={text}

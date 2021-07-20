@@ -26,7 +26,8 @@ const KeyboardAvoidingComponent = ({ text, setText, sendMessage }) => {
             onChangeText={setText}
           />
           <View style={styles.btnContainer}>
-            <Button title="Submit" onPress={() => sendMessage} />
+            <Button title="Submit" onPress={() => sendMessage()} />
+
           </View>
         </View>
       </TouchableWithoutFeedback>
