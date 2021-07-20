@@ -19,14 +19,18 @@ export class MatchesList extends Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      isFetching: false,
+    }
+
     this.renderItem = this.renderItem.bind(this)
-    this.keyExtractor = this.keyExtractor.bind(this)
+    this.onRefresh = this.onRefresh.bind(this)
   }
 
   componentDidMount() {
     // get all users have our user in their likes array
-    const currentUserId = firebase.auth().currentUser.uid
-    this.props.setPotentials(currentUserId)
+    this.props.setPotentials()
+    this.setState({ isFetching: false })
   }
 
   renderItem({ item }) {
@@ -35,6 +39,13 @@ export class MatchesList extends Component {
 
   keyExtractor(item) {
     return item.id.toString()
+  }
+
+  onRefresh() {
+    this.setState({ isFetching: true }, () => {
+      this.props.setPotentials()
+      this.setState({ isFetching: false })
+    })
   }
 
   render() {
@@ -54,6 +65,8 @@ export class MatchesList extends Component {
         renderItem={renderItem}
         initialNumToRender={7}
         ListEmptyComponent={EmptyMessage}
+        onRefresh={() => this.onRefresh()}
+        refreshing={this.state.isFetching}
       />
     )
   }
@@ -67,7 +80,7 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-  setPotentials: (id) => dispatch(fetchPotentialMatches(id)),
+  setPotentials: () => dispatch(fetchPotentialMatches()),
 })
 
 export default connect(mapState, mapDispatch)(MatchesList)
