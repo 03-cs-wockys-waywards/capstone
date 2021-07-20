@@ -39,15 +39,21 @@ export default StyleSheet.create({
   },
   nameText: {
     fontSize: 22,
-    fontWeight: '600',
     lineHeight: 36,
     paddingLeft: 15,
+    marginRight: 10,
+    fontFamily: 'Lato_900Black',
+    letterSpacing: 0.5,
   },
   pronounText: {
     fontSize: 18,
     color: '#7a7a7a',
     lineHeight: 30,
     paddingLeft: 15,
+    marginBottom: 8,
+    marginTop: -6,
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.25,
   },
   profilePreviewContainer: {
     margin: 15,

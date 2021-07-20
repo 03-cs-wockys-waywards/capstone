@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
   interestText: {
     fontSize: 11,
     color: '#070C2C',
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.2,
   },
   medInterest: {
     flexDirection: 'row',
@@ -54,5 +56,7 @@ const styles = StyleSheet.create({
   medInterestText: {
     fontSize: 14,
     color: '#070C2C',
+    fontFamily: 'Lato_300Light',
+    letterSpacing: 0.2,
   },
 })

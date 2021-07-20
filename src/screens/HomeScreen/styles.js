@@ -39,7 +39,6 @@ export default StyleSheet.create({
   },
   userName: {
     fontSize: 19,
-    fontWeight: '700',
     marginRight: 10,
     fontFamily: 'Lato_900Black',
     letterSpacing: 0.5,
