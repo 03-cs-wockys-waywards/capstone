@@ -11,9 +11,10 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 const HomeStack = createStackNavigator();
 
-// replace with our actual logo
+// our logo at the top left of home
 const logo = () => <Image source={headerLogo} style={styles.logo} />;
 
+// name of single user profile
 const renderName = (route) => {
   return `${route.params.user.firstName} ${route.params.user.lastName[0]}.`;
 };
@@ -49,7 +50,7 @@ const openChatRoom = (route, navigation, currentUser) => {
               lastName: currentUser.lastName,
               avatar: currentUser.profilePicture
             }
-          }  
+          }
         });
         docId = chatRoom.id;
       }
@@ -61,14 +62,16 @@ const openChatRoom = (route, navigation, currentUser) => {
     });
 };
 
+// chat room icon at top right of single user profile
 const userChatIcon = (route, navigation) => {
   const currentUser = useSelector((state) => state.user, shallowEqual)
   return (
     <Icon
-      type="material-community"
-      name="message-outline"
+      type="ionicon"
+      name="chatbox-outline"
       size={25}
       onPress={() => openChatRoom(route, navigation, currentUser)}
+      style={{ marginRight: 20 }}
     />
   );
 };

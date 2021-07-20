@@ -26,68 +26,30 @@ export default function MainScreen(props) {
       activeColor="#E8073F"
       inactiveColor="#1261B1"
       labeled={false}
-      labelStyle={{ fontSize: 12 }}
       barStyle={{
         backgroundColor: '#fff',
         alignItems: 'center',
       }}
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline'
+          } else if (route.name === 'Search') {
+            iconName = focused ? 'search' : 'search-outline'
+          } else if (route.name === 'Chat') {
+            iconName = focused ? 'chatbox' : 'chatbox-outline'
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline'
+          }
+          return <Icon type="ionicon" name={iconName} size={size} color={color} />
+        }
+      })}
     >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon
-              type="material-community"
-              name="home"
-              color={color}
-              size={28}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={SearchNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon
-              type="material-community"
-              name="magnify"
-              color={color}
-              size={28}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Chat"
-        component={ChatNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon
-              type="material-community"
-              name="forum-outline"
-              color={color}
-              size={28}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon
-              type="material-community"
-              name="account"
-              color={color}
-              size={28}
-            />
-          ),
-        }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Search" component={SearchNavigator} />
+      <Tab.Screen name="Chat" component={ChatNavigator} />
+      <Tab.Screen name="Profile" component={ProfileNavigator} />
     </Tab.Navigator>
   )
 }
