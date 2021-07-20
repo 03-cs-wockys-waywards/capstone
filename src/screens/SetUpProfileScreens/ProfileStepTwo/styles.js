@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native'
 
 // Styles for Set Up Profile: Step Two
 export default StyleSheet.create({
@@ -75,4 +75,4 @@ export default StyleSheet.create({
     alignItems: 'center',
     bottom: '5%',
   },
-});
+})

@@ -45,6 +45,8 @@ export default function UpdatePronouns({ user, setUser }) {
         labelProps={{
           numberOfLines: 1,
         }}
+        badgeTextStyle={styles.dropdownText}
+        textStyle={styles.dropdownText}
         mode="BADGE"
         showBadgeDot={false}
         badgeColors={['#E5F4D4', '#F4ECD4']}

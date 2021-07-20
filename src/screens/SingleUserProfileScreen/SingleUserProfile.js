@@ -1,67 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import {
   ImageBackground,
   SafeAreaView,
   View,
   Text,
   Pressable,
-} from 'react-native';
-import { Icon } from 'react-native-elements';
-import DoubleTap from 'react-native-double-tap';
-import { Pill } from '../../components/Pill';
-import { getLightColorsArray } from '../../helpers/getColorsArray';
-import { lightColors } from '../../helpers/colors.js';
-import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns';
-import defaultProfilePicture from '../../../assets/images/default-profile-picture.jpg';
-import styles from './styles';
-import { _addLike, _removeLike } from '../../store/userReducer';
-import EnlargedImageModel from './EnlargedImageModal';
+} from 'react-native'
+import { Icon } from 'react-native-elements'
+
+import { Pill } from '../../components/Pill'
+import { getLightColorsArray } from '../../helpers/getColorsArray'
+import { lightColors } from '../../helpers/colors.js'
+import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
+import defaultProfilePicture from '../../../assets/images/default-profile-picture.jpg'
+import EnlargedImageModel from './EnlargedImageModal'
+import styles from './styles'
+import { _addLike, _removeLike } from '../../store/userReducer'
 
 export default function SingleUserProfile({ route }) {
-  const { user, liked } = route.params;
-  const [like, setLike] = useState(liked);
-  const [colors, setColors] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
+  const { user, liked } = route.params
+  const [like, setLike] = useState(liked)
+  const [colors, setColors] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const colors = getLightColorsArray(lightColors, 5);
-    setColors(colors);
-  }, []);
+    const colors = getLightColorsArray(lightColors, 5)
+    setColors(colors)
+  }, [])
 
   const handleLike = (id) => {
     if (!like) {
-      dispatch(_addLike(id));
-      setLike(true);
+      dispatch(_addLike(id))
+      setLike(true)
     } else {
-      dispatch(_removeLike(id));
-      setLike(false);
+      dispatch(_removeLike(id))
+      setLike(false)
     }
-  };
+  }
 
   const renderName = (firstName, lastName) => {
-    return `${firstName} ${lastName[0]}.`;
-  };
+    return `${firstName} ${lastName[0]}.`
+  }
 
   const renderPronouns = (pronouns) => {
     return pronouns
       .map((pronoun) => displaySemanticPronouns(pronoun))
-      .join(', ');
-  };
+      .join(', ')
+  }
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
       return (
         <Pill key={index} text={interest} backgroundColor={colors[index]} />
-      );
-    });
-  };
+      )
+    })
+  }
 
   const handlePress = () => {
-    setModalVisible(!modalVisible);
-  };
+    setModalVisible(!modalVisible)
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,43 +80,39 @@ export default function SingleUserProfile({ route }) {
           </ImageBackground>
         </Pressable>
         <View style={styles.profileInfoContainer}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.nameText}>
-              {renderName(user.firstName, user.lastName)}
+              {user.firstName} {user.lastName[0]}.
             </Text>
-            <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
-              {like ? (
-                <Icon
-                  type="material-community"
-                  name="heart"
-                  size={25}
-                  color="#E8073F"
-                />
-              ) : (
-                <Icon
-                  type="material-community"
-                  name="heart-plus-outline"
-                  size={25}
-                  color="#E8073F"
-                />
-              )}
-            </DoubleTap>
+            {like ? (
+              <Icon
+                type="material-community"
+                name="heart"
+                size={25}
+                color="#E8073F"
+                onPress={() => handleLike(user.id)}
+              />
+            ) : (
+              <Icon
+                type="material-community"
+                name="heart-plus-outline"
+                size={25}
+                color="#E8073F"
+                onPress={() => handleLike(user.id)}
+              />
+            )}
           </View>
           <Text style={styles.pronounText}>
             {renderPronouns(user.pronouns)}
           </Text>
-          <Text style={styles.subheadingText}>Interests</Text>
-          <View style={styles.interestsContainer}>
-            {renderInterests(user.interests)}
+          <View>
+            <Text style={styles.subheadingText}>Interests</Text>
+            <View style={styles.interestsContainer}>
+              {renderInterests(user.interests)}
+            </View>
           </View>
         </View>
       </View>
     </SafeAreaView>
-  );
+  )
 }

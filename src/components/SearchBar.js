@@ -12,6 +12,8 @@ export default function Search({ updateSearchText, searchText }) {
       lightTheme={true}
       containerStyle={styles.container}
       inputContainerStyle={styles.inputContainer}
+      inputStyle={styles.text}
+
     />
   )
 }
@@ -29,4 +31,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 10,
   },
+  text: {
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.2
+  }
 })
