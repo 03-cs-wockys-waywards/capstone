@@ -6,7 +6,6 @@ import {
   View,
   Text,
   Pressable,
-  Modal,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import DoubleTap from 'react-native-double-tap';
@@ -61,7 +60,6 @@ export default function SingleUserProfile({ route }) {
   };
 
   const handlePress = () => {
-    console.log('open larger image');
     setModalVisible(!modalVisible);
   };
 

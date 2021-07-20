@@ -80,8 +80,9 @@ export default StyleSheet.create({
     height: '100%',
   },
   closeButton: {
+    position: 'absolute',
     width: 30,
-    marginLeft: '90%',
+    marginLeft: '87%',
     marginTop: '2%',
   },
   profileInfoContainer: {

@@ -1,12 +1,5 @@
-import React, { useState } from 'react';
-import {
-  ImageBackground,
-  SafeAreaView,
-  View,
-  Text,
-  Pressable,
-  Modal,
-} from 'react-native';
+import React from 'react';
+import { ImageBackground, View, Pressable, Modal } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styles from './styles';
 
@@ -23,7 +16,7 @@ export default function EnlargedImageModel({ user, modalVisible, closeModal }) {
             <Icon
               type="font-awesome"
               name="times-circle"
-              color="#707070"
+              color="#000"
               size={34}
             />
           </Pressable>
