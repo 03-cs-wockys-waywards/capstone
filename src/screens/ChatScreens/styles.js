@@ -3,9 +3,13 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
+    height: "90%",
+    backgroundColor: '#FEF7DD',
   },
   scrollContainer: {
+    margin: 10,
     paddingBottom: '15%',
+    flexGrow: 1,
   },
   headerContainer: {
     justifyContent: 'center',
@@ -15,79 +19,21 @@ export default StyleSheet.create({
   },
   headerText: {
     fontSize: 30,
-    fontWeight: '600',
-    lineHeight: 36,
+    fontFamily: "Lato_900Black",
+    letterSpacing: 0.35,
     marginBottom: 5,
+    marginTop: 10,
   },
-  subheadingText: {
-    fontSize: 18,
-    fontWeight: '600',
-    paddingLeft: 15,
-    lineHeight: 30,
-  },
-  nameText: {
-    fontSize: 22,
-    fontWeight: '600',
-    lineHeight: 36,
-    paddingLeft: 15,
-  },
-  pronounText: {
-    fontSize: 18,
-    color: '#7a7a7a',
-    lineHeight: 30,
-    paddingLeft: 15,
-  },
-  labelText: {
-    fontSize: 16,
-    lineHeight: 19,
-    marginTop: 15,
-    marginBottom: 15,
-  },
-  profilePreviewContainer: {
-    margin: 15,
-  },
-  image: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
-    width: '100%',
-    height: 600,
-    backgroundColor: '#d3d3d3',
-  },
-  imageStyle: {
-    borderRadius: 15,
-  },
-  profileInfoContainer: {
+  inputContainer: {
+    flex: 1,
+    backgroundColor: 'green',
     position: 'absolute',
-    bottom: 10,
-    backgroundColor: '#fff',
-    width: '95%',
-    borderRadius: 15,
-    paddingVertical: '2%',
+    bottom: 0,
   },
-  interestsContainer: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingHorizontal: 10,
-  },
-  button: {
-    height: 48,
-    borderRadius: 45,
-    backgroundColor: '#136360',
-    width: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  confirmButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginVertical: '5%',
+  input: {
+    backgroundColor: 'red',
+    width: '100%',
+    height: 40,
+    color: '#ffffff'
   },
 });

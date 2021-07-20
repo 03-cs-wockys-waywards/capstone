@@ -67,6 +67,7 @@ export default StyleSheet.create({
     width: '95%',
     borderRadius: 15,
     paddingVertical: '2%',
+    marginHorizontal: '5%',
   },
   interestsContainer: {
     flexWrap: 'wrap',
