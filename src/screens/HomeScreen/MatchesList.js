@@ -63,7 +63,7 @@ export class MatchesList extends Component {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         initialNumToRender={5}
-        maxToRenderPerBatch={5}
+        maxToRenderPerBatch={7}
         updateCellsBatchingPeriod={70}
         windowSize={1}
         ListEmptyComponent={EmptyMessage}

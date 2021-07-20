@@ -60,10 +60,16 @@ export default StyleSheet.create({
   },
   emptyMessage: {
     fontSize: 18,
-    fontWeight: '600',
     textAlign: 'center',
     paddingHorizontal: '10%',
     lineHeight: 30,
     color: '#fff',
+    fontFamily: 'Lato_900Black_Italic',
+    letterSpacing: 0.5,
+  },
+  toggleText: {
+    fontSize: 14,
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.3,
   },
 })
