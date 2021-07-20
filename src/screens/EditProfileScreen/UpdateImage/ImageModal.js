@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/tingle-capstone/upload';
+import { CLOUDINARY_URL, upload_preset } from '@env';
 
 export default function ImageModal({ setUserPic }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,7 +29,7 @@ export default function ImageModal({ setUserPic }) {
 
         let data = {
           file: base64Img,
-          upload_preset: 'iy4cnozl',
+          upload_preset,
         };
 
         fetch(CLOUDINARY_URL, {
@@ -66,7 +65,7 @@ export default function ImageModal({ setUserPic }) {
 
         let data = {
           file: base64Img,
-          upload_preset: 'iy4cnozl',
+          upload_preset,
         };
 
         fetch(CLOUDINARY_URL, {

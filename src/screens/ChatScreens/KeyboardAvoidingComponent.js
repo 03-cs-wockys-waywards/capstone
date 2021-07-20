@@ -1,20 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   KeyboardAvoidingView,
   TextInput,
   StyleSheet,
-  Text,
   Platform,
   TouchableWithoutFeedback,
   Button,
   Keyboard,
-} from "react-native";
+} from 'react-native';
 
 const KeyboardAvoidingComponent = ({ text, setText, sendMessage }) => {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -27,7 +26,6 @@ const KeyboardAvoidingComponent = ({ text, setText, sendMessage }) => {
           />
           <View style={styles.btnContainer}>
             <Button title="Submit" onPress={() => sendMessage()} />
-
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -49,11 +47,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    borderColor: "#000000",
+    borderColor: '#000000',
     borderBottomWidth: 1,
   },
   btnContainer: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     marginTop: 12,
   },
 });

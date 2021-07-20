@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import { View, Text, TextInput } from 'react-native'
-import styles from './styles'
+import React from 'react';
+import { View, Text, TextInput } from 'react-native';
+import styles from './styles';
 
 export default function UpdateName({ user, setUser }) {
-  const { firstName, lastName } = user
+  const { firstName, lastName } = user;
 
   return (
     <View style={{ marginTop: 15 }}>
@@ -24,5 +24,5 @@ export default function UpdateName({ user, setUser }) {
         />
       </View>
     </View>
-  )
+  );
 }

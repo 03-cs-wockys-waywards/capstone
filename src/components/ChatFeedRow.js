@@ -1,6 +1,6 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import { Avatar, ListItem } from "react-native-elements";
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { Avatar, ListItem } from 'react-native-elements';
 
 export default function ChatFeedRow({
   avatar,
@@ -16,7 +16,7 @@ export default function ChatFeedRow({
         rounded
         size="medium"
         activeOpacity={0.25}
-        containerStyle={{borderWidth: 0.75, borderColor: '#F4D4E1'}}
+        containerStyle={{ borderWidth: 0.75, borderColor: '#F4D4E1' }}
       />
       <ListItem.Content>
         <ListItem.Title style={styles.name}>
@@ -33,13 +33,13 @@ export default function ChatFeedRow({
 const styles = StyleSheet.create({
   name: {
     fontSize: 17.5,
-    fontFamily: "Lato_900Black",
+    fontFamily: 'Lato_900Black',
     paddingBottom: 1.5,
     letterSpacing: 0.35,
   },
   latestMessage: {
     fontSize: 16,
-    fontFamily: "Lato_400Regular",
+    fontFamily: 'Lato_400Regular',
     paddingBottom: 1.5,
   },
 });
