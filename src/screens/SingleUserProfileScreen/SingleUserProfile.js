@@ -1,67 +1,62 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   ImageBackground,
   SafeAreaView,
   View,
   Text,
   Pressable,
-} from 'react-native'
-import { Icon } from 'react-native-elements'
+} from 'react-native';
+import { Icon } from 'react-native-elements';
 
-import { Pill } from '../../components/Pill'
-import { getLightColorsArray } from '../../helpers/getColorsArray'
-import { lightColors } from '../../helpers/colors.js'
-import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns'
-import defaultProfilePicture from '../../../assets/images/default-profile-picture.jpg'
-import EnlargedImageModel from './EnlargedImageModal'
-import styles from './styles'
-import { _addLike, _removeLike } from '../../store/userReducer'
+import { Pill } from '../../components/Pill';
+import { getLightColorsArray } from '../../helpers/getColorsArray';
+import { lightColors } from '../../helpers/colors.js';
+import { displaySemanticPronouns } from '../../helpers/displaySemanticPronouns';
+import EnlargedImageModel from './EnlargedImageModal';
+import styles from './styles';
+import { _addLike, _removeLike } from '../../store/userReducer';
 
 export default function SingleUserProfile({ route }) {
-  const { user, liked } = route.params
-  const [like, setLike] = useState(liked)
-  const [colors, setColors] = useState([])
-  const [modalVisible, setModalVisible] = useState(false)
+  const { user, liked } = route.params;
+  const [like, setLike] = useState(liked);
+  const [colors, setColors] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const colors = getLightColorsArray(lightColors, 5)
-    setColors(colors)
-  }, [])
+    const colors = getLightColorsArray(lightColors, 5);
+    setColors(colors);
+  }, []);
 
   const handleLike = (id) => {
     if (!like) {
-      dispatch(_addLike(id))
-      setLike(true)
+      dispatch(_addLike(id));
+      setLike(true);
     } else {
-      dispatch(_removeLike(id))
-      setLike(false)
+      dispatch(_removeLike(id));
+      setLike(false);
     }
-  }
-
-  const renderName = (firstName, lastName) => {
-    return `${firstName} ${lastName[0]}.`
-  }
+  };
 
   const renderPronouns = (pronouns) => {
     return pronouns
       .map((pronoun) => displaySemanticPronouns(pronoun))
-      .join(', ')
-  }
+      .join(', ');
+  };
 
   const renderInterests = (interests) => {
     return interests.map((interest, index) => {
       return (
         <Pill key={index} text={interest} backgroundColor={colors[index]} />
-      )
-    })
-  }
+      );
+    });
+  };
 
   const handlePress = () => {
-    setModalVisible(!modalVisible)
-  }
+    setModalVisible(!modalVisible);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -114,5 +109,5 @@ export default function SingleUserProfile({ route }) {
         </View>
       </View>
     </SafeAreaView>
-  )
+  );
 }

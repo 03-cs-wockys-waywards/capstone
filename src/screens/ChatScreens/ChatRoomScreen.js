@@ -1,18 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import { firebase } from "../../firebaseSpecs/config";
-import "firebase/firestore";
-import "firebase/auth";
-import { useSelector } from "react-redux";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-} from "react-native";
-import ChatBubble from "../../components/ChatBubble";
-import ChatInput from "../../components/ChatInput";
-import KeyboardAvoidingComponent from "./KeyboardAvoidingComponent";
-import styles from "./styles";
+import React, { useState, useEffect, useRef } from 'react';
+import { firebase } from '../../firebaseSpecs/config';
+import 'firebase/firestore';
+import 'firebase/auth';
+import { useSelector } from 'react-redux';
+import { SafeAreaView, ScrollView, View, Text } from 'react-native';
+import ChatBubble from '../../components/ChatBubble';
+import KeyboardAvoidingComponent from './KeyboardAvoidingComponent';
+import styles from './styles';
 
 export default function ChatRoomScreen({ route }) {
   const { docId } = route.params;
@@ -20,8 +14,8 @@ export default function ChatRoomScreen({ route }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [match, setMatch] = useState({});
-  const docRef = firebase.firestore().collection("messages").doc(docId);
-  const [text, setText] = useState("");
+  const docRef = firebase.firestore().collection('messages').doc(docId);
+  const [text, setText] = useState('');
   const scrollViewRef = useRef();
 
   const getMatch = (displayData) => {
@@ -56,16 +50,18 @@ export default function ChatRoomScreen({ route }) {
       messages: firebase.firestore.FieldValue.arrayUnion(data),
       latestMessage: data,
     });
-    setText("");
+    setText('');
   }
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }}>
       <View style={styles.container}>
-        <ScrollView 
+        <ScrollView
           contentContainerStyle={styles.scrollContainer}
           ref={scrollViewRef}
-          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+          onContentSizeChange={() =>
+            scrollViewRef.current.scrollToEnd({ animated: true })
+          }
         >
           {loading ? (
             <></>
@@ -83,25 +79,19 @@ export default function ChatRoomScreen({ route }) {
                     <ChatBubble
                       key={index}
                       message={text}
-                      user={from === currentUser.id ? "currentUser" : "match"}
+                      user={from === currentUser.id ? 'currentUser' : 'match'}
                     />
                   );
                 })}
             </View>
           )}
-          <KeyboardAvoidingComponent text={text} setText={setText} sendMessage={sendMessage} />
+          <KeyboardAvoidingComponent
+            text={text}
+            setText={setText}
+            sendMessage={sendMessage}
+          />
         </ScrollView>
       </View>
     </SafeAreaView>
   );
-}
-
-{/* <ChatInput text={text} setText={setText} sendMessage={sendMessage} /> */}
-
-{
-  /* <ChatInput
-  text={text}
-  setText={setText}
-  sendMessage={sendMessage}
-/> */
 }

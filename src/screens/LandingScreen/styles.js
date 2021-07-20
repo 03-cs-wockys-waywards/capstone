@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 // Styles for App Landing Page
 export default StyleSheet.create({
   container: {
     flexGrow: 1,
     flexDirection: 'column',
-    //marginHorizontal: '20%',
     marginTop: '50%',
     alignContent: 'center',
     justifyContent: 'center',
@@ -55,6 +54,5 @@ export default StyleSheet.create({
   logo: {
     width: '100%',
     resizeMode: 'center',
-    //marginTop: -50,
   },
-})
+});

@@ -1,5 +1,3 @@
-// everyone else's likes should reference Jennie's UID
-
 module.exports = [
   // RHETTA HAYWOOD MAIN CHARACTER
   // {
