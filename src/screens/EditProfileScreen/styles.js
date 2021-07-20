@@ -31,16 +31,15 @@ export default StyleSheet.create({
   label: {
     flexGrow: 1,
     fontSize: 16,
-    letterSpacing: 0.125,
-    fontWeight: '500',
     lineHeight: 19,
     marginTop: 10,
     marginBottom: 15,
     paddingTop: 3,
+    fontFamily: 'Lato_700Bold',
+    letterSpacing: 0.25,
   },
   input: {
     fontSize: 16,
-    fontWeight: '300',
     letterSpacing: 0.35,
     borderBottomWidth: 1,
     borderBottomColor: '#132077',
@@ -48,6 +47,7 @@ export default StyleSheet.create({
     height: 30,
     marginBottom: 6,
     paddingLeft: 10,
+    fontFamily: 'Lato_300Light',
   },
   pronounContainer: {
     display: 'flex',
@@ -95,5 +95,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
+  },
+  dropdownText: {
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.25,
   },
 })

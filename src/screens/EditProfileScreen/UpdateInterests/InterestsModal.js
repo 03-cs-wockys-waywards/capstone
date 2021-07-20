@@ -139,6 +139,9 @@ export const styles = StyleSheet.create({
   },
   subtitle: {
     marginBottom: 10,
+    fontSize: 16,
+    fontFamily: 'Lato_400Regular',
+    color: '#F93A6A',
   },
   flatListContainer: {
     alignItems: 'center',
