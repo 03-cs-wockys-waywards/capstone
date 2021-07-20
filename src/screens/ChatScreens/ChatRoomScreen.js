@@ -97,8 +97,7 @@ export default function ChatRoomScreen({ route }) {
 }
 
 {/* <ChatInput text={text} setText={setText} sendMessage={sendMessage} /> */}
-{/* <KeyboardAvoidingComponent text={text} setText={setText} sendMessage={sendMessage} /> */}
-// <KeyboardAvoidingComponent />
+
 {
   /* <ChatInput
   text={text}

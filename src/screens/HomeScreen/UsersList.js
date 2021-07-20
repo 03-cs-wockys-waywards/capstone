@@ -1,46 +1,46 @@
-import React, { Component } from 'react';
-import { SafeAreaView, Text, ImageBackground, View } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
-import { firebase } from '../../firebaseSpecs/config';
-import TutorialModal from '../../components/TutorialModal';
-import DiscoverList from './DiscoverList';
-import MatchesList from './MatchesList';
-import styles from './styles';
-import image from '../../../assets/gradient.png';
+import React, { Component } from 'react'
+import { SafeAreaView, Text, ImageBackground, View } from 'react-native'
+import { ButtonGroup } from 'react-native-elements'
+import { firebase } from '../../firebaseSpecs/config'
+import TutorialModal from '../../components/TutorialModal'
+import DiscoverList from './DiscoverList'
+import MatchesList from './MatchesList'
+import styles from './styles'
+import image from '../../../assets/gradient.png'
 
 export default class UsersList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       selectedIndex: 0,
       modalVisible: false,
       modalAppeared: false,
-    };
-    this.updateIndex = this.updateIndex.bind(this);
+    }
+    this.updateIndex = this.updateIndex.bind(this)
   }
 
   componentDidMount() {
-    const { modalAppeared } = this.state.modalAppeared;
-    const creationTime = firebase.auth().currentUser.metadata.creationTime;
-    const lastSignInTime = firebase.auth().currentUser.metadata.lastSignInTime;
+    const { modalAppeared } = this.state.modalAppeared
+    const creationTime = firebase.auth().currentUser.metadata.creationTime
+    const lastSignInTime = firebase.auth().currentUser.metadata.lastSignInTime
     if (modalAppeared) {
-      this.setState({ modalVisible: false });
+      this.setState({ modalVisible: false })
     } else if (!modalAppeared && creationTime === lastSignInTime) {
-      this.setState({ modalVisible: true, modalAppeared: true });
+      this.setState({ modalVisible: true, modalAppeared: true })
     }
   }
 
   updateIndex(selectedIndex) {
-    this.setState({ selectedIndex });
+    this.setState({ selectedIndex })
   }
 
   render() {
-    const { navigation } = this.props;
-    const { selectedIndex, modalVisible } = this.state;
+    const { navigation } = this.props
+    const { selectedIndex, modalVisible } = this.state
 
-    const buttonOne = () => <Text>Discover</Text>;
-    const buttonTwo = () => <Text>Matches</Text>;
-    const buttons = [{ element: buttonOne }, { element: buttonTwo }];
+    const buttonOne = () => <Text style={styles.toggleText}>Discover</Text>
+    const buttonTwo = () => <Text style={styles.toggleText}>Matches</Text>
+    const buttons = [{ element: buttonOne }, { element: buttonTwo }]
 
     return (
       <SafeAreaView style={styles.container}>
@@ -79,6 +79,6 @@ export default class UsersList extends Component {
           </View>
         </ImageBackground>
       </SafeAreaView>
-    );
+    )
   }
 }

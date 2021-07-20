@@ -12,14 +12,17 @@ export default StyleSheet.create({
   },
   descriptionText: {
     fontSize: 18,
-    fontWeight: '600',
     textAlign: 'center',
     paddingHorizontal: '10%',
     lineHeight: 30,
     color: '#223147',
+    fontFamily: 'Lato_900Black',
+    letterSpacing: 0.5,
   },
   suggestionText: {
     fontSize: 18,
     color: '#223147',
+    fontFamily: 'Lato_400Regular',
+    letterSpacing: 0.2
   },
 })

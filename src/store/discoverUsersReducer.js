@@ -29,7 +29,11 @@ export const fetchUsersWithInterests = () => {
               const id = doc.id
               return { id, ...data }
             })
-            dispatch(setDiscoverUsers(users))
+            // filter our the current user from discover list
+            const discoverUsers = users.filter(
+              (person) => person.id !== currentUserId
+            )
+            dispatch(setDiscoverUsers(discoverUsers))
           })
       })
   }

@@ -32,18 +32,18 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    margin: 20,
+    justifyContent: 'space-evenly',
+    marginHorizontal: '10%',
   },
   buttonText: {
     fontSize: 18,
-    fontFamily: 'Lato_400Regular',
-    letterSpacing: 0.6,
+    fontFamily: 'Lato_700Bold',
+    letterSpacing: 0.75,
     color: '#EAB803',
   },
   bar: {
     fontSize: 20,
-    fontFamily: 'Lato_700Bold',
+    fontFamily: 'Lato_900Black',
     color: '#C2D831',
   },
   image: {

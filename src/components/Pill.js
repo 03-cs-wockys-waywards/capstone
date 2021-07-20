@@ -1,17 +1,17 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 export const Pill = ({ text, backgroundColor }) => {
   const bgColor = {
     backgroundColor,
-  };
+  }
 
   return (
     <View style={[styles.pillContainer, bgColor]}>
       <Text style={styles.pillText}>{text}</Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   pillContainer: {
@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
   },
   pillText: {
     color: '#000',
-    fontSize: 16,
+    fontSize: 15,
+    fontFamily: 'Lato_300Light',
+    letterSpacing: 0.2,
   },
-});
+})

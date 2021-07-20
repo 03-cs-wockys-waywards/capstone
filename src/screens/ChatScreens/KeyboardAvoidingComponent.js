@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   KeyboardAvoidingView,
@@ -27,6 +27,7 @@ const KeyboardAvoidingComponent = ({ text, setText, sendMessage }) => {
           />
           <View style={styles.btnContainer}>
             <Button title="Submit" onPress={() => sendMessage()} />
+
           </View>
         </View>
       </TouchableWithoutFeedback>
