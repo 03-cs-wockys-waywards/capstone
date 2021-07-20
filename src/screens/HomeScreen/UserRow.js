@@ -31,11 +31,9 @@ export default function UserRow({ item, navigation }) {
     if (!isLiked) {
       dispatch(_addLike(id))
       setLike(true)
-      console.log('Liked')
     } else {
       dispatch(_removeLike(id))
       setLike(false)
-      console.log('Unliked')
     }
   }
 

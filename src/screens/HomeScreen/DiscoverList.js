@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { FlatList, Text } from 'react-native'
 import { fetchUsersWithInterests } from '../../store/discoverUsersReducer'
 import UserRow from './UserRow'
-import { firebase } from '../../firebaseSpecs/config'
 import styles from './styles'
 
 const EmptyMessage = () => {
@@ -50,13 +49,11 @@ export class DiscoverList extends Component {
 
   render() {
     const { renderItem, keyExtractor } = this
-    const { user, users } = this.props
-    // filter out the current user from discover list
-    const discoverUsers = users.filter((person) => person.id !== user.id)
+    const { users } = this.props
 
     return (
       <FlatList
-        data={discoverUsers}
+        data={users}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         initialNumToRender={7}
@@ -69,7 +66,6 @@ export class DiscoverList extends Component {
 }
 
 const mapState = (state) => ({
-  user: state.user,
   users: state.discoverUsers,
 })
 

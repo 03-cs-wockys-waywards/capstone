@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { FlatList, Text, View } from 'react-native'
 import { fetchPotentialMatches } from '../../store/potentialMatchesReducer'
 import UserRow from './UserRow'
-import { firebase } from '../../firebaseSpecs/config'
 import styles from './styles'
 
 const EmptyMessage = () => {
@@ -54,13 +53,13 @@ export class MatchesList extends Component {
     const currentUserLikes = user.likes
 
     // look through current user's likes array & find matches
-    const matches = potentialMatches.filter((user) =>
-      currentUserLikes.includes(user.id)
-    )
+    // const matches = potentialMatches.filter((user) =>
+    //   currentUserLikes.includes(user.id)
+    // )
 
     return (
       <FlatList
-        data={matches}
+        data={potentialMatches}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         initialNumToRender={7}
