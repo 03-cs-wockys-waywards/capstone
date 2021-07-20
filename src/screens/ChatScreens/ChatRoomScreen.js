@@ -12,6 +12,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import ChatBubble from "../../components/ChatBubble";
+import ChatInput from "../../components/ChatInput";
+import { Icon } from "react-native-elements";
 import styles from "./styles";
 
 export default function ChatRoomScreen({ route }) {
@@ -43,7 +45,7 @@ export default function ChatRoomScreen({ route }) {
     return () => unsubscribe();
   }, []);
 
-  const sendMessage = () => {
+  function sendMessage () {
     if (!text) return;
     const { id } = currentUser;
     const data = {
@@ -70,22 +72,41 @@ export default function ChatRoomScreen({ route }) {
                 style={styles.headerText}
               >{`${match.firstName} ${match.lastName[0]}.`}</Text>
             </View>
-            {messages && messages.map((message, index) => {
-            const { text, from } = message;
-            return (
-              <ChatBubble
-                key={index}
-                message={text}
-                user={from === currentUser.id ? "currentUser" : "match"}
-              />
-            );
-          })}
+            {messages &&
+              messages.map((message, index) => {
+                const { text, from } = message;
+                return (
+                  <ChatBubble
+                    key={index}
+                    message={text}
+                    user={from === currentUser.id ? "currentUser" : "match"}
+                  />
+                );
+              })}
           </View>
         )}
-        <TextInput onChangeText={setText} value={text} placeholder="Message" />
-        <TouchableOpacity onPress={() => sendMessage()}>
-          <Text>Send</Text>
-        </TouchableOpacity>
+        {/* <View style={styles.textInputContainer}>
+          <TextInput
+            onChangeText={setText}
+            value={text}
+            placeholder="Message"
+            multiline={true}
+          />
+          <TouchableOpacity
+            onPress={() => sendMessage()}
+          >
+            {text ? (
+              <Icon
+                type="material-community"
+                name="arrow-up-circle"
+                size={28}
+              ></Icon>
+            ) : (
+              <></>
+            )}
+          </TouchableOpacity>
+        </View> */}
+        <ChatInput text={text} setText={setText} sendMessage={sendMessage} />
       </ScrollView>
     </SafeAreaView>
   );
