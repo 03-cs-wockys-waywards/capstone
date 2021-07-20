@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function ChatBubble({ message, user }) {
   const styles = StyleSheet.create({
     userChatContainer: {
-      alignSelf: 'flex-start',
+      alignSelf: 'flex-end',
       justifyContent: 'center',
       paddingVertical: 12,
       paddingHorizontal: 20,
@@ -12,6 +12,7 @@ export default function ChatBubble({ message, user }) {
       marginHorizontal: 4,
       borderRadius: 50,
       backgroundColor: 'white',
+      marginTop: 3,
     },
     matchChatContainer: {
       alignSelf: 'flex-start',
@@ -21,8 +22,13 @@ export default function ChatBubble({ message, user }) {
       marginLeft: 4,
       marginHorizontal: 4,
       borderRadius: 50,
-      backgroundColor: 'yellow',
+      backgroundColor: "#D9E77E",
+      marginTop: 3,
     },
+    text: {
+      fontSize: 16,
+      fontFamily: "Lato_400Regular",
+    }
   });
 
   return (
@@ -33,7 +39,7 @@ export default function ChatBubble({ message, user }) {
           : styles.matchChatContainer
       }
     >
-      <Text>{message}</Text>
+      <Text style={styles.text}>{message}</Text>
     </View>
   );
 }
