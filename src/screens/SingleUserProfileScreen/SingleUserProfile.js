@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { ImageBackground, SafeAreaView, View, Text } from 'react-native'
 import { Icon } from 'react-native-elements'
-import DoubleTap from 'react-native-double-tap'
 
 import { Pill } from '../../components/Pill'
 import { getLightColorsArray } from '../../helpers/getColorsArray'
@@ -34,10 +33,6 @@ export default function SingleUserProfile({ route }) {
     }
   }
 
-  const renderName = (firstName, lastName) => {
-    return `${firstName} ${lastName[0]}.`
-  }
-
   const renderPronouns = (pronouns) => {
     return pronouns
       .map((pronoun) => displaySemanticPronouns(pronoun))
@@ -66,25 +61,25 @@ export default function SingleUserProfile({ route }) {
               style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}
             >
               <Text style={styles.nameText}>
-                {renderName(user.firstName, user.lastName)}
+                {user.firstName} {user.lastName[0]}.
               </Text>
-              <DoubleTap doubleTap={() => handleLike(user.id)} delay={200}>
-                {like ? (
-                  <Icon
-                    type="material-community"
-                    name="heart"
-                    size={25}
-                    color="#E8073F"
-                  />
-                ) : (
-                  <Icon
-                    type="material-community"
-                    name="heart-plus-outline"
-                    size={25}
-                    color="#E8073F"
-                  />
-                )}
-              </DoubleTap>
+              {like ? (
+                <Icon
+                  type="material-community"
+                  name="heart"
+                  size={25}
+                  color="#E8073F"
+                  onPress={() => handleLike(user.id)}
+                />
+              ) : (
+                <Icon
+                  type="material-community"
+                  name="heart-plus-outline"
+                  size={25}
+                  color="#E8073F"
+                  onPress={() => handleLike(user.id)}
+                />
+              )}
             </View>
             <Text style={styles.pronounText}>
               {renderPronouns(user.pronouns)}
