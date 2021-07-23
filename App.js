@@ -104,7 +104,7 @@ export class App extends Component {
 
     if (loading && !fontsLoaded) {
       return <AppLoading />
-    } else {
+    } else if (!loading && fontsLoaded) {
       return (
         <Provider store={store}>
           <NavigationContainer>
