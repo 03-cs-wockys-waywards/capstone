@@ -88,6 +88,12 @@ Run `expo start`.
 
 ## Notes on Development
 
+We developed customized solutions for seeding user data, structuring chat data, and handling navigation. Read about our takeaways here:
+
+- Custom bulk seed data for users:
+- Structuring data for chat: https://medium.com/@fpenfold723/navigating-cloud-firestores-querying-limitations-802970340a6e
+- Handling nested navigation: https://medium.com/@vkim20/an-introduction-to-nested-navigation-in-react-native-4695fda86974
+
 ## Next Steps
 
 The next steps for Tingle include incorporating a concierge feature that will suggest events and schedule dates for matched users, and an anonymous endorsement feature to create a safer space for users.
