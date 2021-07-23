@@ -92,7 +92,7 @@ Run `expo start`.
 
 We developed customized solutions for seeding user data, structuring chat data, and handling navigation. Read about our takeaways here:
 
-- Custom bulk seed data for users:
+- Custom bulk seed data for users: https://medium.com/@devkarenc/journey-to-the-firebase-seeding-cloud-firestore-and-authentication-4934240438
 - Structuring data for chat: https://medium.com/@fpenfold723/navigating-cloud-firestores-querying-limitations-802970340a6e
 - Handling nested navigation: https://medium.com/@vkim20/an-introduction-to-nested-navigation-in-react-native-4695fda86974
 
@@ -107,9 +107,3 @@ Meet the team behind Tingle!
 - Karen Choi - [Github](https://github.com/DevKarenC) | [LinkedIn](https://www.linkedin.com/in/seungahchoi/)
 - Torie Kim - [Github](https://github.com/toriekim) | [LinkedIn](https://www.linkedin.com/in/victoriakim20/)
 - Fernanda Penfold - [Github](https://github.com/fernandapenfold) | [LinkedIn](https://www.linkedin.com/in/fernandapenfold/)
-
-## Disclaimer
-
-```
-
-```
