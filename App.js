@@ -62,9 +62,9 @@ export class App extends Component {
       loading: true,
       isLoggedIn: false,
       fontsLoaded: false,
-    };
+    }
 
-    this.loadFontsAsync = this.loadFontsAsync.bind(this);
+    this.loadFontsAsync = this.loadFontsAsync.bind(this)
   }
 
   async loadFontsAsync() {
@@ -104,52 +104,58 @@ export class App extends Component {
 
     if (loading && !fontsLoaded) {
       return <AppLoading />
+    } else if (!loading && fontsLoaded) {
+      return (
+        <Provider store={store}>
+          <NavigationContainer>
+            {isLoggedIn ? (
+              <Stack.Navigator
+                initialRouteName="Main"
+                headerMode="none"
+                screenOptions={screenOptions}
+              >
+                <Stack.Screen
+                  name="Main"
+                  component={MainScreen}
+                  initialParams={{ user: user }}
+                />
+              </Stack.Navigator>
+            ) : (
+              <Stack.Navigator
+                initialRouteName="Landing"
+                headerMode="none"
+                screenOptions={screenOptions}
+              >
+                <Stack.Screen
+                  name="Landing"
+                  component={LandingScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen
+                  name="Registration"
+                  component={RegistrationScreen}
+                />
+                <Stack.Screen
+                  name="ProfileStepOne"
+                  component={ProfileStepOne}
+                />
+                <Stack.Screen
+                  name="ProfileStepTwo"
+                  component={ProfileStepTwo}
+                />
+                <Stack.Screen
+                  name="ProfileStepThree"
+                  component={ProfileStepThree}
+                />
+                <Stack.Screen name="Confirmation" component={Confirmation} />
+              </Stack.Navigator>
+            )}
+            <MyStatusBar backgroundColor="white" barStyle="dark-content" />
+          </NavigationContainer>
+        </Provider>
+      )
     }
-
-    return (
-      <Provider store={store}>
-        <NavigationContainer>
-          {isLoggedIn && fontsLoaded ? (
-            <Stack.Navigator
-              initialRouteName="Main"
-              headerMode="none"
-              screenOptions={screenOptions}
-            >
-              <Stack.Screen
-                name="Main"
-                component={MainScreen}
-                initialParams={{ user: user }}
-              />
-            </Stack.Navigator>
-          ) : (
-            <Stack.Navigator
-              initialRouteName="Landing"
-              headerMode="none"
-              screenOptions={screenOptions}
-            >
-              <Stack.Screen
-                name="Landing"
-                component={LandingScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen
-                name="Registration"
-                component={RegistrationScreen}
-              />
-              <Stack.Screen name="ProfileStepOne" component={ProfileStepOne} />
-              <Stack.Screen name="ProfileStepTwo" component={ProfileStepTwo} />
-              <Stack.Screen
-                name="ProfileStepThree"
-                component={ProfileStepThree}
-              />
-              <Stack.Screen name="Confirmation" component={Confirmation} />
-            </Stack.Navigator>
-          )}
-          <MyStatusBar backgroundColor="white" barStyle="dark-content" />
-        </NavigationContainer>
-      </Provider>
-    )
   }
 }
 
