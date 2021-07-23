@@ -69,11 +69,28 @@ Run `expo start`.
 
 ## Features
 
-See Tingle in action!
+### App Features
+
+- Persistent Login: Through Firebase Authentication
+- Discover List: Displays users who share at least one common interest
+- Matches List: Displays users who have liked each other
+- Search: Can search users by interest with auto-complete using RegEx
+- Chat: Real-time, persistent chat for users to communicate through the app
+- Edit Profile: User can update profile picture, name, pronouns, and interests
+- Welcome Modal: For new users, overviewing how to use the app
+- Single User Profile: Liking functionality & pop-up photo modal
+
+### Technical Features
+
+- Registration with E-mail & Password
+- Writing to & reading from Firestore Database
+- React Navigation with nested stack & bottom tab navigators
 
 ## Notes on Development
 
 ## Next Steps
+
+The next steps for Tingle include incorporating a concierge feature that will suggest events and schedule dates for matched users, and an anonymous endorsement feature to create a safer space for users.
 
 ## Developers
 
