@@ -102,10 +102,10 @@ export class App extends Component {
   render() {
     const { loading, user, isLoggedIn, fontsLoaded } = this.state
 
-    if (loading && !fontsLoaded) {
+    if (loading) {
       return <AppLoading />
-    } else if (!loading && fontsLoaded) {
-      return (
+    } else {
+      return fontsLoaded ? (
         <Provider store={store}>
           <NavigationContainer>
             {isLoggedIn ? (
@@ -154,6 +154,8 @@ export class App extends Component {
             <MyStatusBar backgroundColor="white" barStyle="dark-content" />
           </NavigationContainer>
         </Provider>
+      ) : (
+        <AppLoading/>
       )
     }
   }
