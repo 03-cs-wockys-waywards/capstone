@@ -25,6 +25,8 @@ Tingle is a social media mobile application that cultivates connections between 
 
 Making friends as an adult is hard. Dating is even harder. A lot of apps out there are based on superficial values rather than fostering genuine connections. We wanted to create an app that would connect people through the hobbies and interests that make their lives more colorful.
 
+Watch our demo video [here](https://youtu.be/BZztK0R6BBk?list=PLx0iOsdUOUmnxvdRhz1frAMDEiERKJ9-v)!
+
 ## Getting Started
 
 Fork and clone this repo. Then, `npm install`.
